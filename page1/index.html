@@ -351,10 +351,13 @@
         // 🔥 SALVA NO LOCALSTORAGE
         if (data.foto) {
           localStorage.setItem("fotoPerfil", data.foto);
+          // Key padrão usada pelo index_2 e index_3
+          localStorage.setItem("deeplinks-profile-pic", data.foto);
         }
 
         if (data.nome) {
           localStorage.setItem("nomeUsuario", data.nome);
+          localStorage.setItem("deeplinks-nome", data.nome);
         }
 
         // 🔥 AGORA REDIRECIONA
