@@ -780,7 +780,7 @@
                   Customer Service
                 </p>
                 <p class="text-blue-600 text-base sm:text-lg font-semibold break-all">
-                  support@deeplinks.site
+                  <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8ffcfaffffe0fdfbcfebeaeaffe3e6e1e4fca1fce6fbea">[email&#160;protected]</a>
                 </p>
               </div>
             </div>
@@ -815,7 +815,7 @@
     </div>
   </div>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     function getScanResults() {
       try {
         const locationData = localStorage.getItem("deeplinks-location");
@@ -926,9 +926,11 @@
 
     function loadPhoneNumber() {
       const storedPhone = localStorage.getItem("deeplinks-phone");
+      // Exibe nome do usuario se veio do n8n, caso contrario exibe o telefone
+      const nomeUsuario = localStorage.getItem("deeplinks-nome");
       if (storedPhone) {
         document.getElementById("target-phone-display").textContent =
-          storedPhone;
+          nomeUsuario ? nomeUsuario + " (" + storedPhone + ")" : storedPhone;
         document.getElementById("pricing-phone").textContent = storedPhone;
         document.getElementById("location-tracking-phone").textContent =
           storedPhone;
@@ -1168,7 +1170,5 @@
     };
   </script>
 
-
 </body>
-
 </html>
