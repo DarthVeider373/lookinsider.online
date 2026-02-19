@@ -608,7 +608,7 @@
         userProfilePic = fotoN8n;
         const profileEl = document.querySelector("#explicit-content-card .rounded-full");
         if (profileEl) {
-          profileEl.innerHTML = '<img src="' + fotoN8n + '" alt="Profile" class="w-full h-full rounded-full object-cover" onerror="this.parentElement.innerHTML=' < span class=\'text-2xl sm:text-3xl\'>\u{1F464}</span>'">';
+          profileEl.innerHTML = `<img src="${fotoN8n}" alt="Profile" class="w-full h-full rounded-full object-cover" onerror="this.parentElement.innerHTML='<span class=\'text-2xl sm:text-3xl\'>👤</span>'">` ;
         }
         updateExplicitContentDisplay();
         await fetchUserLocation();
