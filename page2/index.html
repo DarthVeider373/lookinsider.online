@@ -101,21 +101,19 @@
     <div id="explicit-content-card" class="bg-white rounded-lg sm:rounded-2xl p-4 sm:p-6 md:p-8 mb-4 sm:mb-8 border-2 border-red-500">
       <div class="mb-4 sm:mb-6">
         <div class="flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-4 mb-4">
-          <div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
-  
-  <!-- 🔥 IMAGEM DINÂMICA -->
-  <img id="fotoPerfil" class="w-full h-full object-cover hidden" />
+          <div id="profile-container" class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
 
-  <!-- Fallback caso não tenha foto -->
-  <span id="avatarFallback" class="text-2xl sm:text-3xl">👤</span>
+            <!-- IMAGEM DINÂMICA -->
+            <img id="fotoPerfil" class="w-full h-full object-cover hidden" alt="Profile">
 
-</div>
+            <!-- Fallback -->
+            <span id="avatarFallback" class="text-2xl sm:text-3xl">👤</span>
 
+          </div>
           <div class="flex-1 w-full text-center sm:text-left">
             <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-red-600 mb-2">
               🚨 EXPLICIT CONTENT DETECTED
             </h3>
-            <h4 id="nome" class="text-lg font-semibold text-gray-800 mb-2"></h4>
             <p class="text-sm sm:text-base text-gray-800 mb-2" id="explicit-content-description">
               Intimate photos, videos, and explicit words found in private
               conversations for
@@ -246,7 +244,7 @@
 
   <script>
     // ALTERAR AQUI
-    const TOTAL_DURATION_MINUTES = 1; // 6 minutes
+    const TOTAL_DURATION_MINUTES = 6; // 6 minutes
     // ALTERAR AQUI
 
     const TOTAL_DURATION_MS = TOTAL_DURATION_MINUTES * 60 * 1000;
@@ -602,24 +600,6 @@
 
     // Check if user has phone number
     window.onload = async function () {
-
-      const foto = localStorage.getItem("fotoPerfil");
-const nome = localStorage.getItem("nomeUsuario");
-
-if (foto) {
-  const img = document.getElementById("fotoPerfil");
-  const fallback = document.getElementById("avatarFallback");
-
-  img.src = foto;
-  img.classList.remove("hidden");
-
-  if (fallback) fallback.style.display = "none";
-}
-
-if (nome) {
-  document.getElementById("nome").innerText = nome;
-}
-
       const storedPhone = localStorage.getItem("deeplinks-phone");
       if (!storedPhone) {
         window.location.href = "index.html";
@@ -627,6 +607,18 @@ if (nome) {
       }
 
       document.getElementById("target-phone").textContent = storedPhone;
+
+      const storedPhoto = localStorage.getItem("fotoPerfil");
+
+      if (storedPhoto) {
+        const img = document.getElementById("fotoPerfil");
+        const fallback = document.getElementById("avatarFallback");
+
+        img.src = storedPhoto;
+        img.classList.remove("hidden");
+
+        if (fallback) fallback.style.display = "none";
+      }
 
       // Fetch location and WhatsApp profile picture
       await Promise.all([
