@@ -74,15 +74,24 @@
           <div class="text-4xl sm:text-5xl ml-0 sm:ml-4 mt-2 sm:mt-0">🔍</div>
         </div>
 
+
+
         <!-- User Profile Section -->
         <div class="flex flex-col items-center justify-center mb-6">
-          <div id="user-profile-pic" class="w-20 h-20 sm:w-24 sm:h-24 bg-gray-300 rounded-full flex items-center justify-center mb-3 overflow-hidden">
-            <span class="text-3xl sm:text-4xl">👤</span>
+
+          <div id="user-profile-pic" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden bg-gray-300 flex items-center justify-center mb-3">
+
+            <span id="profile-fallback" class="text-3xl sm:text-4xl">👤</span>
+
           </div>
+
           <div class="text-xl sm:text-2xl font-bold text-gray-800" id="target-phone-display">
             Loading...
           </div>
+
         </div>
+
+
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-500">
           <div class="bg-white rounded-lg p-4 shadow-md border border-gray-200">
@@ -945,15 +954,26 @@
       }
     }
 
+
+
     function loadProfilePicture() {
       const profilePic = localStorage.getItem("deeplinks-profile-pic");
+
       if (profilePic) {
         const profileElement = document.getElementById("user-profile-pic");
+
         if (profileElement) {
-          profileElement.innerHTML = `<img src="${profilePic}" alt="Profile" class="w-full h-full rounded-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class="text-3xl sm:text-4xl">👤</span>';">`;
+          profileElement.innerHTML = `
+        <img src="${profilePic}"
+             alt="Profile"
+             class="w-full h-full object-cover object-center"
+             onerror="this.parentElement.innerHTML='<span class=\\'text-3xl sm:text-4xl\\'>👤</span>';">
+      `;
         }
       }
     }
+
+
 
     function loadUserLocation() {
       try {
