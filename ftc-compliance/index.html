@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>FTC Compliance - LookInsider</title>
+
+	<!-- ✅ Tailwind (se seu site já carrega Tailwind, você pode remover esta linha) -->
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+	<main class="max-w-6xl mx-auto px-4 py-12">
+		<div class="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+			<div class="border-b border-gray-200 bg-white px-6 py-5">
+				<h1 class="text-xl md:text-2xl font-semibold text-gray-900">FTC Compliance & Disclaimer</h1>
+				<p class="mt-1 text-xs text-gray-500">Last updated: March 2026</p>
+			</div>
+
+			<div class="px-6 py-6 space-y-6">
+				<section>
+					<h2 class="text-sm font-semibold text-gray-900">General Disclaimer</h2>
+					<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+						This website is owned and operated by <strong>LookInsider</strong>. The information provided on this website
+						is for general informational purposes only.
+					</p>
+				</section>
+
+				<section class="rounded-xl border border-gray-200 bg-gray-50 p-4">
+					<h2 class="text-sm font-semibold text-gray-900">No Professional Advice</h2>
+					<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+						The content on this website does not constitute legal, financial, medical, or professional advice of any kind.
+						You should consult with a qualified professional before making decisions based on information found on this website.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-sm font-semibold text-gray-900">Results Disclaimer</h2>
+					<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+						Any testimonials, examples, or case studies shown on this website are not intended to represent or guarantee
+						that anyone will achieve the same or similar results. Individual results may vary.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-sm font-semibold text-gray-900">Affiliate Disclosure</h2>
+					<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+						This website may contain affiliate links. We may receive compensation if you purchase through our links at no additional cost to you.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-sm font-semibold text-gray-900">Compliance Statement</h2>
+					<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+						We strive to comply with applicable consumer protection laws and regulations, including guidelines established by the Federal Trade Commission (FTC).
+					</p>
+				</section>
+			</div>
+
+			<div class="border-t border-gray-200 px-6 py-4">
+				<p class="text-xs text-gray-500">
+					© <span id="footer-year"></span> LookInsider. All rights reserved.
+				</p>
+			</div>
+		</div>
+	</main>
+
+	<script>
+		document.getElementById("footer-year").textContent = new Date().getFullYear();
+	</script>
+</body>
+
+</html>
