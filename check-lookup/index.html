@@ -1,0 +1,2199 @@
+<!DOCTYPE html><html lang="en"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LookInsider — Reverse Phone Lookup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C3AFF;
+            --primary-dark: #5428CC;
+            --primary-light: #8B6AFF;
+            --accent: #00D4AA;
+            --accent-dark: #00B894;
+            --bg-dark: #0A0E1A;
+            --bg-card: #111827;
+            --bg-card-light: #1A2236;
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --border: #1E293B;
+            --danger: #FF4757;
+            --warning: #FBBF24;
+            --success: #34D399;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(108,58,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(108,58,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow-1 { top: -200px; left: -200px; background: var(--primary); }
+        .bg-glow-2 { bottom: -200px; right: -200px; background: var(--accent); }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 16px 24px;
+            background: rgba(10,14,26,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span { color: var(--accent); }
+
+        .header-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(108,58,255,0.1);
+            border: 1px solid rgba(108,58,255,0.2);
+            border-radius: 100px;
+            font-size: 12px;
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        .header-badge .dot {
+            width: 6px; height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .main {
+            position: relative;
+            z-index: 1;
+            padding-top: 80px;
+        }
+
+        /* Hero */
+        .section-hero {
+            padding: 80px 24px 60px;
+            text-align: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(108,58,255,0.1);
+            border: 1px solid rgba(108,58,255,0.2);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--primary-light);
+            font-weight: 600;
+            margin-bottom: 28px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: clamp(36px,6vw,64px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 520px;
+            margin: 0 auto 48px;
+            font-weight: 400;
+        }
+
+        /* Phone Input */
+        .input-container { max-width: 480px; margin: 0 auto; }
+
+        .phone-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .phone-input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(108,58,255,0.15);
+        }
+
+        .phone-flag {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            border-right: 1px solid var(--border);
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .phone-input {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-size: 17px;
+            font-weight: 500;
+            padding: 12px 16px;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .phone-input::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .btn-search {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-search:hover {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(108,58,255,0.4);
+        }
+
+        .btn-search svg { width: 18px; height: 18px; }
+
+        .input-note {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .input-note span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .input-note svg {
+            width: 14px; height: 14px;
+            color: var(--success);
+        }
+
+        .input-error {
+            color: var(--danger);
+            font-size: 13px;
+            margin-top: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .input-error.visible {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        /* Trust Bar */
+        .trust-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            padding: 32px 24px;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .trust-item svg {
+            width: 20px; height: 20px;
+            color: var(--accent);
+        }
+
+        /* Stats */
+        .stats-section {
+            padding: 40px 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 28px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            margin-top: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Features */
+        .section-features {
+            padding: 80px 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(28px,4vw,42px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 52px;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            padding: 32px 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(108,58,255,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
+        .feature-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 18px;
+        }
+
+        .feature-icon.purple { background: rgba(108,58,255,0.15); }
+        .feature-icon.green { background: rgba(0,212,170,0.15); }
+        .feature-icon.yellow { background: rgba(251,191,36,0.15); }
+        .feature-icon.blue { background: rgba(56,189,248,0.15); }
+        .feature-icon.pink { background: rgba(236,72,153,0.15); }
+        .feature-icon.red { background: rgba(255,71,87,0.15); }
+
+        .feature-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Disclaimer Section */
+        .disclaimer-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px 0;
+        }
+
+        .disclaimer-box {
+            padding: 24px 28px;
+            background: rgba(30,41,59,0.4);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .disclaimer-box-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .disclaimer-box-title svg {
+            width: 16px; height: 16px;
+            color: var(--warning);
+        }
+
+        .disclaimer-box p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-muted);
+            font-size: 12px;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+            background: rgba(108,58,255,0.08);
+        }
+
+        .footer-divider {
+            color: var(--border);
+            user-select: none;
+        }
+
+        .footer-contact {
+            margin-top: 16px;
+        }
+
+        .footer-contact a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer-contact a:hover { text-decoration: underline; }
+
+        /* Scan Overlay */
+        .scan-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10,14,26,0.95);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .scan-overlay.active { display: flex; }
+
+        .scan-container {
+            width: 100%;
+            max-width: 560px;
+            text-align: center;
+        }
+
+        .scan-phone-display {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .scan-status-text {
+            font-size: 15px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 36px;
+            min-height: 24px;
+        }
+
+        .scan-circle-wrapper {
+            position: relative;
+            width: 180px; height: 180px;
+            margin: 0 auto 36px;
+        }
+
+        .scan-circle-bg {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 6;
+        }
+
+        .scan-circle-progress {
+            fill: none;
+            stroke: url(#progressGradient);
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-dasharray: 502;
+            stroke-dashoffset: 502;
+            transition: stroke-dashoffset 0.5s ease;
+            transform: rotate(-90deg);
+            transform-origin: center;
+        }
+
+        .scan-percentage {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 44px;
+            font-weight: 900;
+            letter-spacing: -2px;
+        }
+
+        .scan-percentage span {
+            font-size: 20px;
+            color: var(--text-muted);
+        }
+
+        .scan-steps {
+            text-align: left;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .scan-step {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            opacity: 0.3;
+            transition: all 0.5s ease;
+        }
+
+        .scan-step:last-child { border-bottom: none; }
+        .scan-step.active { opacity: 1; }
+        .scan-step.completed { opacity: 1; }
+
+        .scan-step-icon {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+            background: var(--bg-card-light);
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .scan-step.active .scan-step-icon {
+            border-color: var(--primary);
+            background: rgba(108,58,255,0.1);
+            animation: pulse-icon 1.5s infinite;
+        }
+
+        .scan-step.completed .scan-step-icon {
+            border-color: var(--success);
+            background: rgba(52,211,153,0.1);
+        }
+
+        @keyframes pulse-icon {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(108,58,255,0.3); }
+            50% { box-shadow: 0 0 0 6px rgba(108,58,255,0); }
+        }
+
+        .scan-step-spinner {
+            width: 16px; height: 16px;
+            border: 2px solid transparent;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .scan-step.active .scan-step-spinner { display: block; }
+        .scan-step.active .scan-step-check { display: none; }
+        .scan-step.completed .scan-step-spinner { display: none; }
+        .scan-step.completed .scan-step-check { display: block; color: var(--success); }
+        .scan-step-check { display: none; }
+
+        .scan-step-waiting {
+            display: block;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+
+        .scan-step.active .scan-step-waiting,
+        .scan-step.completed .scan-step-waiting { display: none; }
+
+        .scan-step-info { flex: 1; }
+
+        .scan-step-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .scan-step-detail {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .scan-step.completed .scan-step-detail { color: var(--success); }
+
+        .scan-step-count {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-light);
+            display: none;
+        }
+
+        .scan-step.completed .scan-step-count { display: block; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .scan-warning {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 18px;
+            background: rgba(255,71,87,0.08);
+            border: 1px solid rgba(255,71,87,0.2);
+            border-radius: 12px;
+            font-size: 13px;
+            color: #FF6B7A;
+            font-weight: 500;
+        }
+
+        .scan-warning svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+        /* Results Overlay */
+        .results-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-dark);
+            z-index: 10000;
+            overflow-y: auto;
+        }
+
+        .results-overlay.active { display: block; }
+
+        .results-container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .results-header {
+            text-align: center;
+            padding: 32px 0;
+        }
+
+        .results-alert {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255,71,87,0.1);
+            border: 1px solid rgba(255,71,87,0.2);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--danger);
+            font-weight: 600;
+            margin-bottom: 20px;
+            animation: pulse-alert 2s infinite;
+        }
+
+        @keyframes pulse-alert {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,71,87,0.2); }
+            50% { box-shadow: 0 0 0 8px rgba(255,71,87,0); }
+        }
+
+        .results-alert .alert-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--danger);
+            animation: pulse-dot 1s infinite;
+        }
+
+        .results-title {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .results-phone {
+            font-size: 20px;
+            color: var(--primary-light);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .results-found-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .results-found-text strong { color: var(--warning); }
+
+        .result-category { margin-bottom: 16px; }
+
+        .result-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .result-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .result-card-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .result-card-icon {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .result-card-title { font-size: 15px; font-weight: 700; }
+        .result-card-subtitle { font-size: 12px; color: var(--text-muted); }
+
+        .result-badge {
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-badge.found {
+            background: rgba(52,211,153,0.1);
+            color: var(--success);
+            border: 1px solid rgba(52,211,153,0.2);
+        }
+
+        .result-badge.alert {
+            background: rgba(255,71,87,0.1);
+            color: var(--danger);
+            border: 1px solid rgba(255,71,87,0.2);
+        }
+
+        .result-card-body { padding: 18px 22px; }
+
+        .result-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(30,41,59,0.5);
+        }
+
+        .result-row:last-child { border-bottom: none; }
+
+        .result-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            filter: blur(7px);
+            user-select: none;
+            pointer-events: none;
+        }
+
+        /* Results CTA */
+        .results-cta {
+            position: sticky;
+            bottom: 0;
+            background: linear-gradient(to top, var(--bg-dark) 60%, transparent);
+            padding: 40px 0 24px;
+            margin-top: 12px;
+        }
+
+        .cta-card {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 32px 28px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .cta-lock-icon {
+            width: 56px; height: 56px;
+            background: rgba(108,58,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 24px;
+        }
+
+        .cta-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .cta-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .cta-price { margin-bottom: 20px; }
+
+        .cta-price-old {
+            font-size: 16px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-right: 8px;
+        }
+
+        .cta-price-new {
+            font-size: 40px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .cta-price-new span {
+            font-size: 18px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .cta-price-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .btn-unlock {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.3px;
+            text-decoration: none;
+        }
+
+        .btn-unlock:hover {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(108,58,255,0.4);
+        }
+
+        .btn-unlock svg { width: 20px; height: 20px; }
+
+        .cta-features {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .cta-feature svg {
+            width: 16px; height: 16px;
+            color: var(--success);
+            flex-shrink: 0;
+        }
+
+        .cta-timer {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .cta-timer svg { width: 16px; height: 16px; }
+
+        .cta-guarantee {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: rgba(52,211,153,0.05);
+            border: 1px solid rgba(52,211,153,0.15);
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .cta-guarantee-icon {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: rgba(52,211,153,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .cta-guarantee-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .cta-guarantee-text strong { color: var(--success); }
+
+        .cta-secure-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .cta-secure-row svg { width: 14px; height: 14px; }
+
+        .cta-methods {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .cta-method {
+            padding: 4px 10px;
+            background: var(--bg-card-light);
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        /* Results footer disclaimer */
+        .results-footer {
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 24px;
+        }
+
+        .results-footer-disclaimer {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .results-footer-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .results-footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .results-footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .results-footer-links .sep { color: var(--border); }
+
+        .results-footer-copy {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* Toast Container */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            animation: slideInToast 0.4s ease, fadeOutToast 0.4s ease 3.6s forwards;
+            max-width: 320px;
+        }
+
+        .toast-icon { font-size: 18px; flex-shrink: 0; }
+        .toast strong { color: var(--text-primary); }
+
+        @keyframes slideInToast {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeOutToast {
+            to { opacity: 0; transform: translateY(10px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Payment Modal */
+        .payment-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10,14,26,0.9);
+            backdrop-filter: blur(8px);
+            z-index: 20000;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .payment-modal-overlay.active { display: flex; }
+
+        .payment-modal {
+            width: 100%;
+            max-width: 440px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 36px 28px;
+            position: relative;
+        }
+
+        .payment-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: var(--bg-card-light);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .payment-close:hover {
+            background: rgba(255,71,87,0.1);
+            border-color: rgba(255,71,87,0.3);
+            color: var(--danger);
+        }
+
+        .payment-header { text-align: center; margin-bottom: 28px; }
+
+        .payment-lock {
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, rgba(108,58,255,0.2), rgba(0,212,170,0.2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 28px;
+        }
+
+        .payment-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+        .payment-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 6px; }
+        .payment-includes { margin-bottom: 24px; }
+
+        .payment-includes-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .payment-include-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .payment-include-item svg {
+            width: 18px; height: 18px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .payment-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+        .payment-price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .payment-price-label { font-size: 16px; font-weight: 600; }
+
+        .payment-price-value { font-size: 32px; font-weight: 900; letter-spacing: -1px; }
+        .payment-price-value small { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+
+        .btn-pay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0,212,170,0.3);
+        }
+
+        .payment-secure {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .payment-secure svg { width: 14px; height: 14px; }
+
+        .payment-methods {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .payment-method-icon {
+            padding: 6px 12px;
+            background: var(--bg-card-light);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .guarantee-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: rgba(52,211,153,0.05);
+            border: 1px solid rgba(52,211,153,0.15);
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .guarantee-icon {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: rgba(52,211,153,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .guarantee-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .guarantee-text strong { color: var(--success); }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .phone-input-wrapper {
+                flex-direction: column;
+                padding: 8px;
+            }
+            .phone-flag {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                width: 100%;
+                justify-content: center;
+                padding: 10px;
+            }
+            .phone-input { width: 100%; text-align: center; padding: 12px; }
+            .btn-search { width: 100%; justify-content: center; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .trust-bar { gap: 16px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .header-badge { display: none; }
+            .input-note { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">🔍</div>
+                <div class="logo-text">Look<span>Insider</span></div>
+            </a>
+            <div class="header-badge">
+                <span class="dot"></span>
+                <span id="headerSearchCount">2,847</span> searches today
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="main" id="mainContent">
+        <section class="section-hero">
+            <div class="hero-eyebrow">🔒 Trusted by 2M+ users</div>
+            <h1 class="hero-title">
+                Discover Who's Behind<br>
+                <span class="gradient-text">Any Phone Number</span>
+            </h1>
+            <p class="hero-desc">
+                Enter a US phone number to instantly uncover names, addresses, social profiles, and hidden information tied to it.
+            </p>
+            <div class="input-container">
+                <div class="phone-input-wrapper" id="phoneWrapper">
+                    <div class="phone-flag">
+                        <svg width="24" height="16" viewBox="0 0 24 16" fill="none">
+                            <rect width="24" height="16" rx="2" fill="#B22234"></rect>
+                            <rect y="1.23" width="24" height="1.23" fill="white"></rect>
+                            <rect y="3.69" width="24" height="1.23" fill="white"></rect>
+                            <rect y="6.15" width="24" height="1.23" fill="white"></rect>
+                            <rect y="8.62" width="24" height="1.23" fill="white"></rect>
+                            <rect y="11.08" width="24" height="1.23" fill="white"></rect>
+                            <rect y="13.54" width="24" height="1.23" fill="white"></rect>
+                            <rect width="9.6" height="8.62" fill="#3C3B6E"></rect>
+                        </svg>
+                        +1
+                    </div>
+                    <input type="tel" class="phone-input" id="phoneInput" placeholder="(555) 123-4567" maxlength="14" autocomplete="off">
+                    <button class="btn-search" id="btnSearch" onclick="startSearch()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        Search
+                    </button>
+                </div>
+                <div class="input-error" id="inputError">Please enter a valid 10-digit US phone number.</div>
+                <div class="input-note">
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Encrypted &amp; Secure
+                    </span>
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        100% Confidential
+                    </span>
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Instant Results
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <div class="trust-bar">
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                256-bit SSL
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Compliant
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Updated Daily
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
+                2M+ Searches
+            </div>
+        </div>
+
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">3.2B+</div>
+                    <div class="stat-label">Records in Database</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">97.3%</div>
+                    <div class="stat-label">Match Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">~4s</div>
+                    <div class="stat-label">Avg. Search Time</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-features">
+            <div class="section-label">What You'll Discover</div>
+            <h2 class="section-title">Comprehensive Phone Intelligence</h2>
+            <p class="section-subtitle">Our advanced lookup scans billions of records to piece together a complete profile from a single phone number.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon purple">👤</div>
+                    <div class="feature-title">Full Name &amp; Identity</div>
+                    <div class="feature-desc">Identify names potentially associated with the phone number and see who may be behind the call.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon green">🏠</div>
+                    <div class="feature-title">Home Address</div>
+                    <div class="feature-desc">Uncover possible current and historical addresses connected to the phone number.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon yellow">👨‍👩‍👧‍👦</div>
+                    <div class="feature-title">Family Members</div>
+                    <div class="feature-desc">Discover potential relatives and associated family connections from public records.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon blue">📱</div>
+                    <div class="feature-title">Social Media Profiles</div>
+                    <div class="feature-desc">Find publicly available social media profiles linked to the phone number.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon pink">📧</div>
+                    <div class="feature-title">Email &amp; Online Activity</div>
+                    <div class="feature-desc">View publicly listed email addresses and mentions from websites, directories, and blogs.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon red">💼</div>
+                    <div class="feature-title">Employment &amp; Dating</div>
+                    <div class="feature-desc">Discover possible job information and publicly available dating profiles linked to the number.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Disclaimer Section -->
+        <section class="disclaimer-section">
+            <div class="disclaimer-box">
+                <div class="disclaimer-box-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Disclaimer
+                </div>
+                <p>The information provided on this website is for general informational purposes only and is sourced from publicly available or third-party data. We do not guarantee the accuracy, completeness, or current validity of any information displayed, nor do we verify phone number ownership. This website is not affiliated with any telecom operator, government authority, or law-enforcement agency. Users agree to use this service at their own risk and in compliance with applicable laws, including data-protection and information-technology regulations. The information must not be used for harassment, stalking, defamation, or any unlawful activity.</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 LookInsider. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="https://lookinsider.online/disclaimer/" target="_blank">Disclaimer</a>
+                <span class="footer-divider">·</span>
+                <a href="https://lookinsider.online/ftc-compliance/" target="_blank">FTC Compliance</a>
+                <span class="footer-divider">·</span>
+                <a href="https://lookinsider.online/refund-policy/" target="_blank">Refund Policy</a>
+                <span class="footer-divider">·</span>
+                <a href="https://lookinsider.online/terms-of-service/" target="_blank">Terms of Service</a>
+            </div>
+            <div class="footer-contact">
+                <p>Contact: <a href="mailto:support@lookinsider.online">support@lookinsider.online</a></p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Scanning Overlay -->
+    <div class="scan-overlay" id="scanOverlay">
+        <div class="scan-container">
+            <div class="scan-phone-display" id="scanPhoneDisplay">+1 (555) 123-4567</div>
+            <div class="scan-status-text" id="scanStatusText">Initializing secure search...</div>
+            <div class="scan-circle-wrapper">
+                <svg width="180" height="180" viewBox="0 0 180 180">
+                    <defs>
+                        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#6C3AFF"></stop>
+                            <stop offset="100%" style="stop-color:#00D4AA"></stop>
+                        </linearGradient>
+                    </defs>
+                    <circle class="scan-circle-bg" cx="90" cy="90" r="80"></circle>
+                    <circle class="scan-circle-progress" id="scanProgress" cx="90" cy="90" r="80"></circle>
+                </svg>
+                <div class="scan-percentage">
+                    <span id="scanPercent">0</span><span>%</span>
+                </div>
+            </div>
+            <div class="scan-steps">
+                <div class="scan-step" id="step1">
+                    <div class="scan-step-icon">
+                        <div class="scan-step-spinner"></div>
+                        <svg class="scan-step-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <div class="scan-step-waiting"></div>
+                    </div>
+                    <div class="scan-step-info">
+                        <div class="scan-step-title">Scanning phone databases</div>
+                        <div class="scan-step-detail">Searching carrier records...</div>
+                    </div>
+                    <div class="scan-step-count"></div>
+                </div>
+                <div class="scan-step" id="step2">
+                    <div class="scan-step-icon">
+                        <div class="scan-step-spinner"></div>
+                        <svg class="scan-step-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <div class="scan-step-waiting"></div>
+                    </div>
+                    <div class="scan-step-info">
+                        <div class="scan-step-title">Searching public records</div>
+                        <div class="scan-step-detail">Waiting...</div>
+                    </div>
+                    <div class="scan-step-count"></div>
+                </div>
+                <div class="scan-step" id="step3">
+                    <div class="scan-step-icon">
+                        <div class="scan-step-spinner"></div>
+                        <svg class="scan-step-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <div class="scan-step-waiting"></div>
+                    </div>
+                    <div class="scan-step-info">
+                        <div class="scan-step-title">Scanning social media</div>
+                        <div class="scan-step-detail">Waiting...</div>
+                    </div>
+                    <div class="scan-step-count"></div>
+                </div>
+                <div class="scan-step" id="step4">
+                    <div class="scan-step-icon">
+                        <div class="scan-step-spinner"></div>
+                        <svg class="scan-step-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <div class="scan-step-waiting"></div>
+                    </div>
+                    <div class="scan-step-info">
+                        <div class="scan-step-title">Deep web analysis</div>
+                        <div class="scan-step-detail">Waiting...</div>
+                    </div>
+                    <div class="scan-step-count"></div>
+                </div>
+                <div class="scan-step" id="step5">
+                    <div class="scan-step-icon">
+                        <div class="scan-step-spinner"></div>
+                        <svg class="scan-step-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <div class="scan-step-waiting"></div>
+                    </div>
+                    <div class="scan-step-info">
+                        <div class="scan-step-title">Compiling full report</div>
+                        <div class="scan-step-detail">Waiting...</div>
+                    </div>
+                    <div class="scan-step-count"></div>
+                </div>
+            </div>
+            <div class="scan-warning">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <span>Sensitive information found. This report contains private data.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Overlay -->
+    <div class="results-overlay" id="resultsOverlay">
+        <div class="results-container">
+            <!-- Results Header -->
+            <div class="results-header">
+                <a href="#" class="logo" style="justify-content:center;margin-bottom:20px;">
+                    <div class="logo-icon">🔍</div>
+                    <div class="logo-text">Look<span>Insider</span></div>
+                </a>
+                <div class="results-alert">
+                    <span class="alert-dot"></span>
+                    Report Ready — Contains Sensitive Data
+                </div>
+                <h2 class="results-title">Report Complete</h2>
+                <div class="results-phone" id="resultsPhone">+1 (555) 123-4567</div>
+                <p class="results-found-text">We found <strong id="resultsCount">47 records</strong> linked to this number across <strong>12 data sources</strong></p>
+            </div>
+
+            <!-- Owner Identity -->
+            <div class="result-category">
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <div class="result-card-header-left">
+                            <div class="result-card-icon" style="background:rgba(108,58,255,0.15);">👤</div>
+                            <div>
+                                <div class="result-card-title">Owner Identity</div>
+                                <div class="result-card-subtitle">2 names found</div>
+                            </div>
+                        </div>
+                        <span class="result-badge found">Found</span>
+                    </div>
+                    <div class="result-card-body">
+                        <div class="result-row">
+                            <span class="result-label">Full Name</span>
+                            <span class="result-value">Michael R. Thompson</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Alias / AKA</span>
+                            <span class="result-value">Mike Thompson Jr.</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Age</span>
+                            <span class="result-value">34 years old</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Gender</span>
+                            <span class="result-value">Male</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Address History -->
+            <div class="result-category">
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <div class="result-card-header-left">
+                            <div class="result-card-icon" style="background:rgba(0,212,170,0.15);">🏠</div>
+                            <div>
+                                <div class="result-card-title">Address History</div>
+                                <div class="result-card-subtitle">3 addresses found</div>
+                            </div>
+                        </div>
+                        <span class="result-badge found">Found</span>
+                    </div>
+                    <div class="result-card-body">
+                        <div class="result-row">
+                            <span class="result-label">Current Address</span>
+                            <span class="result-value">1247 Oak Valley Dr, Austin, TX</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Previous #1</span>
+                            <span class="result-value">832 Elm Street, Dallas, TX</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Previous #2</span>
+                            <span class="result-value">4510 Pine Rd, Houston, TX</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Family Members -->
+            <div class="result-category">
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <div class="result-card-header-left">
+                            <div class="result-card-icon" style="background:rgba(251,191,36,0.15);">👨‍👩‍👧</div>
+                            <div>
+                                <div class="result-card-title">Family Members</div>
+                                <div class="result-card-subtitle">4 relatives found</div>
+                            </div>
+                        </div>
+                        <span class="result-badge found">Found</span>
+                    </div>
+                    <div class="result-card-body">
+                        <div class="result-row">
+                            <span class="result-label">Relative #1</span>
+                            <span class="result-value">Sandra K. Thompson</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Relative #2</span>
+                            <span class="result-value">Robert J. Thompson</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Relative #3</span>
+                            <span class="result-value">Emily A. Thompson</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Relative #4</span>
+                            <span class="result-value">David M. Hernandez</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media -->
+            <div class="result-category">
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <div class="result-card-header-left">
+                            <div class="result-card-icon" style="background:rgba(56,189,248,0.15);">📱</div>
+                            <div>
+                                <div class="result-card-title">Social Media Profiles</div>
+                                <div class="result-card-subtitle">5 profiles found</div>
+                            </div>
+                        </div>
+                        <span class="result-badge alert">⚠ Exposed</span>
+                    </div>
+                    <div class="result-card-body">
+                        <div class="result-row">
+                            <span class="result-label">Facebook</span>
+                            <span class="result-value">facebook.com/mthompson...</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Instagram</span>
+                            <span class="result-value">@mike_thomps0n_real</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">LinkedIn</span>
+                            <span class="result-value">linkedin.com/in/michael-t...</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Twitter / X</span>
+                            <span class="result-value">@MikeT_Austin34</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">TikTok</span>
+                            <span class="result-value">@mikethompson_tx</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Addresses -->
+            <div class="result-category">
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <div class="result-card-header-left">
+                            <div class="result-card-icon" style="background:rgba(236,72,153,0.15);">📧</div>
+                            <div>
+                                <div class="result-card-title">Email Addresses</div>
+                                <div class="result-card-subtitle">3 emails found</div>
+                            </div>
+                        </div>
+                        <span class="result-badge found">Found</span>
+                    </div>
+                    <div class="result-card-body">
+                        <div class="result-row">
+                            <span class="result-label">Primary</span>
+                            <span class="result-value">m.thompson84@gmail.com</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Secondary</span>
+                            <span class="result-value">mike.t@outlook.com</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Work</span>
+                            <span class="result-value">mthompson@techcorp.io</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dating Profiles -->
+            <div class="result-category">
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <div class="result-card-header-left">
+                            <div class="result-card-icon" style="background:rgba(255,71,87,0.15);">❤️</div>
+                            <div>
+                                <div class="result-card-title">Dating Profiles</div>
+                                <div class="result-card-subtitle">2 profiles detected</div>
+                            </div>
+                        </div>
+                        <span class="result-badge alert">⚠ Sensitive</span>
+                    </div>
+                    <div class="result-card-body">
+                        <div class="result-row">
+                            <span class="result-label">Platform #1</span>
+                            <span class="result-value">Active profile found on T...</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Platform #2</span>
+                            <span class="result-value">Profile matched on Bum...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employment -->
+            <div class="result-category">
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <div class="result-card-header-left">
+                            <div class="result-card-icon" style="background:rgba(251,191,36,0.15);">💼</div>
+                            <div>
+                                <div class="result-card-title">Employment History</div>
+                                <div class="result-card-subtitle">2 records found</div>
+                            </div>
+                        </div>
+                        <span class="result-badge found">Found</span>
+                    </div>
+                    <div class="result-card-body">
+                        <div class="result-row">
+                            <span class="result-label">Current Job</span>
+                            <span class="result-value">Senior Developer at Tech...</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Previous Job</span>
+                            <span class="result-value">Software Engineer at Dat...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="results-cta">
+                <div class="cta-card">
+                    <div class="cta-lock-icon">🔐</div>
+                    <h3 class="cta-title">Unlock Full Report</h3>
+                    <p class="cta-desc">Get instant access to all unblurred data including names, addresses, photos, social profiles, and more.</p>
+                    <div class="cta-price">
+                        <span class="cta-price-old">$97.00</span>
+                        <span class="cta-price-new">$47 <span>USD</span></span>
+                        <div class="cta-price-sub">One-time payment · No subscription</div>
+                    </div>
+                    <a href="https://explodely.com/p/1456247277" target="_blank" class="btn-unlock" id="btnUnlock">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                        </svg>
+                        Unlock Full Report — $47
+                    </a>
+                    <div class="cta-features">
+                        <div class="cta-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Complete owner identification
+                        </div>
+                        <div class="cta-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Full addresses &amp; family members
+                        </div>
+                        <div class="cta-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            All social media &amp; dating profiles
+                        </div>
+                        <div class="cta-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Email addresses &amp; employment data
+                        </div>
+                        <div class="cta-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Downloadable PDF report
+                        </div>
+                    </div>
+                    <div class="cta-timer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Report data expires in <span id="timerCountdown">14:59</span>
+                    </div>
+                    <div class="cta-guarantee">
+                        <div class="cta-guarantee-icon">🛡️</div>
+                        <div class="cta-guarantee-text">
+                            <strong>60-Day Money-Back Guarantee.</strong> If you are not completely satisfied with your purchase, you are entitled to request a full refund within 60 days. No questions asked.
+                        </div>
+                    </div>
+                    <div class="cta-secure-row">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Secured with 256-bit SSL encryption · Powered by Explodely
+                    </div>
+                    <div class="cta-methods">
+                        <div class="cta-method">VISA</div>
+                        <div class="cta-method">MASTERCARD</div>
+                        <div class="cta-method">AMEX</div>
+                        <div class="cta-method">PAYPAL</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Footer -->
+            <div class="results-footer">
+                <p class="results-footer-disclaimer">The information provided on this website is for general informational purposes only and is sourced from publicly available or third-party data. We do not guarantee the accuracy, completeness, or current validity of any information displayed, nor do we verify phone number ownership. This website is not affiliated with any telecom operator, government authority, or law-enforcement agency. Users agree to use this service at their own risk and in compliance with applicable laws, including data-protection and information-technology regulations. The information must not be used for harassment, stalking, defamation, or any unlawful activity.</p>
+                <div class="results-footer-links">
+                    <a href="https://lookinsider.online/disclaimer/" target="_blank">Disclaimer</a>
+                    <span class="sep">·</span>
+                    <a href="https://lookinsider.online/ftc-compliance/" target="_blank">FTC Compliance</a>
+                    <span class="sep">·</span>
+                    <a href="https://lookinsider.online/refund-policy/" target="_blank">Refund Policy</a>
+                    <span class="sep">·</span>
+                    <a href="https://lookinsider.online/terms-of-service/" target="_blank">Terms of Service</a>
+                </div>
+                <p class="results-footer-copy">© 2026 LookInsider. All rights reserved. · <a href="mailto:support@lookinsider.online" style="color:var(--accent);text-decoration:none;">support@lookinsider.online</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal-overlay" id="paymentModal">
+        <div class="payment-modal">
+            <button class="payment-close" onclick="closePayment()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="payment-header">
+                <div class="payment-lock">🔓</div>
+                <div class="payment-title">Unlock Your Report</div>
+                <div class="payment-subtitle">Instant access to all discovered information</div>
+            </div>
+            <div class="payment-includes">
+                <div class="payment-includes-title">Your report includes</div>
+                <div class="payment-include-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Full name &amp; identity verification
+                </div>
+                <div class="payment-include-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Current &amp; past addresses
+                </div>
+                <div class="payment-include-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Social media &amp; dating profiles
+                </div>
+                <div class="payment-include-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Family members &amp; associates
+                </div>
+                <div class="payment-include-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Email addresses &amp; employment info
+                </div>
+            </div>
+            <hr class="payment-divider">
+            <div class="payment-price-row">
+                <div class="payment-price-label">Total</div>
+                <div class="payment-price-value">$47 <small>USD</small></div>
+            </div>
+            <a href="https://explodely.com/p/1456247277" target="_blank" class="btn-pay">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+                Pay $47 — Get Instant Access
+            </a>
+            <div class="payment-secure">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Secured with 256-bit SSL encryption · Powered by Explodely
+            </div>
+            <div class="payment-methods">
+                <div class="payment-method-icon">VISA</div>
+                <div class="payment-method-icon">MASTERCARD</div>
+                <div class="payment-method-icon">AMEX</div>
+                <div class="payment-method-icon">PAYPAL</div>
+            </div>
+            <div class="guarantee-badge">
+                <div class="guarantee-icon">🛡️</div>
+                <div class="guarantee-text">
+                    <strong>60-Day Money-Back Guarantee.</strong> If you are not completely satisfied with your purchase, you are entitled to request a full refund within 60 days. No questions asked.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Phone input formatting
+        const phoneInput = document.getElementById('phoneInput');
+        phoneInput.addEventListener('input', function(e) {
+            let val = e.target.value.replace(/\D/g, '');
+            if (val.length > 10) val = val.substring(0, 10);
+            if (val.length >= 7) {
+                e.target.value = `(${val.substring(0,3)}) ${val.substring(3,6)}-${val.substring(6)}`;
+            } else if (val.length >= 4) {
+                e.target.value = `(${val.substring(0,3)}) ${val.substring(3)}`;
+            } else if (val.length >= 1) {
+                e.target.value = `(${val}`;
+            }
+            document.getElementById('inputError').classList.remove('visible');
+        });
+
+        phoneInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') startSearch();
+        });
+
+        function getCleanPhone() {
+            return phoneInput.value.replace(/\D/g, '');
+        }
+
+        function getFormattedPhone() {
+            const d = getCleanPhone();
+            if (d.length === 10) {
+                return `+1 (${d.substring(0,3)}) ${d.substring(3,6)}-${d.substring(6)}`;
+            }
+            return phoneInput.value;
+        }
+
+        function startSearch() {
+            const digits = getCleanPhone();
+            if (digits.length !== 10) {
+                document.getElementById('inputError').classList.add('visible');
+                document.getElementById('phoneWrapper').style.borderColor = 'var(--danger)';
+                setTimeout(() => { document.getElementById('phoneWrapper').style.borderColor = ''; }, 2000);
+                return;
+            }
+            const formatted = getFormattedPhone();
+            document.getElementById('scanPhoneDisplay').textContent = formatted;
+            document.getElementById('scanOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            runScanAnimation();
+        }
+
+        async function runScanAnimation() {
+            const progressCircle = document.getElementById('scanProgress');
+            const percentEl = document.getElementById('scanPercent');
+            const statusText = document.getElementById('scanStatusText');
+            const circumference = 2 * Math.PI * 80;
+
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById('step' + i).classList.remove('active', 'completed');
+            }
+
+            const steps = [
+                { id:1, startPercent:0, endPercent:18, duration:2500, status:'Scanning phone carrier databases...', detail:'Querying 47 carrier databases...', completeDetail:'3 carrier matches found', count:'3' },
+                { id:2, startPercent:18, endPercent:42, duration:3000, status:'Searching public records & court filings...', detail:'Analyzing 1.2B public records...', completeDetail:'12 public records found', count:'12' },
+                { id:3, startPercent:42, endPercent:65, duration:2800, status:'Scanning social media platforms...', detail:'Checking 200+ social platforms...', completeDetail:'5 social profiles found', count:'5' },
+                { id:4, startPercent:65, endPercent:85, duration:2500, status:'Running deep web analysis...', detail:'Scanning dating sites & forums...', completeDetail:'8 deep web results', count:'8' },
+                { id:5, startPercent:85, endPercent:100, duration:2200, status:'Compiling comprehensive report...', detail:'Organizing all discovered data...', completeDetail:'47 total records compiled', count:'47' }
+            ];
+
+            for (const step of steps) {
+                const stepEl = document.getElementById('step' + step.id);
+                stepEl.classList.add('active');
+                stepEl.querySelector('.scan-step-detail').textContent = step.detail;
+                statusText.textContent = step.status;
+
+                await animateProgress(step.startPercent, step.endPercent, step.duration, (val) => {
+                    percentEl.textContent = Math.round(val);
+                    const offset = circumference - (val / 100) * circumference;
+                    progressCircle.style.strokeDashoffset = offset;
+                });
+
+                stepEl.classList.remove('active');
+                stepEl.classList.add('completed');
+                stepEl.querySelector('.scan-step-detail').textContent = step.completeDetail;
+                stepEl.querySelector('.scan-step-count').textContent = step.count;
+                await sleep(400);
+            }
+
+            statusText.textContent = '✅ Scan complete! Loading results...';
+            await sleep(1500);
+            document.getElementById('scanOverlay').classList.remove('active');
+            showResults();
+        }
+
+        function animateProgress(from, to, duration, callback) {
+            return new Promise((resolve) => {
+                const start = performance.now();
+                function frame(time) {
+                    const elapsed = time - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    callback(from + (to - from) * eased);
+                    if (progress < 1) requestAnimationFrame(frame);
+                    else resolve();
+                }
+                requestAnimationFrame(frame);
+            });
+        }
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        function showResults() {
+            document.getElementById('resultsPhone').textContent = getFormattedPhone();
+            document.getElementById('resultsOverlay').classList.add('active');
+            document.body.style.overflow = '';
+            startTimer();
+            setTimeout(() => showToast('🔍', '<strong>Someone from Texas</strong> just unlocked a report'), 5000);
+            setTimeout(() => showToast('✅', '<strong>2,847 reports</strong> generated today'), 12000);
+            setTimeout(() => showToast('⚡', '<strong>Report data</strong> may expire soon — save your results'), 20000);
+        }
+
+        let timerMinutes = 14;
+        let timerSeconds = 59;
+        function startTimer() {
+            const timerEl = document.getElementById('timerCountdown');
+            setInterval(() => {
+                if (timerSeconds === 0) {
+                    if (timerMinutes === 0) return;
+                    timerMinutes--;
+                    timerSeconds = 59;
+                } else {
+                    timerSeconds--;
+                }
+                timerEl.textContent = `${timerMinutes}:${timerSeconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function openPayment() {
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        function closePayment() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        function showToast(icon, message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 4000);
+        }
+
+        const homepageToasts = [
+            { icon:'🔍', msg:'<strong>Someone from California</strong> just searched a number' },
+            { icon:'✅', msg:'<strong>Report unlocked</strong> for a Florida number' },
+            { icon:'👤', msg:'<strong>New York user</strong> found 32 records' },
+        ];
+
+        let toastIndex = 0;
+        setInterval(() => {
+            if (!document.getElementById('scanOverlay').classList.contains('active') &&
+                !document.getElementById('resultsOverlay').classList.contains('active')) {
+                const t = homepageToasts[toastIndex % homepageToasts.length];
+                showToast(t.icon, t.msg);
+                toastIndex++;
+            }
+        }, 8000);
+    </script>
+
+
+</body></html>
