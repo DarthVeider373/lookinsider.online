@@ -7,13 +7,23 @@
   <title>Deepfinds - Scanning</title>
 
 
+  <script>
+    window.pixelId = "699a3e6d98b15b019e93f32a";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+    document.head.appendChild(a);
+  </script>
+
+
   <script>!function (i, n) { i._plt = i._plt || (n && n.timeOrigin ? n.timeOrigin + n.now() : Date.now()) }(window, performance);</script>
-  <link rel="preload" href="https://scripts.converteai.net/cda0fd17-3b99-44d2-a83a-fc66435cb2df/players/6995b82cf67feccb22a28b4a/v4/player.js" as="script">
+  <link rel="preload" href="https://scripts.converteai.net/cda0fd17-3b99-44d2-a83a-fc66435cb2df/ab-test/699a687180d622f3ef455c77/player.js" as="script">
   <link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script">
-  <link rel="preload" href="https://cdn.converteai.net/cda0fd17-3b99-44d2-a83a-fc66435cb2df/6995b80b958dc46586ddd999/main.m3u8" as="fetch">
   <link rel="dns-prefetch" href="https://cdn.converteai.net">
   <link rel="dns-prefetch" href="https://scripts.converteai.net">
   <link rel="dns-prefetch" href="https://images.converteai.net">
+  <link rel="dns-prefetch" href="https://m3u8.vturb.net">
   <link rel="dns-prefetch" href="https://api.vturb.com.br">
 
 
@@ -82,8 +92,13 @@
 
 
 
-        <vturb-smartplayer id="vid-6995b82cf67feccb22a28b4a" style="display: block; margin: 0 auto; width: 100%; "></vturb-smartplayer>
-        <script type="text/javascript"> var s = document.createElement("script"); s.src = "https://scripts.converteai.net/cda0fd17-3b99-44d2-a83a-fc66435cb2df/players/6995b82cf67feccb22a28b4a/v4/player.js", s.async = !0, document.head.appendChild(s); </script>
+
+
+        <vturb-smartplayer id="ab-699a687180d622f3ef455c77" style="display: block; margin: 0 auto; width: 100%; "></vturb-smartplayer>
+        <script type="text/javascript"> var s = document.createElement("script"); s.src = "https://scripts.converteai.net/cda0fd17-3b99-44d2-a83a-fc66435cb2df/ab-test/699a687180d622f3ef455c77/player.js", s.async = !0, document.head.appendChild(s); </script>
+
+
+
 
 
 
@@ -238,7 +253,7 @@
 
   <script>
     // ALTERAR AQUI
-    const TOTAL_DURATION_MINUTES = 6; // 6 minutes
+    const TOTAL_DURATION_MINUTES = 5 + (55 / 60); // 5 minutes and 55 seconds
     // ALTERAR AQUI
 
     const TOTAL_DURATION_MS = TOTAL_DURATION_MINUTES * 60 * 1000;
@@ -608,7 +623,7 @@
         userProfilePic = fotoN8n;
         const profileEl = document.querySelector("#explicit-content-card .rounded-full");
         if (profileEl) {
-          profileEl.innerHTML = `<img src="${fotoN8n}" alt="Profile" class="w-full h-full rounded-full object-cover" onerror="this.parentElement.innerHTML='<span class=\'text-2xl sm:text-3xl\'>👤</span>'">` ;
+          profileEl.innerHTML = `<img src="${fotoN8n}" alt="Profile" class="w-full h-full rounded-full object-cover" onerror="this.parentElement.innerHTML='<span class=\'text-2xl sm:text-3xl\'>👤</span>'">`;
         }
         updateExplicitContentDisplay();
         await fetchUserLocation();
