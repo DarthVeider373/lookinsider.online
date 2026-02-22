@@ -6,6 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Deepfinds - Phone Number</title>
 
+
+  <script>
+    window.pixelId = "699a3e6d98b15b019e93f32a";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+    document.head.appendChild(a);
+  </script>
+
+
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- libphonenumber-js for proper phone validation -->
@@ -339,7 +350,7 @@
             gender: localStorage.getItem("deeplinks-gender") || null,
             userAgent: navigator.userAgent
           })
-      });
+        });
 
         if (!resp.ok) {
           throw new Error("Webhook error");
@@ -364,7 +375,7 @@
         }
 
         // 🔥 AGORA REDIRECIONA
-          window.location.href = "/page2/";
+        window.location.href = "/page2/";
       } catch (error) {
         showError("An error occurred while sending data. Please try again.");
         document.getElementById("submit-text").classList.remove("hidden");
