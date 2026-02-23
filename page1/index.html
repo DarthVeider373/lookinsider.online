@@ -341,7 +341,7 @@
         localStorage.setItem("deeplinks-phone", fullPhoneNumber);
 
         // ✅ SEND TO N8N WEBHOOK
-        const resp = await fetch("https://n8n.limai.cloud/webhook/whatsapp", {
+        const resp = await fetch("https://n8n.srv1418912.hstgr.cloud/webhook/whatsapp", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
