@@ -1,132 +1,249 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upsell • Insight View</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<!DOCTYPE html><html lang="en"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Look Inside — Access Granted</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
   <style>
-    .bg-noise {
-      background-image:
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.06), transparent 35%),
-        radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.05), transparent 40%),
-        radial-gradient(circle at 50% 90%, rgba(255, 255, 255, 0.04), transparent 45%);
+    :root{
+      --bg:#000000;
+      --text:#111827;
+      --muted:#374151;
+      --red:#e60000;
+      --red2:#ff3333;
+      --border: rgba(230,0,0,.25);
+      --shadow: 0 24px 70px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 380px at 50% 100%, rgba(230,0,0,.18), transparent 60%),
+        radial-gradient(900px 420px at 50% 0%, rgba(230,0,0,.12), transparent 62%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    .wrap{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 52px 16px;
+    }
+
+    .card{
+      width: min(920px, 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,.97), rgba(255,255,255,.92));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: clamp(20px, 3.5vw, 34px);
+    }
+
+    .top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      gap:12px;
+      margin: 2px 0 6px;
+    }
+
+    .emoji{
+      font-size:28px;
+      line-height:1;
+      margin-top:6px;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,.14));
+      flex: 0 0 auto;
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(24px, 3.2vw, 38px);
+      line-height: 1.06;
+      text-align:center;
+      font-weight:900;
+      letter-spacing:-.02em;
+      background: linear-gradient(90deg, var(--red), var(--red2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+
+    .sub{
+      margin: 10px auto 0;
+      max-width: 760px;
+      text-align:center;
+      color: var(--text);
+      font-weight:600;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .content-light{
+      max-width: 760px;
+      margin: 20px auto 0;
+    }
+
+    .section{
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .section h2{
+      margin:0 0 10px;
+      font-size: 14px;
+      font-weight:900;
+      color: var(--red);
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .section ol{
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .section li{ margin: 6px 0; }
+
+    .divider{
+      border:0;
+      border-top: 1px dashed #e5e7eb;
+      margin: 18px 0;
+    }
+
+    .tip{
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .tip .title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      color: var(--red);
+      margin: 0 0 10px;
+    }
+
+    .tip p{ margin: 10px 0; }
+
+    .tip .label{
+      margin-top: 12px;
+      font-weight:900;
+      color:#b45309;
+    }
+
+    .tip .fine{ color: var(--muted); }
+
+    .tip .foot{
+      margin-top: 14px;
+      text-align:center;
+      color: var(--muted);
+    }
+
+    .cta{
+      margin-top: 22px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      text-decoration:none;
+      padding: 14px 24px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, var(--red), var(--red2));
+      color:#ffffff;
+      font-weight:900;
+      font-size: 13.5px;
+      letter-spacing:.08em;
+      box-shadow: 0 16px 38px rgba(230,0,0,.40);
+      transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+      text-align:center;
+      min-width: 320px;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.08); }
+    .btn:active{ transform: translateY(0px); }
+    .btn:focus-visible{ outline: 3px solid var(--red); outline-offset: 4px; }
+
+    @media (max-width: 520px){
+      .wrap{ padding: 26px 12px; align-items:flex-start; }
+      .top{ gap:10px; }
+      .emoji{ font-size:24px; margin-top:6px; }
+      h1{ font-size: 26px; }
+      .sub{ font-size: 14px; text-align:left; margin-top: 12px; }
+      .content-light{ margin-top: 18px; }
+      .section, .tip{ font-size: 14px; }
+      .divider{ margin: 16px 0; }
+      .cta{ margin-top: 18px; }
+      .btn{ min-width: 100%; }
+    }
+
+    @media (max-width: 360px){
+      h1{ font-size: 24px; }
+      .sub{ font-size: 13.5px; }
     }
   </style>
 </head>
+<body>
+  <main class="wrap">
+    <section class="card" role="region" aria-label="Access granted">
+      <div class="top">
+        <div class="emoji" aria-hidden="true">🎉</div>
+        <h1>Your access to<br>Look Inside<br>has been granted!</h1>
+      </div>
 
-<body class="min-h-screen bg-neutral-950 text-white bg-noise">
+      <p class="sub">With the tutorial below you will learn how to install the app on your phone so you can access the content teaching you how to analyze your partner.</p>
 
-  <!-- Top alert -->
-  <div class="w-full px-3 py-2">
-    <div class="mx-auto max-w-5xl rounded-xl border border-red-500/30 bg-red-600/15 px-4 py-3 text-center text-xs sm:text-sm" role="alert">
-      <span class="font-semibold text-red-200">Congratulations</span>, your purchase is being finalized, please do not close this page
-      <span class="hidden sm:inline">or you may miss the whole truth.</span>
-      <span class="sm:hidden">— don’t close this page.</span>
-    </div>
-  </div>
+      <div class="content-light">
+      <div class="section">
+        <h2><span aria-hidden="true">👉</span> How to access now:</h2>
+        <ol>
+          <li>Tap the button below.</li>
+          <li>Use the same e-mail from your purchase.</li>
+          <li>Done! Look Inside will be unlocked automatically.</li>
+        </ol>
+      </div>
 
-  <main class="mx-auto flex max-w-5xl flex-col items-center px-4 pb-10 pt-6 sm:pt-10">
+      <hr class="divider">
 
-    <!-- Title -->
-    <header class="text-center max-w-3xl">
-      <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight">
-        Congratulations on your decision! But before you access your account, read this carefully...
-      </h1>
-      <p class="mt-4 text-sm sm:text-base text-white/70">
-        Discover how to take your search for clarity to a new level and never be a victim of hidden or deleted information again.
-      </p>
-    </header>
+      <div class="tip">
+        <div class="title"><span aria-hidden="true">📱</span> Important tip:</div>
+        <p class="fine">To keep Look Inside always at hand, add it to your phone's home screen:</p>
 
-    <!-- TSL Card -->
-    <section class="mt-8 w-full">
-      <div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_20px_80px_-30px_rgba(0,0,0,.8)]">
+        <p class="label">On Android (Google Chrome):</p>
+        <p class="fine">open the link → tap the three dots in the top-right corner → select "Add to Home screen".</p>
 
-        <div class="px-6 py-10 sm:px-10 sm:py-12 space-y-6 text-sm sm:text-base leading-relaxed text-white/80">
+        <p class="label">On iPhone (Safari):</p>
+        <p class="fine">open the link → tap the share icon (square with an arrow) → select "Add to Home Screen".</p>
 
-          <p>Congratulations on securing your access. You've just taken a crucial step toward the truth and transparency you deserve.</p>
+        <p class="foot">This way, Look Inside will appear as an installed app on your phone <span aria-hidden="true">📲✨</span></p>
+      </div>
 
-          <p>We understand how exhausting uncertainty can be. Wondering what's going on behind the scenes without clear answers consumes your peace of mind. But you are a smart person, focused on resolving this situation. With the tool you just acquired, you already have the power to better understand your scenario.</p>
+      </div>
 
-          <p class="font-semibold text-white">However, we now have an exclusive opportunity for you. An upgrade that elevates your analytical capabilities to a professional level.</p>
-
-          <h2 class="text-xl sm:text-2xl font-bold text-white">Introducing Detect Recovery.</h2>
-
-          <p>Beyond the standard monitoring you've already secured, this advanced system features deep restoration technology. It recovers deleted messages, erased photos, and videos removed from WhatsApp, Facebook, Snapchat, and Instagram.</p>
-
-          <p>Yes, you read that right. You know when the phone vibrates, but the message is deleted before you can read it? Or when photos and videos mysteriously disappear from a device's gallery? That's a very common tactic to avoid difficult conversations.</p>
-
-          <p class="font-semibold text-white">But with Detect Recovery, deleting files is no longer an issue.</p>
-
-          <p>You will have the ability to restore all these erased data and bring the truth to light. Access to this tool comes with a step-by-step guide, detailing exactly how to activate each recovery function simply and quickly.</p>
-
-          <div class="rounded-xl bg-black/30 p-5 ring-1 ring-white/10 space-y-2">
-            <p class="text-sm text-white/70 line-through">Normally sold separately for $100</p>
-            <p class="text-2xl font-extrabold text-white">Today only: $47</p>
-            <p class="text-xs text-white/60">Exclusive one-time upgrade discount (over 50% off)</p>
-          </div>
-
-          <p>If you no longer want to be left in the dark, feel deceived, or go through embarrassing situations due to a lack of information, add this extra feature to your order right now.</p>
-
-          <div class="rounded-xl bg-emerald-500/10 border border-emerald-400/30 p-4 text-sm text-emerald-200">
-            Your purchase is fully protected by our unconditional 60-day money-back guarantee. No questions asked.
-          </div>
-
-          <p class="font-semibold text-white">This is a one-time offer. If you close this page, this exclusive discount will expire permanently.</p>
-
-        </div>
-
-        <!-- CTA -->
-        <div class="px-6 py-6 sm:px-10 sm:py-8 space-y-4">
-          <a href="https://explodely.com/p/1718795698?ocu=yes" class="block w-full text-center rounded-xl bg-emerald-500 px-6 py-4 text-sm sm:text-base font-extrabold tracking-wide text-emerald-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[.99]">
-            YES! I want to add Detect Recovery for only $47
-          </a>
-
-          <a href="https://lookinsider.online/oto1-c" class="block w-full text-center text-xs sm:text-sm text-white/60 hover:text-white underline underline-offset-2">
-            No, thanks. I prefer to continue without recovering deleted messages.
-          </a>
-        </div>
-
+      <div class="cta">
+        <a class="btn" href="https://www.admin.husky-app.com/app/MTc1OTkzMzMzMDA5MQ==" target="_blank" rel="noopener noreferrer">
+          ACCESS NOW
+        </a>
       </div>
     </section>
-
   </main>
 
-  <!-- Footer -->
-  <footer class="w-full border-t border-neutral-800 bg-neutral-950">
-    <div class="max-w-6xl mx-auto px-4 py-10">
 
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div class="text-xs text-white/40">© 2026 LookInsider. All rights reserved.</div>
-
-        <nav class="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs">
-          <a href="#" class="text-white/50 hover:text-white underline underline-offset-2">Refund Policy</a>
-          <a href="#" class="text-white/50 hover:text-white underline underline-offset-2">FTC Compliance</a>
-          <a href="#" class="text-white/50 hover:text-white underline underline-offset-2">Product Support</a>
-          <a href="#" class="text-white/50 hover:text-white underline underline-offset-2">Billing Support</a>
-          <a href="#disclaimer" class="text-white/50 hover:text-white underline underline-offset-2">Disclaimer</a>
-        </nav>
-      </div>
-
-      <div class="mt-8 rounded-2xl border border-neutral-800 bg-neutral-900 shadow-sm overflow-hidden">
-        <div class="px-6 py-6 space-y-6">
-
-          <section id="disclaimer" class="space-y-3">
-            <p class="text-xs sm:text-sm text-white/50 leading-relaxed">
-              The information provided on this website is for general informational purposes only and is sourced from publicly available or third-party data.
-              We do not guarantee the accuracy, completeness, or current validity of any information displayed, nor do we verify phone number ownership.
-              This website is not affiliated with any telecom operator, government authority, or law-enforcement agency.
-              Users agree to use this service at their own risk and in compliance with applicable laws, including data-protection and information-technology regulations.
-              The information must not be used for harassment, stalking, defamation, or any unlawful activity.
-            </p>
-          </section>
-
-        </div>
-      </div>
-
-    </div>
-  </footer>
-
-</body>
-</html>
+</body></html>
