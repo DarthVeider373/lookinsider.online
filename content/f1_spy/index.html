@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Look Inside - Complete Spy Report</title>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Inter', sans-serif;
+			background-color: #0A0A0C;
+			color: #E0E0E0;
+			min-height: 100vh;
+			overflow-x: hidden;
+		}
+
+		body::before {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.008) 2px, rgba(255, 255, 255, 0.008) 4px);
+			pointer-events: none;
+			z-index: 1000;
+		}
+
+		.container {
+			max-width: 680px;
+			width: 100%;
+			margin: 0 auto;
+			padding: 32px 20px 120px;
+		}
+
+		/* ========== LANG SELECTOR ========== */
+		.lang-bar {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 500;
+			padding: 10px 20px;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background: linear-gradient(180deg, #0A0A0C 60%, transparent);
+		}
+
+		.lang-btn {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			background: #111114;
+			border: 1px solid #1E1E24;
+			border-radius: 8px;
+			padding: 6px 12px;
+			cursor: pointer;
+			position: relative;
+			color: #888;
+			font-size: 12px;
+			font-weight: 600;
+			user-select: none;
+		}
+
+		.lang-btn .flag {
+			font-size: 16px;
+		}
+
+		.lang-btn .arrow {
+			font-size: 10px;
+			transition: transform 0.2s;
+		}
+
+		.lang-btn.open .arrow {
+			transform: rotate(180deg);
+		}
+
+		.lang-dropdown {
+			display: none;
+			position: absolute;
+			top: calc(100% + 6px);
+			right: 0;
+			background: #111114;
+			border: 1px solid #1E1E24;
+			border-radius: 10px;
+			overflow: hidden;
+			min-width: 170px;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+		}
+
+		.lang-dropdown.show {
+			display: block;
+		}
+
+		.lang-option {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			padding: 10px 14px;
+			cursor: pointer;
+			font-size: 12px;
+			font-weight: 500;
+			color: #888;
+			transition: all 0.15s;
+		}
+
+		.lang-option:hover {
+			background: #1A1A20;
+			color: #FFF;
+		}
+
+		.lang-option.active {
+			color: #C62828;
+			background: rgba(198, 40, 40, 0.08);
+		}
+
+		.lang-option .flag {
+			font-size: 18px;
+		}
+
+		/* ========== HEADER ========== */
+		.header {
+			text-align: center;
+			margin-bottom: 36px;
+			margin-top: 28px;
+		}
+
+		.logo {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 12px;
+			margin-bottom: 28px;
+		}
+
+		.logo-icon {
+			width: 42px;
+			height: 42px;
+			background: #C62828;
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 0 20px rgba(198, 40, 40, 0.4);
+		}
+
+		.logo-icon svg {
+			width: 22px;
+			height: 22px;
+		}
+
+		.logo-text {
+			font-size: 28px;
+			font-weight: 900;
+			letter-spacing: -1px;
+			text-transform: uppercase;
+		}
+
+		.logo-text .look {
+			color: #FFFFFF;
+		}
+
+		.logo-text .inside {
+			color: #C62828;
+		}
+
+		.badge {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			background: rgba(198, 40, 40, 0.15);
+			border: 1px solid rgba(198, 40, 40, 0.3);
+			border-radius: 20px;
+			padding: 6px 16px;
+			margin-bottom: 20px;
+			font-size: 11px;
+			font-weight: 700;
+			color: #FF6B6B;
+			text-transform: uppercase;
+			letter-spacing: 1.5px;
+		}
+
+		.badge-dot {
+			width: 6px;
+			height: 6px;
+			background: #C62828;
+			border-radius: 50%;
+			animation: blink 1s ease-in-out infinite;
+		}
+
+		.hero-title {
+			font-size: 30px;
+			font-weight: 900;
+			color: #FFFFFF;
+			margin-bottom: 8px;
+			letter-spacing: -0.5px;
+		}
+
+		.hero-title .red {
+			color: #C62828;
+		}
+
+		.hero-sub {
+			font-size: 13px;
+			color: #555;
+			font-weight: 500;
+		}
+
+		/* ========== TARGET ========== */
+		.target-card {
+			background: #111114;
+			border: 1px solid #1E1E24;
+			border-radius: 16px;
+			padding: 28px;
+			margin-bottom: 20px;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.target-card::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 2px;
+			background: linear-gradient(90deg, transparent, #C62828, transparent);
+			animation: scanLine 2.5s ease-in-out infinite;
+		}
+
+		.target-label {
+			font-size: 10px;
+			font-weight: 700;
+			color: #555;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			margin-bottom: 14px;
+		}
+
+		.target-number {
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 28px;
+			font-weight: 700;
+			color: #C62828;
+			margin-bottom: 16px;
+			letter-spacing: 3px;
+		}
+
+		.target-info {
+			display: flex;
+			gap: 20px;
+			flex-wrap: wrap;
+		}
+
+		.target-info-item {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.target-info-dot {
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+		}
+
+		.target-info-dot.green {
+			background: #2E7D32;
+			box-shadow: 0 0 8px rgba(46, 125, 50, 0.5);
+		}
+
+		.target-info-dot.amber {
+			background: #F9A825;
+			box-shadow: 0 0 8px rgba(249, 168, 37, 0.5);
+		}
+
+		.target-info-text {
+			font-size: 12px;
+			color: #888;
+			font-weight: 500;
+		}
+
+		/* ========== STATUS ========== */
+		.status-bar {
+			background: #111114;
+			border: 1px solid #1E1E24;
+			border-radius: 12px;
+			padding: 18px 24px;
+			margin-bottom: 20px;
+			display: flex;
+			align-items: center;
+			gap: 14px;
+		}
+
+		.status-spinner {
+			width: 20px;
+			height: 20px;
+			border: 2px solid #222;
+			border-top-color: #C62828;
+			border-radius: 50%;
+			animation: spin 0.8s linear infinite;
+			flex-shrink: 0;
+		}
+
+		.status-text {
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 12px;
+			color: #C62828;
+			font-weight: 500;
+			flex: 1;
+			overflow: hidden;
+		}
+
+		.typing-cursor {
+			display: inline-block;
+			width: 2px;
+			height: 14px;
+			background: #C62828;
+			margin-left: 2px;
+			animation: blink 0.7s step-end infinite;
+			vertical-align: middle;
+		}
+
+		/* ========== APP CARDS ========== */
+		.app-scan {
+			background: #111114;
+			border: 1px solid #1E1E24;
+			border-radius: 16px;
+			padding: 24px;
+			margin-bottom: 16px;
+			position: relative;
+			overflow: hidden;
+			transition: border-color 0.3s;
+		}
+
+		.app-scan.active {
+			border-color: rgba(198, 40, 40, 0.4);
+		}
+
+		.app-scan.active::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(180deg, rgba(198, 40, 40, 0.03) 0%, transparent 50%);
+			pointer-events: none;
+		}
+
+		.app-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 18px;
+		}
+
+		.app-left {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.app-icon {
+			width: 40px;
+			height: 40px;
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 20px;
+		}
+
+		.app-icon.whatsapp {
+			background: #1A3A2A;
+		}
+
+		.app-icon.telegram {
+			background: #1A2A3A;
+		}
+
+		.app-icon.messenger {
+			background: #1A1A3A;
+		}
+
+		.app-icon.imessage {
+			background: #1A2A2A;
+		}
+
+		.app-icon.instagram {
+			background: #2A1A2A;
+		}
+
+		.app-icon.facebook {
+			background: #1A1A3A;
+		}
+
+		.app-name {
+			font-size: 15px;
+			font-weight: 800;
+			color: #FFFFFF;
+		}
+
+		.app-status-badge {
+			font-size: 10px;
+			font-weight: 700;
+			padding: 4px 10px;
+			border-radius: 6px;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		.app-status-badge.scanning {
+			background: rgba(198, 40, 40, 0.15);
+			color: #FF6B6B;
+			animation: pulse-opacity 1.5s ease-in-out infinite;
+		}
+
+		.app-status-badge.queued {
+			background: rgba(255, 255, 255, 0.05);
+			color: #555;
+		}
+
+		.app-status-badge.extracting {
+			background: rgba(249, 168, 37, 0.15);
+			color: #F9A825;
+		}
+
+		.app-findings {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			gap: 10px;
+		}
+
+		.finding-item {
+			background: #0D0D10;
+			border: 1px solid #1A1A20;
+			border-radius: 10px;
+			padding: 14px 12px;
+			text-align: center;
+		}
+
+		.finding-icon {
+			font-size: 18px;
+			margin-bottom: 6px;
+		}
+
+		.finding-count {
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 20px;
+			font-weight: 800;
+			color: #FFFFFF;
+			margin-bottom: 2px;
+		}
+
+		.finding-count.red {
+			color: #C62828;
+		}
+
+		.finding-count.amber {
+			color: #F9A825;
+		}
+
+		.finding-label {
+			font-size: 10px;
+			color: #555;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		.app-log {
+			margin-top: 14px;
+			background: #0D0D10;
+			border: 1px solid #1A1A20;
+			border-radius: 8px;
+			padding: 12px 14px;
+			max-height: 100px;
+			overflow: hidden;
+		}
+
+		.log-line {
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 10px;
+			color: #444;
+			line-height: 1.8;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.log-line .time {
+			color: #333;
+		}
+
+		.log-line .action {
+			color: #C62828;
+		}
+
+		.log-line .found {
+			color: #F9A825;
+		}
+
+		/* ========== THREAT ========== */
+		.threat-card {
+			background: linear-gradient(135deg, rgba(198, 40, 40, 0.1) 0%, rgba(198, 40, 40, 0.02) 100%);
+			border: 1px solid rgba(198, 40, 40, 0.2);
+			border-radius: 16px;
+			padding: 24px;
+			margin-bottom: 20px;
+		}
+
+		.threat-header {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 16px;
+		}
+
+		.threat-icon {
+			width: 36px;
+			height: 36px;
+			background: #C62828;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			animation: pulse 2s ease-in-out infinite;
+			box-shadow: 0 0 20px rgba(198, 40, 40, 0.4);
+		}
+
+		.threat-icon svg {
+			width: 18px;
+			height: 18px;
+		}
+
+		.threat-title {
+			font-size: 16px;
+			font-weight: 800;
+			color: #FF6B6B;
+		}
+
+		.threat-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+		}
+
+		.threat-item {
+			background: rgba(0, 0, 0, 0.3);
+			border: 1px solid #1E1E24;
+			border-radius: 10px;
+			padding: 14px;
+		}
+
+		.threat-item-label {
+			font-size: 10px;
+			color: #555;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			margin-bottom: 6px;
+		}
+
+		.threat-item-value {
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 22px;
+			font-weight: 800;
+		}
+
+		.threat-item-value.red {
+			color: #C62828;
+		}
+
+		.threat-item-value.amber {
+			color: #F9A825;
+		}
+
+		/* ========== BOTTOM ========== */
+		.bottom-bar {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: #0A0A0C;
+			border-top: 1px solid #1A1A20;
+			padding: 16px 20px;
+			z-index: 100;
+		}
+
+		.bottom-inner {
+			max-width: 680px;
+			margin: 0 auto;
+		}
+
+		.bottom-top {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 10px;
+		}
+
+		.bottom-label {
+			font-size: 11px;
+			font-weight: 700;
+			color: #555;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		.bottom-timer {
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 13px;
+			font-weight: 700;
+			color: #C62828;
+		}
+
+		.progress-track {
+			width: 100%;
+			height: 4px;
+			background: #1A1A20;
+			border-radius: 4px;
+			overflow: hidden;
+		}
+
+		.progress-fill {
+			height: 100%;
+			border-radius: 4px;
+			background: linear-gradient(90deg, #C62828, #FF6B6B);
+			box-shadow: 0 0 10px rgba(198, 40, 40, 0.5);
+			transition: width 0.5s ease-out;
+			animation: progressPulse 2s ease-in-out infinite;
+		}
+
+		/* ========== ANIMATIONS ========== */
+		@keyframes blink {
+
+			0%,
+			100% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0;
+			}
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		@keyframes pulse {
+
+			0%,
+			100% {
+				transform: scale(1);
+			}
+
+			50% {
+				transform: scale(1.05);
+			}
+		}
+
+		@keyframes pulse-opacity {
+
+			0%,
+			100% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0.5;
+			}
+		}
+
+		@keyframes scanLine {
+			0% {
+				opacity: 0;
+			}
+
+			50% {
+				opacity: 1;
+			}
+
+			100% {
+				opacity: 0;
+			}
+		}
+
+		@keyframes progressPulse {
+
+			0%,
+			100% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0.7;
+			}
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(10px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.fade-in {
+			animation: fadeIn 0.6s ease-out both;
+		}
+
+		.d1 {
+			animation-delay: 0.1s;
+		}
+
+		.d2 {
+			animation-delay: 0.3s;
+		}
+
+		.d3 {
+			animation-delay: 0.5s;
+		}
+
+		.d4 {
+			animation-delay: 0.7s;
+		}
+
+		.d5 {
+			animation-delay: 0.9s;
+		}
+
+		.d6 {
+			animation-delay: 1.1s;
+		}
+
+		.d7 {
+			animation-delay: 1.3s;
+		}
+
+		.d8 {
+			animation-delay: 1.5s;
+		}
+
+		@media (max-width: 600px) {
+			.container {
+				padding: 24px 16px 130px;
+			}
+
+			.hero-title {
+				font-size: 24px;
+			}
+
+			.target-number {
+				font-size: 22px;
+			}
+
+			.finding-count {
+				font-size: 16px;
+			}
+
+			.finding-item {
+				padding: 10px 8px;
+			}
+
+			.threat-item-value {
+				font-size: 18px;
+			}
+
+			.target-info {
+				gap: 12px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<!-- LANG SELECTOR -->
+	<div class="lang-bar">
+		<div class="lang-btn" id="langBtn" onclick="toggleLang()">
+			<span class="flag" id="langFlag">🇺🇸</span>
+			<span id="langLabel">English</span>
+			<span class="arrow">▼</span>
+			<div class="lang-dropdown" id="langDropdown">
+				<div class="lang-option" data-lang="en" onclick="setLang('en')"><span class="flag">🇺🇸</span> English</div>
+				<div class="lang-option" data-lang="pt" onclick="setLang('pt')"><span class="flag">🇧🇷</span> Português</div>
+				<div class="lang-option" data-lang="es" onclick="setLang('es')"><span class="flag">🇪🇸</span> Español</div>
+				<div class="lang-option" data-lang="fr" onclick="setLang('fr')"><span class="flag">🇫🇷</span> Français</div>
+				<div class="lang-option" data-lang="de" onclick="setLang('de')"><span class="flag">🇩🇪</span> Deutsch</div>
+				<div class="lang-option" data-lang="it" onclick="setLang('it')"><span class="flag">🇮🇹</span> Italiano</div>
+				<div class="lang-option" data-lang="ru" onclick="setLang('ru')"><span class="flag">🇷🇺</span> Русский</div>
+				<div class="lang-option" data-lang="ja" onclick="setLang('ja')"><span class="flag">🇯🇵</span> 日本語</div>
+				<div class="lang-option" data-lang="ko" onclick="setLang('ko')"><span class="flag">🇰🇷</span> 한국어</div>
+				<div class="lang-option" data-lang="zh" onclick="setLang('zh')"><span class="flag">🇨🇳</span> 中文</div>
+				<div class="lang-option" data-lang="ar" onclick="setLang('ar')"><span class="flag">🇸🇦</span> العربية</div>
+				<div class="lang-option" data-lang="hi" onclick="setLang('hi')"><span class="flag">🇮🇳</span> हिन्दी</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+
+		<!-- HEADER -->
+		<div class="header fade-in">
+			<div class="logo">
+				<div class="logo-icon">
+					<svg viewBox="0 0 24 24" fill="none">
+						<circle cx="10.5" cy="10.5" r="6" stroke="#FFF" stroke-width="2.5" fill="none" />
+						<line x1="15" y1="15" x2="20" y2="20" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" />
+					</svg>
+				</div>
+				<span class="logo-text"><span class="look">LOOK</span> <span class="inside">INSIDE</span></span>
+			</div>
+			<div class="badge">
+				<div class="badge-dot"></div> <span data-i18n="badge">Classified Report — Live</span>
+			</div>
+			<h1 class="hero-title"><span data-i18n="heroComplete">COMPLETE</span> <span class="red" data-i18n="heroSpy">SPY</span> <span data-i18n="heroReport">REPORT</span></h1>
+			<p class="hero-sub" data-i18n="heroSub">Advanced Phone Intelligence Extraction System v4.2</p>
+		</div>
+
+		<!-- TARGET -->
+		<div class="target-card fade-in d1">
+			<div class="target-label">🎯 <span data-i18n="targetLabel">Target Number</span></div>
+			<div class="target-number">Number you entered previously</div>
+			<div class="target-info">
+				<div class="target-info-item">
+					<div class="target-info-dot green"></div><span class="target-info-text" data-i18n="deviceOnline">Device Online</span>
+				</div>
+				<div class="target-info-item">
+					<div class="target-info-dot green"></div><span class="target-info-text" data-i18n="signalLocked">Signal Locked</span>
+				</div>
+				<div class="target-info-item">
+					<div class="target-info-dot amber"></div><span class="target-info-text" data-i18n="encryptBypassing">Encryption Bypassing...</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- STATUS -->
+		<div class="status-bar fade-in d2">
+			<div class="status-spinner"></div>
+			<div class="status-text"><span id="statusMsg">Initializing deep scan protocol...</span><span class="typing-cursor"></span></div>
+		</div>
+
+		<!-- WHATSAPP -->
+		<div class="app-scan active fade-in d3" id="appWhatsapp">
+			<div class="app-header">
+				<div class="app-left">
+					<div class="app-icon whatsapp">💬</div><span class="app-name">WhatsApp</span>
+				</div>
+				<span class="app-status-badge scanning" id="whatsappBadge" data-i18n-badge="scanning">Scanning</span>
+			</div>
+			<div class="app-findings">
+				<div class="finding-item">
+					<div class="finding-icon">🖼️</div>
+					<div class="finding-count red" id="waImages">0</div>
+					<div class="finding-label" data-i18n="hiddenImages">Hidden Images</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">💬</div>
+					<div class="finding-count amber" id="waChats">0</div>
+					<div class="finding-label" data-i18n="suspiciousChats">Suspicious Chats</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">🔑</div>
+					<div class="finding-count red" id="waPasswords">0</div>
+					<div class="finding-label" data-i18n="passwordsFound">Passwords Found</div>
+				</div>
+			</div>
+			<div class="app-log" id="waLog">
+				<div class="log-line"><span class="time">[00:00]</span> <span class="action">INIT</span> — Connecting to WhatsApp servers...</div>
+			</div>
+		</div>
+
+		<!-- META / FACEBOOK -->
+		<div class="app-scan fade-in d4" id="appFacebook">
+			<div class="app-header">
+				<div class="app-left">
+					<div class="app-icon facebook">👤</div><span class="app-name">Meta / Facebook</span>
+				</div>
+				<span class="app-status-badge queued" id="facebookBadge" data-i18n-badge="queued">Queued</span>
+			</div>
+			<div class="app-findings">
+				<div class="finding-item">
+					<div class="finding-icon">🖼️</div>
+					<div class="finding-count red" id="fbImages">0</div>
+					<div class="finding-label" data-i18n="hiddenImages">Hidden Images</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">💬</div>
+					<div class="finding-count amber" id="fbChats">0</div>
+					<div class="finding-label" data-i18n="suspiciousChats">Suspicious Chats</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">🔑</div>
+					<div class="finding-count red" id="fbPasswords">0</div>
+					<div class="finding-label" data-i18n="passwordsFound">Passwords Found</div>
+				</div>
+			</div>
+			<div class="app-log" id="fbLog">
+				<div class="log-line"><span class="time">[--:--]</span> Waiting in queue...</div>
+			</div>
+		</div>
+
+		<!-- TELEGRAM -->
+		<div class="app-scan fade-in d5" id="appTelegram">
+			<div class="app-header">
+				<div class="app-left">
+					<div class="app-icon telegram">✈️</div><span class="app-name">Telegram</span>
+				</div>
+				<span class="app-status-badge queued" id="telegramBadge" data-i18n-badge="queued">Queued</span>
+			</div>
+			<div class="app-findings">
+				<div class="finding-item">
+					<div class="finding-icon">🖼️</div>
+					<div class="finding-count red" id="tgImages">0</div>
+					<div class="finding-label" data-i18n="hiddenImages">Hidden Images</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">🔒</div>
+					<div class="finding-count amber" id="tgSecret">0</div>
+					<div class="finding-label" data-i18n="secretChats">Secret Chats</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">🔑</div>
+					<div class="finding-count red" id="tgPasswords">0</div>
+					<div class="finding-label" data-i18n="passwordsFound">Passwords Found</div>
+				</div>
+			</div>
+			<div class="app-log" id="tgLog">
+				<div class="log-line"><span class="time">[--:--]</span> Waiting in queue...</div>
+			</div>
+		</div>
+
+		<!-- MESSENGER -->
+		<div class="app-scan fade-in d6" id="appMessenger">
+			<div class="app-header">
+				<div class="app-left">
+					<div class="app-icon messenger">💜</div><span class="app-name">Messenger</span>
+				</div>
+				<span class="app-status-badge queued" id="messengerBadge" data-i18n-badge="queued">Queued</span>
+			</div>
+			<div class="app-findings">
+				<div class="finding-item">
+					<div class="finding-icon">🖼️</div>
+					<div class="finding-count red" id="msImages">0</div>
+					<div class="finding-label" data-i18n="hiddenImages">Hidden Images</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">💬</div>
+					<div class="finding-count amber" id="msChats">0</div>
+					<div class="finding-label" data-i18n="suspiciousChats">Suspicious Chats</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">🔑</div>
+					<div class="finding-count red" id="msPasswords">0</div>
+					<div class="finding-label" data-i18n="passwordsFound">Passwords Found</div>
+				</div>
+			</div>
+			<div class="app-log" id="msLog">
+				<div class="log-line"><span class="time">[--:--]</span> Waiting in queue...</div>
+			</div>
+		</div>
+
+		<!-- iMESSAGE -->
+		<div class="app-scan fade-in d7" id="appImessage">
+			<div class="app-header">
+				<div class="app-left">
+					<div class="app-icon imessage">🟢</div><span class="app-name">iMessage</span>
+				</div>
+				<span class="app-status-badge queued" id="imessageBadge" data-i18n-badge="queued">Queued</span>
+			</div>
+			<div class="app-findings">
+				<div class="finding-item">
+					<div class="finding-icon">🖼️</div>
+					<div class="finding-count red" id="imImages">0</div>
+					<div class="finding-label" data-i18n="hiddenImages">Hidden Images</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">💬</div>
+					<div class="finding-count amber" id="imChats">0</div>
+					<div class="finding-label" data-i18n="deletedMsgs">Deleted Msgs</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">🔑</div>
+					<div class="finding-count red" id="imPasswords">0</div>
+					<div class="finding-label" data-i18n="passwordsFound">Passwords Found</div>
+				</div>
+			</div>
+			<div class="app-log" id="imLog">
+				<div class="log-line"><span class="time">[--:--]</span> Waiting in queue...</div>
+			</div>
+		</div>
+
+		<!-- INSTAGRAM -->
+		<div class="app-scan fade-in d8" id="appInstagram">
+			<div class="app-header">
+				<div class="app-left">
+					<div class="app-icon instagram">📸</div><span class="app-name">Instagram DMs</span>
+				</div>
+				<span class="app-status-badge queued" id="instagramBadge" data-i18n-badge="queued">Queued</span>
+			</div>
+			<div class="app-findings">
+				<div class="finding-item">
+					<div class="finding-icon">🖼️</div>
+					<div class="finding-count red" id="igImages">0</div>
+					<div class="finding-label" data-i18n="hiddenImages">Hidden Images</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">💬</div>
+					<div class="finding-count amber" id="igChats">0</div>
+					<div class="finding-label" data-i18n="vanishMode">Vanish Mode</div>
+				</div>
+				<div class="finding-item">
+					<div class="finding-icon">🔑</div>
+					<div class="finding-count red" id="igPasswords">0</div>
+					<div class="finding-label" data-i18n="passwordsFound">Passwords Found</div>
+				</div>
+			</div>
+			<div class="app-log" id="igLog">
+				<div class="log-line"><span class="time">[--:--]</span> Waiting in queue...</div>
+			</div>
+		</div>
+
+		<!-- THREAT -->
+		<div class="threat-card fade-in d8">
+			<div class="threat-header">
+				<div class="threat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+						<line x1="12" y1="9" x2="12" y2="13" />
+						<line x1="12" y1="17" x2="12.01" y2="17" />
+					</svg></div>
+				<span class="threat-title" data-i18n="threatTitle">Threat Level Summary</span>
+			</div>
+			<div class="threat-grid">
+				<div class="threat-item">
+					<div class="threat-item-label" data-i18n="totalImages">Total Images Found</div>
+					<div class="threat-item-value red" id="totalImages">0</div>
+				</div>
+				<div class="threat-item">
+					<div class="threat-item-label" data-i18n="totalChats">Suspicious Chats</div>
+					<div class="threat-item-value amber" id="totalChats">0</div>
+				</div>
+				<div class="threat-item">
+					<div class="threat-item-label" data-i18n="totalPasswords">Passwords Extracted</div>
+					<div class="threat-item-value red" id="totalPasswords">0</div>
+				</div>
+				<div class="threat-item">
+					<div class="threat-item-label" data-i18n="threatLevelLabel">Threat Level</div>
+					<div class="threat-item-value red" id="threatLevel">—</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- BOTTOM -->
+	<div class="bottom-bar">
+		<div class="bottom-inner">
+			<div class="bottom-top">
+				<span class="bottom-label">⏳ <span data-i18n="analysisProgress">Analysis in Progress</span></span>
+				<span class="bottom-timer" id="timer">00:00</span>
+			</div>
+			<div class="progress-track">
+				<div class="progress-fill" id="progressFill" style="width: 0%"></div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		/* =============== i18n =============== */
+		const translations = {
+			en: {
+				badge: "Classified Report — Live", heroComplete: "COMPLETE", heroSpy: "SPY", heroReport: "REPORT",
+				heroSub: "Advanced Phone Intelligence Extraction System v4.2",
+				targetLabel: "Target Number", deviceOnline: "Device Online", signalLocked: "Signal Locked",
+				encryptBypassing: "Encryption Bypassing...", hiddenImages: "Hidden Images", suspiciousChats: "Suspicious Chats",
+				passwordsFound: "Passwords Found", secretChats: "Secret Chats", deletedMsgs: "Deleted Msgs",
+				vanishMode: "Vanish Mode", threatTitle: "Threat Level Summary", totalImages: "Total Images Found",
+				totalChats: "Suspicious Chats", totalPasswords: "Passwords Extracted", threatLevelLabel: "Threat Level",
+				analysisProgress: "Analysis in Progress", scanning: "Scanning", queued: "Queued", extracting: "Extracting",
+				flag: "🇺🇸", label: "English",
+				statusMsgs: [
+					"Bypassing end-to-end encryption...", "Extracting hidden gallery images...",
+					"Scanning deleted conversations...", "Decrypting password-protected chats...",
+					"Recovering vanish mode messages...", "Analyzing multimedia cache files...",
+					"Cross-referencing contact databases...", "Extracting saved login credentials...",
+					"Scanning cloud backup archives...", "Decoding secret chat protocols...",
+					"Mapping hidden conversation threads...", "Recovering deleted media from cache...",
+					"Analyzing message frequency patterns...", "Extracting location metadata from images...",
+					"Scanning for secondary accounts...", "Recovering password-locked albums...",
+					"Analyzing late-night activity patterns...", "Cross-referencing IP login locations...",
+					"Recovering auto-deleted messages...", "Analyzing call log frequency..."
+				],
+				threats: { critical: "CRITICAL", high: "HIGH", medium: "MEDIUM", low: "LOW" }
+			},
+			pt: {
+				badge: "Relatório Classificado — Ao Vivo", heroComplete: "RELATÓRIO", heroSpy: "ESPIÃO", heroReport: "COMPLETO",
+				heroSub: "Sistema Avançado de Extração de Inteligência Telefônica v4.2",
+				targetLabel: "Número Alvo", deviceOnline: "Dispositivo Online", signalLocked: "Sinal Travado",
+				encryptBypassing: "Quebrando Criptografia...", hiddenImages: "Imagens Ocultas", suspiciousChats: "Conversas Suspeitas",
+				passwordsFound: "Senhas Encontradas", secretChats: "Chats Secretos", deletedMsgs: "Msgs Deletadas",
+				vanishMode: "Modo Temporário", threatTitle: "Resumo do Nível de Ameaça", totalImages: "Total de Imagens",
+				totalChats: "Conversas Suspeitas", totalPasswords: "Senhas Extraídas", threatLevelLabel: "Nível de Ameaça",
+				analysisProgress: "Análise em Progresso", scanning: "Escaneando", queued: "Na Fila", extracting: "Extraindo",
+				flag: "🇧🇷", label: "Português",
+				statusMsgs: [
+					"Quebrando criptografia de ponta a ponta...", "Extraindo imagens ocultas da galeria...",
+					"Escaneando conversas deletadas...", "Descriptografando chats protegidos por senha...",
+					"Recuperando mensagens temporárias...", "Analisando arquivos de cache multimídia...",
+					"Cruzando bancos de dados de contatos...", "Extraindo credenciais de login salvas...",
+					"Escaneando arquivos de backup na nuvem...", "Decodificando protocolos de chat secreto...",
+					"Mapeando conversas ocultas...", "Recuperando mídia deletada do cache...",
+					"Analisando padrões de frequência de mensagens...", "Extraindo metadados de localização das imagens...",
+					"Buscando contas secundárias...", "Recuperando álbuns protegidos por senha...",
+					"Analisando atividade noturna...", "Cruzando localizações de login por IP...",
+					"Recuperando mensagens auto-deletadas...", "Analisando frequência de chamadas..."
+				],
+				threats: { critical: "CRÍTICO", high: "ALTO", medium: "MÉDIO", low: "BAIXO" }
+			},
+			es: {
+				badge: "Informe Clasificado — En Vivo", heroComplete: "INFORME", heroSpy: "ESPÍA", heroReport: "COMPLETO",
+				heroSub: "Sistema Avanzado de Extracción de Inteligencia Telefónica v4.2",
+				targetLabel: "Número Objetivo", deviceOnline: "Dispositivo En Línea", signalLocked: "Señal Bloqueada",
+				encryptBypassing: "Rompiendo Encriptación...", hiddenImages: "Imágenes Ocultas", suspiciousChats: "Chats Sospechosos",
+				passwordsFound: "Contraseñas", secretChats: "Chats Secretos", deletedMsgs: "Msgs Eliminados",
+				vanishMode: "Modo Efímero", threatTitle: "Resumen de Nivel de Amenaza", totalImages: "Total de Imágenes",
+				totalChats: "Chats Sospechosos", totalPasswords: "Contraseñas Extraídas", threatLevelLabel: "Nivel de Amenaza",
+				analysisProgress: "Análisis en Progreso", scanning: "Escaneando", queued: "En Cola", extracting: "Extrayendo",
+				flag: "🇪🇸", label: "Español",
+				statusMsgs: [
+					"Rompiendo cifrado de extremo a extremo...", "Extrayendo imágenes ocultas de la galería...",
+					"Escaneando conversaciones eliminadas...", "Descifrando chats protegidos con contraseña...",
+					"Recuperando mensajes efímeros...", "Analizando archivos de caché multimedia...",
+					"Cruzando bases de datos de contactos...", "Extrayendo credenciales guardadas...",
+					"Escaneando archivos de respaldo en la nube...", "Decodificando protocolos de chat secreto...",
+					"Mapeando hilos de conversación ocultos...", "Recuperando medios eliminados del caché...",
+					"Analizando patrones de frecuencia de mensajes...", "Extrayendo metadatos de ubicación...",
+					"Buscando cuentas secundarias...", "Recuperando álbumes protegidos...",
+					"Analizando actividad nocturna...", "Cruzando ubicaciones de inicio de sesión...",
+					"Recuperando mensajes auto-eliminados...", "Analizando frecuencia de llamadas..."
+				],
+				threats: { critical: "CRÍTICO", high: "ALTO", medium: "MEDIO", low: "BAJO" }
+			},
+			fr: {
+				badge: "Rapport Classifié — En Direct", heroComplete: "RAPPORT", heroSpy: "ESPION", heroReport: "COMPLET",
+				heroSub: "Système Avancé d'Extraction de Renseignements Téléphoniques v4.2",
+				targetLabel: "Numéro Cible", deviceOnline: "Appareil En Ligne", signalLocked: "Signal Verrouillé",
+				encryptBypassing: "Contournement du Chiffrement...", hiddenImages: "Images Cachées", suspiciousChats: "Chats Suspects",
+				passwordsFound: "Mots de Passe", secretChats: "Chats Secrets", deletedMsgs: "Msgs Supprimés",
+				vanishMode: "Mode Éphémère", threatTitle: "Résumé du Niveau de Menace", totalImages: "Total d'Images",
+				totalChats: "Chats Suspects", totalPasswords: "Mots de Passe Extraits", threatLevelLabel: "Niveau de Menace",
+				analysisProgress: "Analyse en Cours", scanning: "Analyse", queued: "En Attente", extracting: "Extraction",
+				flag: "🇫🇷", label: "Français",
+				statusMsgs: [
+					"Contournement du chiffrement de bout en bout...", "Extraction des images cachées de la galerie...",
+					"Analyse des conversations supprimées...", "Déchiffrement des chats protégés par mot de passe...",
+					"Récupération des messages éphémères...", "Analyse des fichiers cache multimédias...",
+					"Croisement des bases de données de contacts...", "Extraction des identifiants enregistrés...",
+					"Analyse des archives de sauvegarde cloud...", "Décodage des protocoles de chat secret...",
+					"Cartographie des fils de conversation cachés...", "Récupération des médias supprimés du cache..."
+				],
+				threats: { critical: "CRITIQUE", high: "ÉLEVÉ", medium: "MOYEN", low: "FAIBLE" }
+			},
+			de: {
+				badge: "Geheimer Bericht — Live", heroComplete: "VOLLSTÄNDIGER", heroSpy: "SPIONAGE", heroReport: "BERICHT",
+				heroSub: "Erweitertes Telefon-Intelligence-Extraktionssystem v4.2",
+				targetLabel: "Zielnummer", deviceOnline: "Gerät Online", signalLocked: "Signal Gesperrt",
+				encryptBypassing: "Verschlüsselung Umgehen...", hiddenImages: "Versteckte Bilder", suspiciousChats: "Verdächtige Chats",
+				passwordsFound: "Passwörter", secretChats: "Geheime Chats", deletedMsgs: "Gelöschte Nachr.",
+				vanishMode: "Flüchtig-Modus", threatTitle: "Bedrohungsstufe Zusammenfassung", totalImages: "Bilder Gesamt",
+				totalChats: "Verdächtige Chats", totalPasswords: "Passwörter Extrahiert", threatLevelLabel: "Bedrohungsstufe",
+				analysisProgress: "Analyse Läuft", scanning: "Scannen", queued: "Warteschlange", extracting: "Extrahieren",
+				flag: "🇩🇪", label: "Deutsch",
+				statusMsgs: [
+					"Ende-zu-Ende-Verschlüsselung umgehen...", "Versteckte Galeriebilder extrahieren...",
+					"Gelöschte Gespräche scannen...", "Passwortgeschützte Chats entschlüsseln...",
+					"Flüchtige Nachrichten wiederherstellen...", "Multimedia-Cache-Dateien analysieren...",
+					"Kontaktdatenbanken abgleichen...", "Gespeicherte Anmeldedaten extrahieren...",
+					"Cloud-Backup-Archive scannen...", "Geheime Chat-Protokolle dekodieren..."
+				],
+				threats: { critical: "KRITISCH", high: "HOCH", medium: "MITTEL", low: "NIEDRIG" }
+			},
+			it: {
+				badge: "Rapporto Classificato — Dal Vivo", heroComplete: "RAPPORTO", heroSpy: "SPIA", heroReport: "COMPLETO",
+				heroSub: "Sistema Avanzato di Estrazione Intelligence Telefonica v4.2",
+				targetLabel: "Numero Obiettivo", deviceOnline: "Dispositivo Online", signalLocked: "Segnale Bloccato",
+				encryptBypassing: "Aggiramento Crittografia...", hiddenImages: "Immagini Nascoste", suspiciousChats: "Chat Sospette",
+				passwordsFound: "Password", secretChats: "Chat Segrete", deletedMsgs: "Msg Eliminati",
+				vanishMode: "Modalità Effimera", threatTitle: "Riepilogo Livello di Minaccia", totalImages: "Immagini Totali",
+				totalChats: "Chat Sospette", totalPasswords: "Password Estratte", threatLevelLabel: "Livello Minaccia",
+				analysisProgress: "Analisi in Corso", scanning: "Scansione", queued: "In Coda", extracting: "Estrazione",
+				flag: "🇮🇹", label: "Italiano",
+				statusMsgs: [
+					"Aggiramento crittografia end-to-end...", "Estrazione immagini nascoste dalla galleria...",
+					"Scansione conversazioni eliminate...", "Decrittazione chat protette da password...",
+					"Recupero messaggi effimeri...", "Analisi file cache multimediali...",
+					"Incrocio database contatti...", "Estrazione credenziali salvate...",
+					"Scansione archivi backup cloud...", "Decodifica protocolli chat segreti..."
+				],
+				threats: { critical: "CRITICO", high: "ALTO", medium: "MEDIO", low: "BASSO" }
+			},
+			ru: {
+				badge: "Секретный Отчёт — Прямой Эфир", heroComplete: "ПОЛНЫЙ", heroSpy: "ШПИОНСКИЙ", heroReport: "ОТЧЁТ",
+				heroSub: "Продвинутая Система Извлечения Телефонной Разведки v4.2",
+				targetLabel: "Целевой Номер", deviceOnline: "Устройство Онлайн", signalLocked: "Сигнал Захвачен",
+				encryptBypassing: "Обход Шифрования...", hiddenImages: "Скрытые Фото", suspiciousChats: "Подозр. Чаты",
+				passwordsFound: "Пароли", secretChats: "Секретные Чаты", deletedMsgs: "Удал. Сообщ.",
+				vanishMode: "Исчез. Режим", threatTitle: "Сводка Уровня Угрозы", totalImages: "Всего Изображений",
+				totalChats: "Подозрительные Чаты", totalPasswords: "Извлечённые Пароли", threatLevelLabel: "Уровень Угрозы",
+				analysisProgress: "Анализ Выполняется", scanning: "Сканирование", queued: "В Очереди", extracting: "Извлечение",
+				flag: "🇷🇺", label: "Русский",
+				statusMsgs: [
+					"Обход сквозного шифрования...", "Извлечение скрытых изображений из галереи...",
+					"Сканирование удалённых разговоров...", "Расшифровка защищённых паролем чатов...",
+					"Восстановление исчезающих сообщений...", "Анализ файлов мультимедийного кэша...",
+					"Перекрёстная проверка баз данных контактов...", "Извлечение сохранённых учётных данных...",
+					"Сканирование облачных архивов...", "Декодирование секретных протоколов чата..."
+				],
+				threats: { critical: "КРИТИЧЕСКИЙ", high: "ВЫСОКИЙ", medium: "СРЕДНИЙ", low: "НИЗКИЙ" }
+			},
+			ja: {
+				badge: "機密レポート — ライブ", heroComplete: "完全", heroSpy: "スパイ", heroReport: "レポート",
+				heroSub: "高度電話情報抽出システム v4.2",
+				targetLabel: "ターゲット番号", deviceOnline: "デバイスオンライン", signalLocked: "信号ロック済み",
+				encryptBypassing: "暗号化バイパス中...", hiddenImages: "隠し画像", suspiciousChats: "疑わしいチャット",
+				passwordsFound: "パスワード", secretChats: "秘密チャット", deletedMsgs: "削除済みメッセージ",
+				vanishMode: "消えるモード", threatTitle: "脅威レベル概要", totalImages: "画像合計",
+				totalChats: "疑わしいチャット", totalPasswords: "抽出されたパスワード", threatLevelLabel: "脅威レベル",
+				analysisProgress: "分析中", scanning: "スキャン中", queued: "待機中", extracting: "抽出中",
+				flag: "🇯🇵", label: "日本語",
+				statusMsgs: [
+					"エンドツーエンド暗号化をバイパス中...", "ギャラリーから隠し画像を抽出中...",
+					"削除された会話をスキャン中...", "パスワード保護チャットを復号中...",
+					"消えるメッセージを復元中...", "マルチメディアキャッシュを分析中...",
+					"連絡先データベースを照合中...", "保存されたログイン情報を抽出中...",
+					"クラウドバックアップをスキャン中...", "秘密チャットプロトコルを解読中..."
+				],
+				threats: { critical: "危険", high: "高", medium: "中", low: "低" }
+			},
+			ko: {
+				badge: "기밀 보고서 — 라이브", heroComplete: "완전한", heroSpy: "스파이", heroReport: "보고서",
+				heroSub: "고급 전화 정보 추출 시스템 v4.2",
+				targetLabel: "대상 번호", deviceOnline: "기기 온라인", signalLocked: "신호 잠금",
+				encryptBypassing: "암호화 우회 중...", hiddenImages: "숨겨진 이미지", suspiciousChats: "의심스러운 채팅",
+				passwordsFound: "비밀번호", secretChats: "비밀 채팅", deletedMsgs: "삭제된 메시지",
+				vanishMode: "사라지기 모드", threatTitle: "위협 수준 요약", totalImages: "총 이미지",
+				totalChats: "의심스러운 채팅", totalPasswords: "추출된 비밀번호", threatLevelLabel: "위협 수준",
+				analysisProgress: "분석 진행 중", scanning: "스캔 중", queued: "대기 중", extracting: "추출 중",
+				flag: "🇰🇷", label: "한국어",
+				statusMsgs: [
+					"종단간 암호화 우회 중...", "갤러리에서 숨겨진 이미지 추출 중...",
+					"삭제된 대화 스캔 중...", "비밀번호로 보호된 채팅 복호화 중...",
+					"사라지는 메시지 복구 중...", "멀티미디어 캐시 파일 분석 중...",
+					"연락처 데이터베이스 교차 참조 중...", "저장된 로그인 정보 추출 중...",
+					"클라우드 백업 아카이브 스캔 중...", "비밀 채팅 프로토콜 해독 중..."
+				],
+				threats: { critical: "위험", high: "높음", medium: "중간", low: "낮음" }
+			},
+			zh: {
+				badge: "机密报告 — 实时", heroComplete: "完整", heroSpy: "间谍", heroReport: "报告",
+				heroSub: "高级电话情报提取系统 v4.2",
+				targetLabel: "目标号码", deviceOnline: "设备在线", signalLocked: "信号锁定",
+				encryptBypassing: "绕过加密中...", hiddenImages: "隐藏图片", suspiciousChats: "可疑聊天",
+				passwordsFound: "密码", secretChats: "秘密聊天", deletedMsgs: "已删消息",
+				vanishMode: "阅后即焚", threatTitle: "威胁级别摘要", totalImages: "图片总计",
+				totalChats: "可疑聊天", totalPasswords: "提取的密码", threatLevelLabel: "威胁级别",
+				analysisProgress: "分析进行中", scanning: "扫描中", queued: "排队中", extracting: "提取中",
+				flag: "🇨🇳", label: "中文",
+				statusMsgs: [
+					"绕过端到端加密...", "从图库提取隐藏图片...",
+					"扫描已删除的对话...", "解密受密码保护的聊天...",
+					"恢复阅后即焚消息...", "分析多媒体缓存文件...",
+					"交叉引用联系人数据库...", "提取已保存的登录凭据...",
+					"扫描云备份档案...", "解码秘密聊天协议..."
+				],
+				threats: { critical: "危险", high: "高", medium: "中", low: "低" }
+			},
+			ar: {
+				badge: "تقرير سري — مباشر", heroComplete: "تقرير", heroSpy: "تجسس", heroReport: "كامل",
+				heroSub: "نظام استخراج المعلومات الهاتفية المتقدم v4.2",
+				targetLabel: "الرقم المستهدف", deviceOnline: "الجهاز متصل", signalLocked: "الإشارة مقفلة",
+				encryptBypassing: "تجاوز التشفير...", hiddenImages: "صور مخفية", suspiciousChats: "محادثات مشبوهة",
+				passwordsFound: "كلمات مرور", secretChats: "محادثات سرية", deletedMsgs: "رسائل محذوفة",
+				vanishMode: "الوضع المؤقت", threatTitle: "ملخص مستوى التهديد", totalImages: "إجمالي الصور",
+				totalChats: "محادثات مشبوهة", totalPasswords: "كلمات مرور مستخرجة", threatLevelLabel: "مستوى التهديد",
+				analysisProgress: "التحليل جارٍ", scanning: "مسح", queued: "في الانتظار", extracting: "استخراج",
+				flag: "🇸🇦", label: "العربية",
+				statusMsgs: [
+					"تجاوز التشفير من طرف إلى طرف...", "استخراج الصور المخفية من المعرض...",
+					"مسح المحادثات المحذوفة...", "فك تشفير المحادثات المحمية بكلمة مرور...",
+					"استعادة الرسائل المؤقتة...", "تحليل ملفات ذاكرة التخزين المؤقت...",
+					"مقارنة قواعد بيانات جهات الاتصال...", "استخراج بيانات تسجيل الدخول المحفوظة...",
+					"مسح أرشيفات النسخ الاحتياطي السحابية...", "فك تشفير بروتوكولات الدردشة السرية..."
+				],
+				threats: { critical: "حرج", high: "مرتفع", medium: "متوسط", low: "منخفض" }
+			},
+			hi: {
+				badge: "गोपनीय रिपोर्ट — लाइव", heroComplete: "पूर्ण", heroSpy: "जासूसी", heroReport: "रिपोर्ट",
+				heroSub: "उन्नत फोन इंटेलिजेंस एक्सट्रैक्शन सिस्टम v4.2",
+				targetLabel: "लक्ष्य नंबर", deviceOnline: "डिवाइस ऑनलाइन", signalLocked: "सिग्नल लॉक",
+				encryptBypassing: "एन्क्रिप्शन बाईपास...", hiddenImages: "छिपी तस्वीरें", suspiciousChats: "संदिग्ध चैट",
+				passwordsFound: "पासवर्ड", secretChats: "गुप्त चैट", deletedMsgs: "हटाए गए संदेश",
+				vanishMode: "गायब मोड", threatTitle: "खतरा स्तर सारांश", totalImages: "कुल तस्वीरें",
+				totalChats: "संदिग्ध चैट", totalPasswords: "निकाले गए पासवर्ड", threatLevelLabel: "खतरा स्तर",
+				analysisProgress: "विश्लेषण जारी", scanning: "स्कैनिंग", queued: "कतार में", extracting: "निकाल रहा है",
+				flag: "🇮🇳", label: "हिन्दी",
+				statusMsgs: [
+					"एंड-टू-एंड एन्क्रिप्शन बाईपास कर रहा है...", "गैलरी से छिपी तस्वीरें निकाल रहा है...",
+					"हटाई गई बातचीत स्कैन कर रहा है...", "पासवर्ड-संरक्षित चैट डिक्रिप्ट कर रहा है...",
+					"गायब संदेश पुनर्प्राप्त कर रहा है...", "मल्टीमीडिया कैश फ़ाइलें विश्लेषण कर रहा है...",
+					"संपर्क डेटाबेस क्रॉस-रेफ़रेंस कर रहा है...", "सहेजे गए लॉगिन क्रेडेंशियल निकाल रहा है...",
+					"क्लाउड बैकअप आर्काइव स्कैन कर रहा है...", "गुप्त चैट प्रोटोकॉल डिकोड कर रहा है..."
+				],
+				threats: { critical: "गंभीर", high: "उच्च", medium: "मध्यम", low: "कम" }
+			}
+		};
+
+		// Default always English (USA) unless user chose another language before.
+		const LANG_STORAGE_KEY = 'li_lang';
+
+		let currentLang = 'en';
+		let currentStatusMsgs = translations.en.statusMsgs;
+
+		function getSavedLang() {
+			try {
+				const v = localStorage.getItem(LANG_STORAGE_KEY);
+				return v && translations[v] ? v : null;
+			} catch (_) {
+				return null;
+			}
+		}
+
+		function saveLang(lang) {
+			try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (_) { }
+		}
+
+		function applyTranslations(lang) {
+			const t = translations[lang];
+			if (!t) return;
+			currentLang = lang;
+			currentStatusMsgs = t.statusMsgs;
+
+			document.documentElement.lang = lang;
+
+			document.querySelectorAll('[data-i18n]').forEach(el => {
+				const key = el.getAttribute('data-i18n');
+				if (t[key]) el.textContent = t[key];
+			});
+
+			document.getElementById('langFlag').textContent = t.flag;
+			document.getElementById('langLabel').textContent = t.label;
+
+			document.querySelectorAll('.lang-option').forEach(opt => {
+				opt.classList.toggle('active', opt.dataset.lang === lang);
+			});
+
+			document.querySelectorAll('[data-i18n-badge]').forEach(el => {
+				const state = el.dataset.i18nBadge;
+				if (t[state]) el.textContent = t[state];
+			});
+		}
+
+		function toggleLang() {
+			const btn = document.getElementById('langBtn');
+			const dd = document.getElementById('langDropdown');
+			btn.classList.toggle('open');
+			dd.classList.toggle('show');
+		}
+
+		function setLang(lang) {
+			applyTranslations(lang);
+			saveLang(lang);
+			document.getElementById('langDropdown').classList.remove('show');
+			document.getElementById('langBtn').classList.remove('open');
+		}
+
+		document.addEventListener('click', (e) => {
+			if (!e.target.closest('.lang-btn')) {
+				document.getElementById('langDropdown').classList.remove('show');
+				document.getElementById('langBtn').classList.remove('open');
+			}
+		});
+
+		/* =============== TIMER =============== */
+		let seconds = 0;
+		const timerEl = document.getElementById('timer');
+		setInterval(() => {
+			seconds++;
+			const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+			const s = String(seconds % 60).padStart(2, '0');
+			timerEl.textContent = m + ':' + s;
+		}, 1000);
+
+		/* =============== PROGRESS =============== */
+		const progressFill = document.getElementById('progressFill');
+		let progress = 0;
+		setInterval(() => {
+			progress += Math.random() * 1.2 + 0.3;
+			if (progress >= 92) progress = 14 + Math.random() * 10;
+			progressFill.style.width = progress + '%';
+		}, 800);
+
+		/* =============== STATUS MESSAGES =============== */
+		const statusEl = document.getElementById('statusMsg');
+		let msgIdx = 0;
+		setInterval(() => {
+			msgIdx = (msgIdx + 1) % currentStatusMsgs.length;
+			statusEl.textContent = currentStatusMsgs[msgIdx];
+		}, 2800);
+
+		/* =============== GETTIME =============== */
+		function getTime() {
+			const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+			const s = String(seconds % 60).padStart(2, '0');
+			return m + ':' + s;
+		}
+
+		/* =============== APP ENGINE =============== */
+		const apps = [
+			{
+				id: 'whatsapp', badge: 'whatsappBadge', card: 'appWhatsapp',
+				counters: { images: 'waImages', chats: 'waChats', passwords: 'waPasswords' },
+				log: 'waLog', delay: 0,
+				logMsgs: [
+					'<span class="action">SCAN</span> — Extracting WhatsApp media folder...',
+					'<span class="found">FOUND</span> — Hidden image in .nomedia directory',
+					'<span class="action">DECRYPT</span> — Breaking chat database encryption...',
+					'<span class="found">FOUND</span> — Deleted conversation recovered (3 contacts)',
+					'<span class="action">EXTRACT</span> — Pulling saved passwords from keychain...',
+					'<span class="found">ALERT</span> — Suspicious late-night messages detected',
+					'<span class="action">SCAN</span> — Analyzing shared media timestamps...',
+					'<span class="found">FOUND</span> — Password-protected backup located',
+					'<span class="action">DECRYPT</span> — Recovering vanished media files...',
+					'<span class="found">FOUND</span> — Hidden contact with no name saved',
+					'<span class="action">EXTRACT</span> — Pulling deleted voice messages...',
+					'<span class="found">ALERT</span> — Repeated deleted messages from same contact'
+				]
+			},
+			{
+				id: 'facebook', badge: 'facebookBadge', card: 'appFacebook',
+				counters: { images: 'fbImages', chats: 'fbChats', passwords: 'fbPasswords' },
+				log: 'fbLog', delay: 6000,
+				logMsgs: [
+					'<span class="action">SCAN</span> — Accessing Meta Graph API backdoor...',
+					'<span class="found">FOUND</span> — Hidden photo albums in Facebook account',
+					'<span class="action">DECRYPT</span> — Breaking Facebook Messenger E2E...',
+					'<span class="found">FOUND</span> — Archived conversations with deleted contacts',
+					'<span class="action">EXTRACT</span> — Pulling Meta ad activity & search history...',
+					'<span class="found">ALERT</span> — Secondary Facebook profile detected',
+					'<span class="action">SCAN</span> — Extracting Facebook Dating activity...',
+					'<span class="found">FOUND</span> — Login credentials stored in Meta keychain',
+					'<span class="action">DECRYPT</span> — Accessing Facebook Marketplace DMs...',
+					'<span class="found">ALERT</span> — Suspicious friend requests pattern detected'
+				]
+			},
+			{
+				id: 'telegram', badge: 'telegramBadge', card: 'appTelegram',
+				counters: { images: 'tgImages', chats: 'tgSecret', passwords: 'tgPasswords' },
+				log: 'tgLog', delay: 14000,
+				logMsgs: [
+					'<span class="action">SCAN</span> — Accessing Telegram secret chats...',
+					'<span class="found">FOUND</span> — Self-destruct timer messages recovered',
+					'<span class="action">DECRYPT</span> — Breaking MTProto encryption layer...',
+					'<span class="found">FOUND</span> — Hidden channel subscriptions detected',
+					'<span class="action">EXTRACT</span> — Pulling cached media from secret chats...',
+					'<span class="found">ALERT</span> — Anonymous group membership detected',
+					'<span class="action">SCAN</span> — Checking for saved credentials...',
+					'<span class="found">FOUND</span> — Password shared in secret conversation'
+				]
+			},
+			{
+				id: 'messenger', badge: 'messengerBadge', card: 'appMessenger',
+				counters: { images: 'msImages', chats: 'msChats', passwords: 'msPasswords' },
+				log: 'msLog', delay: 22000,
+				logMsgs: [
+					'<span class="action">SCAN</span> — Connecting to Messenger API...',
+					'<span class="found">FOUND</span> — Archived conversation detected',
+					'<span class="action">DECRYPT</span> — Accessing vanish mode history...',
+					'<span class="found">FOUND</span> — Hidden message requests folder',
+					'<span class="action">EXTRACT</span> — Recovering deleted photo attachments...',
+					'<span class="found">ALERT</span> — Secondary account linked detected'
+				]
+			},
+			{
+				id: 'imessage', badge: 'imessageBadge', card: 'appImessage',
+				counters: { images: 'imImages', chats: 'imChats', passwords: 'imPasswords' },
+				log: 'imLog', delay: 30000,
+				logMsgs: [
+					'<span class="action">SCAN</span> — Accessing iCloud message sync...',
+					'<span class="found">FOUND</span> — Recently deleted messages recovered',
+					'<span class="action">DECRYPT</span> — Breaking iMessage encryption...',
+					'<span class="found">FOUND</span> — Hidden photos in iCloud shared album',
+					'<span class="action">EXTRACT</span> — Pulling Keychain saved passwords...',
+					'<span class="found">ALERT</span> — FaceTime call to unknown contact'
+				]
+			},
+			{
+				id: 'instagram', badge: 'instagramBadge', card: 'appInstagram',
+				counters: { images: 'igImages', chats: 'igChats', passwords: 'igPasswords' },
+				log: 'igLog', delay: 38000,
+				logMsgs: [
+					'<span class="action">SCAN</span> — Accessing Instagram DM cache...',
+					'<span class="found">FOUND</span> — Vanish mode conversation recovered',
+					'<span class="action">DECRYPT</span> — Pulling unsend message history...',
+					'<span class="found">FOUND</span> — Close Friends list activity detected',
+					'<span class="action">EXTRACT</span> — Recovering shared reel DMs...',
+					'<span class="found">ALERT</span> — Story reactions to suspicious account'
+				]
+			}
+		];
+
+		const counters = {};
+		const logIndices = {};
+
+		function updateTotals() {
+			let ti = 0, tc = 0, tp = 0;
+			apps.forEach(app => {
+				ti += (counters[app.counters.images] || 0);
+				tc += (counters[app.counters.chats] || 0);
+				tp += (counters[app.counters.passwords] || 0);
+			});
+			document.getElementById('totalImages').textContent = ti;
+			document.getElementById('totalChats').textContent = tc;
+			document.getElementById('totalPasswords').textContent = tp;
+
+			const total = ti + tc + tp;
+			const t = translations[currentLang].threats;
+			const lvl = total > 80 ? t.critical : total > 40 ? t.high : total > 15 ? t.medium : t.low;
+			document.getElementById('threatLevel').textContent = lvl;
+		}
+
+		apps.forEach(app => {
+			counters[app.counters.images] = 0;
+			counters[app.counters.chats] = 0;
+			counters[app.counters.passwords] = 0;
+			logIndices[app.id] = 0;
+
+			setTimeout(() => {
+				const card = document.getElementById(app.card);
+				const badge = document.getElementById(app.badge);
+				if (card) card.classList.add('active');
+				if (badge) {
+					badge.textContent = translations[currentLang].scanning;
+					badge.className = 'app-status-badge scanning';
+					badge.dataset.i18nBadge = 'scanning';
+				}
+
+				setInterval(() => {
+					const rImg = Math.floor(Math.random() * 3);
+					const rChat = Math.floor(Math.random() * 2);
+					const rPw = Math.random() > 0.6 ? 1 : 0;
+					counters[app.counters.images] += rImg;
+					counters[app.counters.chats] += rChat;
+					counters[app.counters.passwords] += rPw;
+					document.getElementById(app.counters.images).textContent = counters[app.counters.images];
+					document.getElementById(app.counters.chats).textContent = counters[app.counters.chats];
+					document.getElementById(app.counters.passwords).textContent = counters[app.counters.passwords];
+					updateTotals();
+				}, 1800 + Math.random() * 1500);
+
+				setInterval(() => {
+					const logEl = document.getElementById(app.log);
+					const idx = logIndices[app.id] % app.logMsgs.length;
+					const line = document.createElement('div');
+					line.className = 'log-line';
+					line.innerHTML = '<span class="time">[' + getTime() + ']</span> ' + app.logMsgs[idx];
+					logEl.appendChild(line);
+					logEl.scrollTop = logEl.scrollHeight;
+					logIndices[app.id]++;
+					while (logEl.children.length > 6) logEl.removeChild(logEl.firstChild);
+				}, 3200 + Math.random() * 2000);
+
+				setInterval(() => {
+					if (badge) {
+						badge.textContent = translations[currentLang].extracting;
+						badge.className = 'app-status-badge extracting';
+						badge.dataset.i18nBadge = 'extracting';
+						setTimeout(() => {
+							badge.textContent = translations[currentLang].scanning;
+							badge.className = 'app-status-badge scanning';
+							badge.dataset.i18nBadge = 'scanning';
+						}, 4000);
+					}
+				}, 12000 + Math.random() * 5000);
+
+			}, app.delay);
+		});
+
+		/* =============== INIT =============== */
+		const saved = getSavedLang();
+		applyTranslations(saved || 'en');
+	</script>
+
+</body>
+
+</html>
