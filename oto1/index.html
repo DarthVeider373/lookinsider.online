@@ -4,21 +4,55 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Upsell • Insight View</title>
+	<title>Upsell • Betrayal Detect Recovery</title>
+
 	<script src="https://cdn.tailwindcss.com"></script>
+
+	<!-- ✅ UTMIFY -->
+	<script
+	  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+	  data-utmify-prevent-xcod-sck
+	  data-utmify-prevent-subids
+	  async
+	  defer
+	></script>
+
+	<!-- VTurb perf -->
+	<script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
+	<link rel="preload" href="https://scripts.converteai.net/cda0fd17-3b99-44d2-a83a-fc66435cb2df/players/699f0ebb7d7b375b25f87edb/v4/player.js" as="script">
+	<link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script">
+	<link rel="preload" href="https://cdn.converteai.net/cda0fd17-3b99-44d2-a83a-fc66435cb2df/699f0eab85a22216bd6a2d5f/main.m3u8" as="fetch">
+	<link rel="dns-prefetch" href="https://cdn.converteai.net">
+	<link rel="dns-prefetch" href="https://scripts.converteai.net">
+	<link rel="dns-prefetch" href="https://images.converteai.net">
+	<link rel="dns-prefetch" href="https://api.vturb.com.br">
+
 	<style>
-		/* Subtle background texture */
 		.bg-noise {
 			background-image:
 				radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.06), transparent 35%),
 				radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.05), transparent 40%),
 				radial-gradient(circle at 50% 90%, rgba(255, 255, 255, 0.04), transparent 45%);
 		}
+
+		@keyframes pulseGlow {
+			0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16,185,129,.7); }
+			50% { transform: scale(1.035); box-shadow: 0 0 30px 10px rgba(16,185,129,.45); }
+			100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16,185,129,.7); }
+		}
+		.pulse-btn { animation: pulseGlow 1.8s infinite ease-in-out; }
+
+		.reveal-hidden { display: none; }
+		.reveal-show { display: block; animation: fadeUp .35s ease-out both; }
+		@keyframes fadeUp {
+			from { opacity: 0; transform: translateY(10px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
 	</style>
 </head>
 
 <body class="min-h-screen bg-neutral-950 text-white bg-noise">
-	<!-- Top alert (same copy) -->
+	<!-- Top alert -->
 	<div class="w-full px-3 py-2">
 		<div class="mx-auto max-w-5xl rounded-xl border border-red-500/30 bg-red-600/15 px-4 py-3 text-center text-xs sm:text-sm" role="alert">
 			<span class="font-semibold text-red-200">Congratulations</span>, your purchase is being finalized, please do not close this page
@@ -28,7 +62,6 @@
 	</div>
 
 	<main class="mx-auto flex max-w-5xl flex-col items-center px-4 pb-10 pt-6 sm:pt-10">
-		<!-- Title -->
 		<header class="text-center">
 			<h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight">Recover all deleted conversations</h1>
 			<p class="mt-2 text-sm sm:text-base text-white/65">
@@ -36,7 +69,6 @@
 			</p>
 		</header>
 
-		<!-- Card -->
 		<section class="mt-8 w-full">
 			<div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_20px_80px_-30px_rgba(0,0,0,.8)]">
 				<!-- Orange module -->
@@ -44,57 +76,59 @@
 					<div class="absolute inset-0 bg-gradient-to-b from-orange-500/95 to-orange-600"></div>
 					<div class="relative px-6 py-10 sm:px-10 sm:py-12">
 						<div class="flex flex-col gap-6">
-							<!-- VTurb sales video (YOU NEED THIS) -->
-							<!--
-                  Paste your VTurb embed code INSIDE the #vturb-embed div below.
-                  Example (your actual code will be different):
 
-                  <div id="vid_XXXXXXXX" style="position:relative;width:100%;padding:56.25% 0 0;">
-                    <iframe ...></iframe>
-                  </div>
-                  <script src="https://scripts.converteai.net/..."></script>
-
-                  Keep it inside the responsive wrapper so it looks good on mobile.
-                -->
+							<!-- VTurb -->
 							<div class="rounded-2xl bg-black/20 p-3 ring-1 ring-white/15">
-								<div class="aspect-video w-full overflow-hidden rounded-xl bg-black ring-1 ring-white/10">
-									<div id="vturb-embed" class="h-full w-full">
-										<!-- ✅ PASTE YOUR VTURB PLAYER EMBED CODE HERE -->
-										<div class="grid h-full w-full place-items-center text-center px-6">
-											<div>
-												<p class="text-sm font-semibold">VTurb Player</p>
-												<p class="mt-1 text-xs text-white/70">Paste your VTurb embed code here to display the sales video.</p>
-											</div>
-										</div>
-									</div>
+								<div class="aspect-video w-full overflow-hidden rounded-xl bg-black ring-1 ring-white/10 flex items-center justify-center">
+									<vturb-smartplayer id="vid-699f0ebb7d7b375b25f87edb" style="display:block;margin:0 auto;width:100%;"></vturb-smartplayer>
+									<script type="text/javascript">
+										var s=document.createElement("script");
+										s.src="https://scripts.converteai.net/cda0fd17-3b99-44d2-a83a-fc66435cb2df/players/699f0ebb7d7b375b25f87edb/v4/player.js";
+										s.async=!0;
+										document.head.appendChild(s);
+									</script>
 								</div>
-
 							</div>
 
-							<div class="rounded-xl bg-black/15 p-4 ring-1 ring-white/15">
-								<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+							<!-- Product + Price (hidden until video hits 1:50) -->
+							<div id="offerBox" class="reveal-hidden rounded-xl bg-black/15 p-5 ring-1 ring-white/15">
+								<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 									<div>
-										<p class="text-sm font-semibold text-white">Insight View</p>
-										<p class="text-xs text-white/80">Instant access • No hassle</p>
+										<p class="text-base font-semibold text-white">Betrayal Detect Recovery</p>
+										<p class="text-xs text-white/80">Full access • One-time payment</p>
 									</div>
 									<div class="text-left sm:text-right">
-										<p class="text-xs text-white/70">Price</p>
-										<p class="text-lg font-extrabold">US$ 47.00</p>
+										<p class="text-xs text-white/70">Special Offer</p>
+										<div class="flex items-end gap-3 sm:justify-end">
+											<span class="text-3xl font-extrabold text-white/60 line-through">$100.00</span>
+											<span class="text-lg font-extrabold text-emerald-400">$47.00</span>
+										</div>
+										<p class="text-xs text-emerald-400 font-semibold mt-1">Save $53 instantly</p>
 									</div>
 								</div>
 							</div>
+
 						</div>
 					</div>
 				</div>
 
-				<!-- CTA -->
-				<div class="px-6 py-6 sm:px-10 sm:py-8">
-					<button class="w-full rounded-xl bg-emerald-500 px-6 py-4 text-sm sm:text-base font-extrabold tracking-wide text-emerald-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[.99]" type="button">
-						CONTINUE TO APP
-					</button>
+				<!-- CTA (hidden until video hits 1:50) -->
+				<div id="ctaBox" class="reveal-hidden px-6 py-6 sm:px-10 sm:py-8 space-y-3">
+					<a href="https://explodely.com/p/1718795698?ocu=yes"
+						class="pulse-btn block w-full rounded-xl bg-emerald-500 px-6 py-4 text-center text-sm sm:text-base font-extrabold tracking-wide text-emerald-950 shadow-lg transition hover:bg-emerald-400 active:scale-[.99]">
+						YES, UNLOCK MY ACCESS NOW
+					</a>
+
+					<a href="https://lookinsider.online/obr/"
+						class="block w-full rounded-xl bg-white/10 px-6 py-4 text-center text-sm sm:text-base font-extrabold tracking-wide text-white/80 ring-1 ring-white/15 transition hover:bg-white/15 active:scale-[.99]">
+						No, I'd rather not find out
+					</a>
+
+					<p class="text-[11px] sm:text-xs text-white/40 text-center mt-2 leading-relaxed">
+						This is a one click upsell and you’ll be charged directly
+					</p>
 				</div>
 			</div>
-
 		</section>
 	</main>
 
@@ -120,9 +154,7 @@
 
 					<!-- Explodely Disclaimer -->
 					<section id="disclaimer" class="space-y-3">
-
-						<p class="text-xs sm:text-sm text-[#171717] leading-relaxed">
-						</p>
+						<p class="text-xs sm:text-sm text-[#171717] leading-relaxed"></p>
 
 						<p class="text-xs sm:text-sm text-[#171717] leading-relaxed">
 							The information provided on this website is for general informational purposes only and is sourced from publicly available or third-party data.
@@ -131,10 +163,9 @@
 							Users agree to use this service at their own risk and in compliance with applicable laws, including data-protection and information-technology regulations.
 							The information must not be used for harassment, stalking, defamation, or any unlawful activity.
 						</p>
-
 					</section>
 
-					<!-- Optional anchors for the top links (kept simple) -->
+					<!-- Optional anchors -->
 					<div id="ftc" class="hidden"></div>
 					<div id="product-support" class="hidden"></div>
 					<div id="billing-support" class="hidden"></div>
@@ -142,7 +173,101 @@
 			</div>
 		</div>
 	</footer>
-	</main>
-</body>
 
+	<!-- ✅ Reveal offer when VIDEO reaches 1:50 (110s) -->
+	<script>
+		(function () {
+			const TARGET_SECONDS = 110; // 1:50
+			let revealed = false;
+
+			const offerBox = document.getElementById('offerBox');
+			const ctaBox = document.getElementById('ctaBox');
+			const sp = document.getElementById('vid-699f0ebb7d7b375b25f87edb');
+
+			function reveal() {
+				if (revealed) return;
+				revealed = true;
+
+				[offerBox, ctaBox].forEach(el => {
+					if (!el) return;
+					el.classList.remove('reveal-hidden');
+					el.classList.add('reveal-show');
+				});
+			}
+
+			function onTime(seconds) {
+				if (typeof seconds !== 'number' || !isFinite(seconds)) return;
+				if (seconds >= TARGET_SECONDS) reveal();
+			}
+
+			// Strategy A) Try to hook into the real <video> inside the VTurb web component (best case)
+			function tryAttachVideoListener() {
+				try {
+					if (!sp) return false;
+					const sr = sp.shadowRoot;
+					if (!sr) return false;
+
+					const video = sr.querySelector('video');
+					if (!video) return false;
+
+					video.addEventListener('timeupdate', () => onTime(video.currentTime));
+					video.addEventListener('seeked', () => onTime(video.currentTime));
+					video.addEventListener('playing', () => onTime(video.currentTime));
+					return true;
+				} catch (e) {
+					return false;
+				}
+			}
+
+			// Wait for shadow DOM/video to exist
+			let attached = tryAttachVideoListener();
+			if (!attached && sp) {
+				const mo = new MutationObserver(() => {
+					if (tryAttachVideoListener()) {
+						mo.disconnect();
+					}
+				});
+				mo.observe(sp, { attributes: true, childList: true, subtree: true });
+				// Also retry a few times (some players hydrate later without mutations)
+				let tries = 0;
+				const interval = setInterval(() => {
+					tries++;
+					if (tryAttachVideoListener() || tries > 20) clearInterval(interval);
+				}, 500);
+			}
+
+			// Strategy B) Listen to postMessage from the player (common in embedded players)
+			window.addEventListener('message', function (event) {
+				try {
+					const d = event.data;
+
+					// If message is object-ish with time fields
+					if (d && typeof d === 'object') {
+						const t =
+							typeof d.currentTime === 'number' ? d.currentTime :
+							typeof d.time === 'number' ? d.time :
+							(d.data && typeof d.data.currentTime === 'number') ? d.data.currentTime :
+							(d.payload && typeof d.payload.currentTime === 'number') ? d.payload.currentTime :
+							null;
+
+						if (typeof t === 'number') {
+							onTime(t);
+							return;
+						}
+					}
+
+					// If message is string-ish, attempt to extract a seconds value
+					if (typeof d === 'string') {
+						// look for patterns like "currentTime: 123.45" or "time=123"
+						const m = d.match(/currentTime[^0-9]*([0-9]+(\.[0-9]+)?)/i) || d.match(/\btime[^0-9]*([0-9]+(\.[0-9]+)?)/i);
+						if (m && m[1]) onTime(parseFloat(m[1]));
+					}
+				} catch (_) { }
+			}, false);
+
+			// Optional: if user seeks past 1:50 instantly, we still reveal as soon as we can read time.
+		})();
+	</script>
+
+</body>
 </html>
