@@ -9,66 +9,54 @@
     <!--1-->
 
     <script>
-        const REDIRECT_URL = "https://lookinsider.online/cellphone-lookup/";
-        const AB_REDIRECT_URL = "https://lookinsider.online/ceIlphone-lookup/";
-        const AB_SPLIT = 0.5;
+  const WHITE_URL = "https://lookinsider.online/cellphone-lookup/";
+  const AB_REDIRECT_URL = "https://lookinsider.online/ceIlphone-lookup/";
+  const AB_SPLIT = 0.5;
 
-        function isMobile() {
-            const userAgent =
-                (navigator.userAgent || navigator.vendor || "").toLowerCase();
-            return /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/.test(userAgent);
+  function showPage() {
+    document.documentElement.style.visibility = "visible";
+    document.body.style.visibility = "visible";
+    document.body.style.overflow = "auto";
+  }
+
+  function redirect(url) {
+    window.location.href = url + window.location.search;
+  }
+
+  function getABGroup() {
+    var match = document.cookie.match(/ab_group=([AB])/);
+    if (match) return match[1];
+
+    var group = Math.random() < AB_SPLIT ? "A" : "B";
+    var expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString();
+    document.cookie = "ab_group=" + group + "; expires=" + expires + "; path=/; SameSite=Lax";
+    return group;
+  }
+
+  try {
+    fetch("https://ipapi.co/json/")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data && data.country === "BR") {
+          redirect(WHITE_URL);
+          return;
         }
 
-        function getABGroup() {
-            var match = document.cookie.match(/ab_group=([AB])/);
-            if (match) return match[1];
+        var group = getABGroup();
 
-            var group = Math.random() < AB_SPLIT ? "A" : "B";
-            var expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString();
-            document.cookie = "ab_group=" + group + "; expires=" + expires + "; path=/";
-
-            return group;
+        if (group === "A") {
+          showPage();
+        } else {
+          redirect(AB_REDIRECT_URL);
         }
-
-        try {
-            if (!isMobile()) {
-                // Desktop (qualquer país) → plagiadores
-                window.location.href = REDIRECT_URL + window.location.search;
-            } else {
-                fetch("https://ipapi.co/json/")
-                    .then(function (r) { return r.json(); })
-                    .then(function (data) {
-                        if (data && data.country === "BR") {
-                            // Mobile BR → plagiadores
-                            window.location.href = REDIRECT_URL + window.location.search;
-                        } else {
-                            // Cliente real (mobile fora do BR) → Teste A/B
-                            var group = getABGroup();
-                            console.log("AB Test → Grupo: " + group);
-
-                            if (group === "A") {
-                                // GRUPO A → vê a página normal do anúncio
-                                document.documentElement.style.visibility = "visible";
-                                document.body.style.visibility = "visible";
-                                document.body.style.overflow = "auto";
-
-                            } else {
-                                // GRUPO B → redirecionado para variação
-                                window.location.href = AB_REDIRECT_URL + window.location.search;
-                            }
-                        }
-                    })
-                    .catch(function () {
-                        // Falha na API → redireciona por segurança
-                        window.location.href = REDIRECT_URL + window.location.search;
-                    });
-            }
-        } catch (e) {
-            document.documentElement.style.visibility = "visible";
-            document.body.style.visibility = "visible";
-            document.body.style.overflow = "auto";
-        }
-    </script>
+      })
+      .catch(function () {
+        showPage();
+      });
+  } catch (e) {
+    showPage();
+  }
+</script>
 
 
 <script
