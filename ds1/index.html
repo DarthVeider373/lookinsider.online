@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Betrayal Detect Lite - Special Offer</title>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Inter', sans-serif;
+			background: #0a0a0a;
+			color: #e0e0e0;
+			line-height: 1.7;
+			overflow-x: hidden;
+		}
+
+		.page-wrapper {
+			max-width: 720px;
+			margin: 0 auto;
+			padding: 16px 14px 60px;
+		}
+
+		/* WAIT BANNER */
+		.wait-banner {
+			background: linear-gradient(135deg, #b91c1c, #dc2626);
+			text-align: center;
+			padding: 12px 16px;
+			font-size: clamp(0.85rem, 2.8vw, 1.05rem);
+			font-weight: 700;
+			color: #fff;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			animation: pulseBanner 2s infinite;
+			border-radius: 6px;
+			margin-bottom: 24px;
+		}
+
+		@keyframes pulseBanner {
+
+			0%,
+			100% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0.8;
+			}
+		}
+
+		/* HEADLINE */
+		.headline {
+			text-align: center;
+			margin-bottom: 10px;
+			padding: 0 4px;
+		}
+
+		.headline h1 {
+			font-size: clamp(1.35rem, 5vw, 2.4rem);
+			font-weight: 900;
+			color: #ffffff;
+			line-height: 1.25;
+			margin-bottom: 8px;
+		}
+
+		.headline h1 .price-highlight {
+			color: #22c55e;
+			text-decoration: underline;
+			text-decoration-color: #22c55e;
+			text-underline-offset: 5px;
+		}
+
+		.headline h1 .red-word {
+			color: #ef4444;
+		}
+
+		/* SUBHEADLINE */
+		.subheadline {
+			text-align: center;
+			font-size: clamp(0.92rem, 2.8vw, 1.1rem);
+			color: #a0a0a0;
+			margin-bottom: 30px;
+			font-style: italic;
+			padding: 0 8px;
+			line-height: 1.6;
+		}
+
+		/* DIVIDER */
+		.divider {
+			width: 80px;
+			height: 3px;
+			background: #dc2626;
+			margin: 26px auto;
+			border-radius: 3px;
+		}
+
+		/* TEXT BLOCKS */
+		.copy-block {
+			margin-bottom: 24px;
+			font-size: clamp(0.95rem, 2.8vw, 1.05rem);
+			color: #d0d0d0;
+			padding: 0 4px;
+		}
+
+		.copy-block p {
+			margin-bottom: 14px;
+		}
+
+		.copy-block .bold-line {
+			font-weight: 700;
+			color: #ffffff;
+		}
+
+		.copy-block .red-text {
+			color: #ef4444;
+			font-weight: 700;
+		}
+
+		.copy-block .green-text {
+			color: #22c55e;
+			font-weight: 700;
+		}
+
+		.copy-block .italic-line {
+			font-style: italic;
+			color: #b0b0b0;
+		}
+
+		.copy-block .question {
+			font-weight: 700;
+			color: #fbbf24;
+			font-size: clamp(1rem, 3vw, 1.1rem);
+		}
+
+		/* OFFER BOX */
+		.offer-box {
+			background: linear-gradient(135deg, #111827, #1a1a2e);
+			border: 2px solid #22c55e;
+			border-radius: 14px;
+			padding: 24px 16px;
+			margin: 30px 0;
+			text-align: center;
+		}
+
+		.offer-box .offer-title {
+			font-size: clamp(1.15rem, 3.5vw, 1.4rem);
+			font-weight: 800;
+			color: #22c55e;
+			margin-bottom: 6px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		.offer-box .offer-subtitle {
+			font-size: clamp(0.82rem, 2.3vw, 0.95rem);
+			color: #9ca3af;
+			margin-bottom: 18px;
+		}
+
+		/* BENEFIT LIST */
+		.benefits-list {
+			text-align: left;
+			margin: 18px 0;
+			padding: 0 4px;
+		}
+
+		.benefits-list .benefit-item {
+			display: flex;
+			align-items: flex-start;
+			gap: 10px;
+			margin-bottom: 16px;
+			font-size: clamp(0.9rem, 2.6vw, 1.02rem);
+		}
+
+		.benefits-list .benefit-icon {
+			color: #22c55e;
+			font-size: 1.2rem;
+			flex-shrink: 0;
+			margin-top: 2px;
+		}
+
+		.benefits-list .benefit-text {
+			color: #d4d4d4;
+			line-height: 1.5;
+		}
+
+		.benefits-list .benefit-text strong {
+			color: #ffffff;
+		}
+
+		/* COMPARISON TABLE */
+		.comparison-section {
+			margin: 30px 0;
+			overflow-x: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.comparison-section h3 {
+			text-align: center;
+			font-size: clamp(1.05rem, 3.2vw, 1.25rem);
+			color: #fbbf24;
+			margin-bottom: 16px;
+			font-weight: 800;
+			padding: 0 4px;
+		}
+
+		.table-wrapper {
+			overflow-x: auto;
+			border-radius: 12px;
+		}
+
+		.comparison-table {
+			width: 100%;
+			min-width: 320px;
+			border-collapse: collapse;
+			font-size: clamp(0.78rem, 2.2vw, 0.92rem);
+			border-radius: 12px;
+			overflow: hidden;
+		}
+
+		.comparison-table thead th {
+			background: #1e293b;
+			color: #ffffff;
+			padding: 12px 8px;
+			font-weight: 700;
+			text-align: center;
+			white-space: nowrap;
+		}
+
+		.comparison-table thead th:first-child {
+			text-align: left;
+		}
+
+		.comparison-table tbody td {
+			padding: 10px 8px;
+			border-bottom: 1px solid #1e293b;
+			text-align: center;
+			color: #c0c0c0;
+		}
+
+		.comparison-table tbody td:first-child {
+			text-align: left;
+			font-weight: 600;
+			color: #e0e0e0;
+			white-space: nowrap;
+		}
+
+		.comparison-table .check {
+			color: #22c55e;
+			font-size: 1.1rem;
+		}
+
+		.comparison-table .cross {
+			color: #6b7280;
+			font-size: 1rem;
+		}
+
+		.comparison-table .highlight-row {
+			background: rgba(34, 197, 94, 0.05);
+		}
+
+		.comparison-note {
+			text-align: center;
+			font-size: clamp(0.82rem, 2.3vw, 0.93rem);
+			color: #9ca3af;
+			margin-top: 12px;
+			font-style: italic;
+			padding: 0 8px;
+		}
+
+		/* PRICE SECTION */
+		.price-section {
+			text-align: center;
+			margin: 36px 0 10px;
+			padding: 26px 16px;
+			background: linear-gradient(180deg, rgba(34, 197, 94, 0.08), transparent);
+			border-radius: 14px;
+		}
+
+		.price-section .price-normal {
+			font-size: clamp(0.88rem, 2.5vw, 1rem);
+			color: #9ca3af;
+			margin-bottom: 4px;
+		}
+
+		.price-section .price-strike {
+			font-size: clamp(1.5rem, 5vw, 2rem);
+			color: #ef4444;
+			text-decoration: line-through;
+			font-weight: 700;
+			display: block;
+			margin-bottom: 4px;
+		}
+
+		.price-section .price-today-label {
+			font-size: clamp(0.92rem, 2.7vw, 1.05rem);
+			color: #d4d4d4;
+			margin-bottom: 2px;
+		}
+
+		.price-section .price-final {
+			font-size: clamp(2.4rem, 8vw, 3.2rem);
+			font-weight: 900;
+			color: #22c55e;
+			display: block;
+			line-height: 1.1;
+		}
+
+		.price-section .price-savings {
+			display: inline-block;
+			background: #22c55e;
+			color: #000;
+			font-weight: 800;
+			padding: 6px 16px;
+			border-radius: 20px;
+			font-size: clamp(0.82rem, 2.4vw, 0.95rem);
+			margin-top: 10px;
+		}
+
+		.price-section .price-onetime {
+			font-size: clamp(0.78rem, 2.2vw, 0.88rem);
+			color: #6b7280;
+			margin-top: 8px;
+		}
+
+		/* URGENCY BAR */
+		.urgency-box {
+			background: linear-gradient(135deg, #7f1d1d, #991b1b);
+			border: 1px solid #ef4444;
+			border-radius: 12px;
+			padding: 18px 16px;
+			text-align: center;
+			margin: 26px 0;
+			animation: pulseUrgency 3s infinite;
+		}
+
+		@keyframes pulseUrgency {
+
+			0%,
+			100% {
+				box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+			}
+
+			50% {
+				box-shadow: 0 0 20px 4px rgba(239, 68, 68, 0.2);
+			}
+		}
+
+		.urgency-box .urgency-icon {
+			font-size: 1.5rem;
+			margin-bottom: 6px;
+		}
+
+		.urgency-box .urgency-title {
+			font-size: clamp(0.98rem, 2.8vw, 1.15rem);
+			font-weight: 800;
+			color: #fca5a5;
+			margin-bottom: 8px;
+			text-transform: uppercase;
+		}
+
+		.urgency-box .urgency-text {
+			font-size: clamp(0.85rem, 2.4vw, 0.95rem);
+			color: #fecaca;
+			line-height: 1.5;
+		}
+
+		/* TIMER */
+		.timer-container {
+			text-align: center;
+			margin: 18px 0;
+		}
+
+		.timer-label {
+			font-size: clamp(0.75rem, 2.2vw, 0.88rem);
+			color: #f87171;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			font-weight: 700;
+			margin-bottom: 8px;
+		}
+
+		.timer-display {
+			display: inline-flex;
+			gap: 6px;
+			align-items: center;
+		}
+
+		.timer-block {
+			background: #1e293b;
+			border: 1px solid #374151;
+			border-radius: 8px;
+			padding: 8px 12px;
+			text-align: center;
+			min-width: 54px;
+		}
+
+		.timer-block .timer-number {
+			font-size: clamp(1.4rem, 4.5vw, 1.8rem);
+			font-weight: 900;
+			color: #ef4444;
+			display: block;
+			line-height: 1;
+		}
+
+		.timer-block .timer-unit {
+			font-size: 0.6rem;
+			color: #6b7280;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			margin-top: 4px;
+		}
+
+		.timer-sep {
+			font-size: 1.3rem;
+			color: #ef4444;
+			font-weight: 700;
+		}
+
+		/* GUARANTEE */
+		.guarantee-box {
+			background: #0f1a0f;
+			border: 2px solid #16a34a;
+			border-radius: 14px;
+			padding: 24px 18px;
+			margin: 26px 0;
+			text-align: center;
+		}
+
+		.guarantee-box .guarantee-shield {
+			font-size: 2.2rem;
+			margin-bottom: 8px;
+		}
+
+		.guarantee-box .guarantee-title {
+			font-size: clamp(1.05rem, 3vw, 1.2rem);
+			font-weight: 800;
+			color: #22c55e;
+			margin-bottom: 10px;
+			text-transform: uppercase;
+		}
+
+		.guarantee-box .guarantee-text {
+			font-size: clamp(0.88rem, 2.5vw, 0.98rem);
+			color: #bbf7d0;
+			line-height: 1.6;
+		}
+
+		/* CTA BUTTON */
+		.cta-container {
+			text-align: center;
+			margin: 30px 0;
+			padding: 0 4px;
+		}
+
+		.cta-button {
+			display: inline-block;
+			background: linear-gradient(135deg, #16a34a, #22c55e);
+			color: #ffffff;
+			font-size: clamp(0.95rem, 3.2vw, 1.25rem);
+			font-weight: 800;
+			padding: 18px 24px;
+			border-radius: 12px;
+			text-decoration: none;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			box-shadow: 0 4px 25px rgba(34, 197, 94, 0.4);
+			width: 100%;
+			max-width: 550px;
+			border: none;
+			line-height: 1.4;
+			animation: ctaPulse 2s infinite;
+			text-align: center;
+		}
+
+		@keyframes ctaPulse {
+
+			0%,
+			100% {
+				transform: scale(1);
+				box-shadow: 0 4px 25px rgba(34, 197, 94, 0.4);
+			}
+
+			50% {
+				transform: scale(1.02);
+				box-shadow: 0 6px 35px rgba(34, 197, 94, 0.6);
+			}
+		}
+
+		.cta-button:hover {
+			background: linear-gradient(135deg, #15803d, #16a34a);
+			transform: scale(1.03);
+		}
+
+		.cta-subtext {
+			font-size: clamp(0.72rem, 2.1vw, 0.82rem);
+			color: #6b7280;
+			margin-top: 10px;
+		}
+
+		.cta-subtext .lock-icon {
+			margin-right: 4px;
+		}
+
+		/* NO THANKS */
+		.no-thanks {
+			text-align: center;
+			margin-top: 16px;
+		}
+
+		.no-thanks a {
+			color: #4b5563;
+			font-size: clamp(0.72rem, 2vw, 0.82rem);
+			text-decoration: underline;
+			cursor: pointer;
+			transition: color 0.2s;
+		}
+
+		.no-thanks a:hover {
+			color: #6b7280;
+		}
+
+		/* PS SECTION */
+		.ps-section {
+			margin-top: 36px;
+			padding: 20px 16px;
+			background: #111111;
+			border-left: 4px solid #ef4444;
+			border-radius: 0 12px 12px 0;
+		}
+
+		.ps-section p {
+			font-size: clamp(0.88rem, 2.5vw, 0.97rem);
+			color: #c0c0c0;
+			margin-bottom: 14px;
+			line-height: 1.6;
+		}
+
+		.ps-section .ps-label {
+			color: #ef4444;
+			font-weight: 800;
+		}
+
+		.ps-section strong {
+			color: #ffffff;
+		}
+
+		/* TRUST BADGES */
+		.trust-row {
+			display: flex;
+			justify-content: center;
+			gap: 12px;
+			flex-wrap: wrap;
+			margin: 18px 0;
+			padding: 0 4px;
+		}
+
+		.trust-badge {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			font-size: clamp(0.68rem, 1.9vw, 0.78rem);
+			color: #6b7280;
+		}
+
+		.trust-badge .badge-icon {
+			font-size: 0.9rem;
+		}
+
+		/* SOCIAL PROOF MINI */
+		.social-proof-bar {
+			background: rgba(34, 197, 94, 0.08);
+			border: 1px solid rgba(34, 197, 94, 0.2);
+			border-radius: 8px;
+			padding: 10px 14px;
+			text-align: center;
+			font-size: clamp(0.82rem, 2.4vw, 0.9rem);
+			color: #86efac;
+			margin: 16px 0;
+		}
+
+		/* MODAL */
+		.modal-overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.85);
+			z-index: 9999;
+			justify-content: center;
+			align-items: center;
+			padding: 16px;
+		}
+
+		.modal-overlay.active {
+			display: flex;
+		}
+
+		.modal-box {
+			background: #1a1a2e;
+			border: 2px solid #ef4444;
+			border-radius: 14px;
+			padding: 26px 20px;
+			max-width: 440px;
+			width: 100%;
+			text-align: center;
+		}
+
+		.modal-box h3 {
+			color: #ef4444;
+			font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+			margin-bottom: 12px;
+		}
+
+		.modal-box p {
+			color: #d0d0d0;
+			font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+			line-height: 1.6;
+			margin-bottom: 18px;
+		}
+
+		.modal-box .modal-btns {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.modal-box .btn-stay {
+			background: #22c55e;
+			color: #fff;
+			font-weight: 700;
+			padding: 14px;
+			border: none;
+			border-radius: 8px;
+			cursor: pointer;
+			font-size: clamp(0.88rem, 2.6vw, 1rem);
+			text-decoration: none;
+			display: block;
+			text-align: center;
+		}
+
+		.modal-box .btn-leave {
+			background: none;
+			border: 1px solid #374151;
+			color: #6b7280;
+			padding: 10px;
+			border-radius: 8px;
+			cursor: pointer;
+			font-size: clamp(0.75rem, 2.2vw, 0.85rem);
+			text-decoration: none;
+			display: block;
+			text-align: center;
+		}
+
+		/* ======================== */
+		/* FOOTER                   */
+		/* ======================== */
+		.site-footer {
+			width: 100%;
+			border-top: 1px solid #262626;
+			background: #0d0d0d;
+			margin-top: 0;
+		}
+
+		.footer-inner {
+			max-width: 1100px;
+			margin: 0 auto;
+			padding: 40px 24px 36px;
+		}
+
+		/* Top row: copyright + nav links */
+		.footer-top {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 16px 32px;
+			margin-bottom: 32px;
+		}
+
+		.footer-copyright {
+			font-size: 0.78rem;
+			color: rgba(255, 255, 255, 0.35);
+			white-space: nowrap;
+		}
+
+		.footer-nav {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 8px 28px;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		.footer-nav a {
+			font-size: 0.82rem;
+			color: rgba(255, 255, 255, 0.45);
+			text-decoration: underline;
+			text-underline-offset: 3px;
+			text-decoration-color: rgba(255, 255, 255, 0.2);
+			transition: color 0.2s, text-decoration-color 0.2s;
+		}
+
+		.footer-nav a:hover {
+			color: rgba(255, 255, 255, 0.8);
+			text-decoration-color: rgba(255, 255, 255, 0.5);
+		}
+
+		/* Disclaimer card */
+		.footer-disclaimer-card {
+			background: #141414;
+			border: 1px solid #262626;
+			border-radius: 16px;
+			padding: 28px 28px;
+		}
+
+		.footer-disclaimer-card p {
+			font-size: 0.82rem;
+			line-height: 1.75;
+			color: rgba(255, 255, 255, 0.4);
+			margin: 0;
+		}
+
+		/* Footer responsive */
+		@media (max-width: 640px) {
+			.footer-inner {
+				padding: 28px 16px 28px;
+			}
+
+			.footer-top {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 14px;
+			}
+
+			.footer-nav {
+				gap: 6px 20px;
+			}
+
+			.footer-nav a {
+				font-size: 0.76rem;
+			}
+
+			.footer-copyright {
+				font-size: 0.72rem;
+			}
+
+			.footer-disclaimer-card {
+				padding: 20px 18px;
+				border-radius: 12px;
+			}
+
+			.footer-disclaimer-card p {
+				font-size: 0.75rem;
+				line-height: 1.7;
+			}
+		}
+
+		@media (max-width: 400px) {
+			.page-wrapper {
+				padding: 12px 10px 50px;
+			}
+
+			.offer-box {
+				padding: 20px 12px;
+			}
+
+			.guarantee-box {
+				padding: 20px 14px;
+			}
+
+			.timer-block {
+				min-width: 48px;
+				padding: 6px 8px;
+			}
+
+			.cta-button {
+				padding: 16px 16px;
+			}
+
+			.footer-inner {
+				padding: 24px 12px 24px;
+			}
+
+			.footer-disclaimer-card {
+				padding: 16px 14px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="page-wrapper">
+
+		<!-- WAIT BANNER -->
+		<div class="wait-banner">⚠️ Wait! Don't Close This Page ⚠️</div>
+
+		<!-- SOCIAL PROOF BAR -->
+		<div class="social-proof-bar">
+			🔥 <strong>347 people</strong> secured access in the last 48 hours alone
+		</div>
+
+		<!-- HEADLINE -->
+		<div class="headline">
+			<h1>Uncover Everything They're <span class="red-word">Hiding</span> From You For Just <span class="price-highlight">$27</span></h1>
+		</div>
+
+		<!-- SUBHEADLINE -->
+		<div class="subheadline">
+			I understand. If $47 felt like too much right now, I respect that.<br>
+			But before you leave, give me just 60 more seconds. Because I've put something together specifically for you.
+		</div>
+
+		<div class="divider"></div>
+
+		<!-- PAIN VALIDATION + EMPATHY -->
+		<div class="copy-block">
+			<p>Look, I know what you're feeling right now.</p>
+			<p>That pit in your stomach. The doubt that keeps you awake at night. The messages that vanish from their phone before you can see them. The conversations that "never happened." The deleted voice notes. The erased photos.</p>
+			<p class="bold-line">You know something is wrong. You feel it in your bones.</p>
+			<p>But every time you ask, you get the same answer: <span class="red-text">"You're crazy." "You're too jealous." "There's nothing going on, stop it."</span></p>
+			<p>And here's the worst part — over time, you start believing them. You start doubting yourself. You start thinking maybe the problem is <em>you</em>.</p>
+			<p class="question">But what if the problem was never you?</p>
+			<p>What if all you needed was <strong style="color:#22c55e">one tool</strong> to finally see with your own eyes what they've been trying to hide?</p>
+		</div>
+
+		<div class="divider"></div>
+
+		<!-- OFFER PRESENTATION -->
+		<div class="copy-block">
+			<p class="bold-line" style="font-size:1.15rem; color:#22c55e;">Introducing Betrayal Detect Lite — your shortcut to the truth.</p>
+			<p>This is the affordable version of our full system. Built for anyone who wants <strong>answers now</strong>, without the hassle, without the high price tag, and without needing to be a tech expert.</p>
+			<p>Betrayal Detect Lite focuses on the <strong>3 apps where 89% of all affairs are discovered</strong>: WhatsApp, Instagram, and Facebook Messenger.</p>
+			<p>Deleted messages? <span class="green-text">Recovered.</span><br>
+				Erased photos? <span class="green-text">Restored.</span><br>
+				Videos that "never existed"? <span class="green-text">Back on your screen.</span></p>
+			<p class="bold-line">All of this for a one-time payment of $27. No subscription. No hidden fees. No catch.</p>
+		</div>
+
+		<!-- OFFER BOX -->
+		<div class="offer-box">
+			<div class="offer-title">🔓 Betrayal Detect Lite</div>
+			<div class="offer-subtitle">Instant Access • One-Time Payment • Step-by-Step Guide Included</div>
+
+			<div class="benefits-list">
+				<div class="benefit-item">
+					<span class="benefit-icon">✅</span>
+					<span class="benefit-text"><strong>Recover deleted WhatsApp messages</strong> — including texts, voice notes, and images that were erased "so nobody would see." Now you will.</span>
+				</div>
+				<div class="benefit-item">
+					<span class="benefit-icon">✅</span>
+					<span class="benefit-text"><strong>Access erased Instagram DMs</strong> — uncover the conversations happening behind the scenes, the "followers" who are more than just followers, the messages that vanish like smoke.</span>
+				</div>
+				<div class="benefit-item">
+					<span class="benefit-icon">✅</span>
+					<span class="benefit-text"><strong>Facebook Messenger recovery</strong> — those Messenger chats that were "accidentally deleted"? Nothing is lost forever. Until now.</span>
+				</div>
+				<div class="benefit-item">
+					<span class="benefit-icon">✅</span>
+					<span class="benefit-text"><strong>Deleted photos & videos</strong> — restore erased media from all 3 apps. If they sent or received something compromising, you'll know.</span>
+				</div>
+				<div class="benefit-item">
+					<span class="benefit-icon">✅</span>
+					<span class="benefit-text"><strong>Simplified installation guide</strong> — step-by-step with screenshots. No tech skills needed. If you can use a phone, you can do this.</span>
+				</div>
+				<div class="benefit-item">
+					<span class="benefit-icon">✅</span>
+					<span class="benefit-text"><strong>Instant access after payment</strong> — no waiting. No approval process. In 2 minutes you can start uncovering what they've been hiding from you.</span>
+				</div>
+				<div class="benefit-item">
+					<span class="benefit-icon">✅</span>
+					<span class="benefit-text"><strong>Works on Android & iPhone</strong> — compatible with most major models. No root, no jailbreak required in most cases.</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- COMPARISON -->
+		<div class="comparison-section">
+			<h3>📊 What You Get vs. The Full Plan</h3>
+			<div class="table-wrapper">
+				<table class="comparison-table">
+					<thead>
+						<tr>
+							<th>Feature</th>
+							<th>Lite ($27)</th>
+							<th>Recovery ($47)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="highlight-row">
+							<td>WhatsApp</td>
+							<td><span class="check">✅</span></td>
+							<td><span class="check">✅</span></td>
+						</tr>
+						<tr class="highlight-row">
+							<td>Instagram DMs</td>
+							<td><span class="check">✅</span></td>
+							<td><span class="check">✅</span></td>
+						</tr>
+						<tr class="highlight-row">
+							<td>Facebook Messenger</td>
+							<td><span class="check">✅</span></td>
+							<td><span class="check">✅</span></td>
+						</tr>
+						<tr>
+							<td>Snapchat</td>
+							<td><span class="cross">—</span></td>
+							<td><span class="check">✅</span></td>
+						</tr>
+						<tr>
+							<td>Telegram</td>
+							<td><span class="cross">—</span></td>
+							<td><span class="check">✅</span></td>
+						</tr>
+						<tr>
+							<td>Dating Apps</td>
+							<td><span class="cross">—</span></td>
+							<td><span class="check">✅</span></td>
+						</tr>
+						<tr class="highlight-row">
+							<td>Photos & Videos</td>
+							<td><span class="check">✅</span></td>
+							<td><span class="check">✅</span></td>
+						</tr>
+						<tr class="highlight-row">
+							<td>Step-by-Step Guide</td>
+							<td><span class="check">✅</span></td>
+							<td><span class="check">✅</span></td>
+						</tr>
+						<tr>
+							<td>Advanced Stealth Mode</td>
+							<td><span class="cross">—</span></td>
+							<td><span class="check">✅</span></td>
+						</tr>
+						<tr>
+							<td>GPS Tracking</td>
+							<td><span class="cross">—</span></td>
+							<td><span class="check">✅</span></td>
+						</tr>
+						<tr>
+							<td>Priority Support</td>
+							<td><span class="cross">—</span></td>
+							<td><span class="check">✅</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<p class="comparison-note">Lite doesn't have everything — but it covers the essentials. The 3 apps where most affairs get discovered.</p>
+		</div>
+
+		<div class="copy-block">
+			<p class="question">Think about it:</p>
+			<p>If the affair is happening on WhatsApp, Instagram, or Messenger — and <strong>89% of the time it is</strong> — Betrayal Detect Lite already gives you what you need to uncover the truth.</p>
+			<p>You don't need everything. <span class="bold-line">You just need enough.</span></p>
+			<p>And $27 is enough to end months — sometimes <em>years</em> — of doubt, anxiety, and sleepless nights.</p>
+		</div>
+
+		<!-- PRICE SECTION -->
+		<div class="price-section">
+			<span class="price-normal">Regular price of Betrayal Detect Lite:</span>
+			<span class="price-strike">$79.00</span>
+			<span class="price-today-label">Your price today — <strong>only on this page</strong>:</span>
+			<span class="price-final">$27</span>
+			<span class="price-savings">🔥 SAVE 66% — YOU KEEP $52 IN YOUR POCKET</span>
+			<p class="price-onetime">One-time payment. No monthly fees. No surprise charges. Ever.</p>
+		</div>
+
+		<!-- TIMER -->
+		<div class="timer-container">
+			<div class="timer-label">⏰ This offer expires in:</div>
+			<div class="timer-display">
+				<div class="timer-block">
+					<span class="timer-number" id="timer-min">09</span>
+					<span class="timer-unit">min</span>
+				</div>
+				<span class="timer-sep">:</span>
+				<div class="timer-block">
+					<span class="timer-number" id="timer-sec">59</span>
+					<span class="timer-unit">sec</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- URGENCY -->
+		<div class="urgency-box">
+			<div class="urgency-icon">🚨</div>
+			<div class="urgency-title">Exclusive Offer — This Page Only</div>
+			<div class="urgency-text">
+				This <strong>$27</strong> price exists <strong>only here and now</strong>. If you close this page, leave, or even refresh your browser — the offer disappears. No link back. No second chance. The next price will be the full <strong>$79</strong>. That's the reality.
+			</div>
+		</div>
+
+		<!-- GUARANTEE -->
+		<div class="guarantee-box">
+			<div class="guarantee-shield">🛡️</div>
+			<div class="guarantee-title">Ironclad 30-Day Money-Back Guarantee</div>
+			<div class="guarantee-text">
+				Your investment is 100% protected. If for any reason — literally <strong>any reason at all</strong> — you feel that Betrayal Detect Lite wasn't worth every single penny, just send us an email within 30 days and we'll refund <strong>every cent</strong>. No questions asked. No hassle. No awkward "but why?" games. You ask, we refund. Period.
+				<br><br>
+				<strong>The risk is zero. The risk of continuing without knowing... that's the one that's enormous.</strong>
+			</div>
+		</div>
+
+		<div class="copy-block" style="text-align:center;">
+			<p class="question">Are you going to keep lying next to someone who might be lying to you every single day?</p>
+			<p>Or will you invest <strong style="color:#22c55e">$27</strong> — less than a Friday night pizza — to finally have <strong>peace of mind</strong>?</p>
+		</div>
+
+		<!-- CTA PRINCIPAL -->
+		<div class="cta-container">
+			<a href="https://explodely.com/p/54063765?ocu=yes" class="cta-button">
+				✅ YES! I Want Betrayal Detect Lite<br>
+				<span style="font-size:0.85em;">for Just $27 Now!</span>
+			</a>
+			<p class="cta-subtext"><span class="lock-icon">🔒</span> Secure & encrypted payment • Instant access</p>
+		</div>
+
+		<!-- TRUST BADGES -->
+		<div class="trust-row">
+			<div class="trust-badge"><span class="badge-icon">🔒</span> SSL Secure</div>
+			<div class="trust-badge"><span class="badge-icon">✅</span> Protected Purchase</div>
+			<div class="trust-badge"><span class="badge-icon">🛡️</span> 30-Day Guarantee</div>
+			<div class="trust-badge"><span class="badge-icon">⚡</span> Instant Access</div>
+		</div>
+
+		<!-- NO THANKS -->
+		<div class="no-thanks">
+			<a href="https://lookinsider.online/ds1-2/">No thanks. I'd rather not know the truth.</a>
+		</div>
+
+		<!-- PS SECTION -->
+		<div class="ps-section">
+			<p><span class="ps-label">P.S.</span> — While you're reading this, messages could be getting deleted from your partner's phone right now. Photos could be disappearing. Entire conversations could be erased this very second. Every minute that passes is another minute of evidence lost forever. <strong>$27 is the price of knowing. The price of not knowing... you're already paying that one every single day.</strong></p>
+			<p><span class="ps-label">P.P.S.</span> — You're not here by accident. You searched. You clicked. You landed on this page because <strong>something inside you knows</strong> the story doesn't add up. Don't ignore that voice. It's rarely wrong. <strong>You deserve the truth. You deserve peace of mind. You deserve to know.</strong></p>
+			<p><span class="ps-label">P.P.P.S.</span> — Remember: this <strong style="color:#22c55e;">$27</strong> offer is exclusive to this page. When you leave, it's gone. No link back. No coupon code. No "send it again." If you're on the fence, grab it now with zero risk — the 30-day guarantee has you fully covered. <strong>But the offer? It won't wait.</strong></p>
+		</div>
+
+		<!-- CTA FINAL -->
+		<div class="cta-container" style="margin-top: 32px;">
+			<a href="https://explodely.com/p/54063765?ocu=yes" class="cta-button">
+				🔓 I WANT ACCESS TO BETRAYAL DETECT LITE<br>
+				<span style="font-size:0.85em;">for $27 — One-Time Payment</span>
+			</a>
+			<p class="cta-subtext">👆 Click above to secure your access before the offer expires</p>
+		</div>
+
+		<div class="no-thanks" style="margin-top: 14px; margin-bottom: 40px;">
+			<a href="https://lookinsider.online/ds1-2/">No, I really don't want to know what they're hiding from me.</a>
+		</div>
+
+	</div>
+
+	<!-- ======================== -->
+	<!-- FOOTER                   -->
+	<!-- ======================== -->
+	<footer class="site-footer">
+		<div class="footer-inner">
+
+			<!-- Top row -->
+			<div class="footer-top">
+				<div class="footer-copyright">© 2026 LookInsider. All rights reserved.</div>
+
+				<nav>
+					<ul class="footer-nav">
+						<li><a href="https://lookinsider.online/disclaimer" target="_blank" rel="noopener noreferrer">Disclaimer</a></li>
+						<li><a href="https://lookinsider.online/ftc-compliance/" target="_blank" rel="noopener noreferrer">FTC Compliance</a></li>
+						<li><a href="https://lookinsider.online/terms-of-service/" target="_blank" rel="noopener noreferrer">Terms of Service</a></li>
+						<li><a href="mailto:support@lookinsider.online">Product Support</a></li>
+						<li><a href="https://shorturl.at/bzQUX" target="_blank" rel="noopener noreferrer">Billing Support</a></li>
+					</ul>
+				</nav>
+			</div>
+
+			<!-- Disclaimer card -->
+			<div class="footer-disclaimer-card">
+				<p>The information provided on this website is for general informational purposes only and is sourced from publicly available or third-party data. We do not guarantee the accuracy, completeness, or current validity of any information displayed, nor do we verify phone number ownership. This website is not affiliated with any telecom operator, government authority, or law-enforcement agency. Users agree to use this service at their own risk and in compliance with applicable laws. The information must not be used for harassment, stalking, defamation, or any unlawful activity.</p>
+			</div>
+
+		</div>
+	</footer>
+
+	<!-- EXIT MODAL -->
+	<div class="modal-overlay" id="exitModal">
+		<div class="modal-box">
+			<h3>⚠️ Are you sure you want to leave?</h3>
+			<p>This <strong>$27</strong> offer disappears the moment you close this page. There's no link back. There's no second chance.<br><br>The truth is one click away.<br><strong>Do you really want to walk away without it?</strong></p>
+			<div class="modal-btns">
+				<a href="#" class="btn-stay" onclick="closeModal(); return false;">🔓 I Want to Stay & Secure My Access!</a>
+				<a href="https://lookinsider.online/ds1-2/" class="btn-leave">No, I'd rather stay in the dark.</a>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// COUNTDOWN TIMER
+		let totalSeconds = 10 * 60 - 1;
+		const timerMin = document.getElementById('timer-min');
+		const timerSec = document.getElementById('timer-sec');
+
+		function updateTimer() {
+			if (totalSeconds <= 0) {
+				timerMin.textContent = '00';
+				timerSec.textContent = '00';
+				return;
+			}
+			totalSeconds--;
+			const m = Math.floor(totalSeconds / 60);
+			const s = totalSeconds % 60;
+			timerMin.textContent = m.toString().padStart(2, '0');
+			timerSec.textContent = s.toString().padStart(2, '0');
+		}
+		setInterval(updateTimer, 1000);
+
+		// EXIT INTENT MODAL
+		let modalShown = false;
+
+		document.addEventListener('mouseleave', function (e) {
+			if (e.clientY < 10 && !modalShown) {
+				document.getElementById('exitModal').classList.add('active');
+				modalShown = true;
+			}
+		});
+
+		function closeModal() {
+			document.getElementById('exitModal').classList.remove('active');
+		}
+
+		// Smooth scroll
+		document.documentElement.style.scrollBehavior = 'smooth';
+	</script>
+
+</body>
+
+</html>
