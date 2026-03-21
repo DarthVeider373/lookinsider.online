@@ -1,0 +1,489 @@
+<!DOCTYPE html><html lang="fr"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stylo Maison App | Protocole 28 Jours</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+:root{--p:#E63956;--pd:#C42D47;--pm:#F06680;--pl:#FDE8ED;--pp:#FFF2F5;--bg:#FFFBFC;--ac:#D4956A;--acl:#FFF4EC;--t1:#2A1A1E;--t2:#6E525A;--t3:#9B858C;--w:#FFF;--bd:#F0D8DC;--ok:#D4396A;--okb:#FDE8ED;--r:16px;--rf:50px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--t1);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+header{padding:14px 20px;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:center;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-i{width:34px;height:34px;background:linear-gradient(135deg,var(--p),var(--pm));border-radius:9px;display:flex;align-items:center;justify-content:center}
+.logo-i svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
+.logo-t{font-weight:700;font-size:.95rem;color:var(--p)}
+.logo-t span{font-weight:300;color:var(--t3)}
+.app{max-width:540px;margin:0 auto;padding:24px 16px 60px}
+.screen{display:none}.screen.active{display:block;animation:fi .5s ease}
+@keyframes fi{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.hero{text-align:center;margin-bottom:28px}
+.badge{display:inline-flex;align-items:center;gap:5px;background:var(--pl);color:var(--p);font-size:.72rem;font-weight:600;padding:5px 13px;border-radius:var(--rf);margin-bottom:16px}
+.hero h1{font-size:1.55rem;font-weight:800;line-height:1.25;margin-bottom:10px;letter-spacing:-.4px}
+.hero h1 em{font-style:normal;color:var(--p)}
+.hero p{font-size:.9rem;color:var(--t2);max-width:380px;margin:0 auto}
+.card{background:var(--w);border-radius:24px;padding:26px 22px;box-shadow:0 4px 20px rgba(230,57,86,.06);border:1px solid rgba(230,57,86,.06)}
+.card-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin-bottom:20px;text-align:center}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.82rem;font-weight:600;color:var(--t1);margin-bottom:6px}
+.field label .u{font-weight:400;color:var(--t3)}
+.iw{position:relative}
+.iw input,.mf input{width:100%;padding:14px 48px 14px 15px;background:var(--pp);border:2px solid transparent;border-radius:var(--r);font-size:1rem;font-family:'Inter',sans-serif;font-weight:500;color:var(--t1);outline:none;transition:.3s}
+.iw input::placeholder,.mf input::placeholder{color:var(--t3);font-weight:400}
+.iw input:focus,.mf input:focus{border-color:var(--p);background:var(--w);box-shadow:0 0 0 4px rgba(230,57,86,.1)}
+.iw input.err{border-color:#e74c3c;background:#FFF5F5;animation:shk .4s}
+.iw .sf,.mf .sf{position:absolute;right:15px;top:50%;transform:translateY(-50%);font-size:.82rem;color:var(--t3);pointer-events:none}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.sel-row{display:flex;gap:8px;margin-bottom:14px}
+.sel-btn{flex:1;padding:13px;background:var(--pp);border:2px solid transparent;border-radius:var(--r);font-size:.9rem;font-weight:600;font-family:'Inter',sans-serif;color:var(--t2);cursor:pointer;text-align:center;transition:.3s}
+.sel-btn:hover{border-color:var(--pm)}
+.sel-btn.on{border-color:var(--p);background:var(--pl);color:var(--p)}
+.btn{width:100%;padding:16px;background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;border:none;border-radius:var(--rf);font-size:.96rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:.3s;margin-top:4px}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(230,57,86,.3)}
+.btn:active{transform:translateY(0)}
+.trust{margin-top:22px;text-align:center}
+.trust p{font-size:.76rem;color:var(--t3)}.trust strong{color:var(--t2)}
+.lw{text-align:center;padding:50px 0 30px}
+.lv{width:72px;height:72px;margin:0 auto 24px;position:relative}
+.lr{width:72px;height:72px;border:3px solid var(--pl);border-radius:50%;position:absolute}
+.lr.sp{border-color:transparent;border-top-color:var(--p);animation:spin 1.2s cubic-bezier(.5,0,.5,1) infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lw h2{font-size:1.1rem;font-weight:700;margin-bottom:5px}
+.lw p{font-size:.86rem;color:var(--t3);margin-bottom:28px}
+.pb{max-width:280px;margin:0 auto}
+.pbg{width:100%;height:5px;background:var(--pl);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.pbf{height:100%;width:0;background:linear-gradient(90deg,var(--p),var(--pm));border-radius:10px;transition:width .4s}
+.ps{display:flex;flex-direction:column;gap:8px;text-align:left}
+.psi{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--t3);transition:.4s}
+.psi.on{color:var(--t1);font-weight:500}.psi.ok{color:var(--p)}
+.pid{width:18px;height:18px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.4s}
+.psi.on .pid{border-color:var(--p);background:var(--pl)}.psi.ok .pid{border-color:var(--p);background:var(--p)}
+.pck{display:none;width:10px;height:10px;stroke:#fff;stroke-width:3;fill:none}.psi.ok .pck{display:block}
+.pdt{width:4px;height:4px;border-radius:50%;background:transparent}.psi.on .pdt{background:var(--p);animation:pls 1.5s infinite}.psi.ok .pdt{display:none}
+@keyframes pls{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.4}}
+.dh{background:linear-gradient(135deg,var(--p),var(--pd));border-radius:24px;padding:24px 22px;margin-bottom:14px;position:relative;overflow:hidden}
+.dh::before{content:'';position:absolute;width:160px;height:160px;background:rgba(255,255,255,.06);border-radius:50%;top:-50px;right:-40px}
+.dml{font-size:.68rem;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:5px}
+.dmt{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:4px}
+.dms{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:14px}
+.dpb{height:5px;background:rgba(255,255,255,.15);border-radius:10px;overflow:hidden;margin-bottom:6px}
+.dpf{height:100%;background:rgba(255,255,255,.8);border-radius:10px;transition:width .5s}
+.dpt{font-size:.72rem;color:rgba(255,255,255,.4)}
+.dm{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);position:relative;z-index:1}
+.dmi{text-align:center}.dmi .v{font-size:1.05rem;font-weight:700;color:#fff}.dmi .l{font-size:.65rem;color:rgba(255,255,255,.4);margin-top:1px}.dmi .d{font-size:.68rem;font-weight:600;color:#FFB4C6;margin-top:1px}
+.wt{display:flex;gap:7px;margin-bottom:14px}
+.wtb{flex:1;padding:11px 6px;background:var(--w);border:2px solid var(--bd);border-radius:var(--r);text-align:center;cursor:pointer;transition:.3s;font-family:'Inter',sans-serif}
+.wtb:hover{border-color:var(--pm)}.wtb.on{border-color:var(--p);background:var(--pl)}
+.wtb .n{font-size:.66rem;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.4px}
+.wtb.on .n{color:var(--p)}
+.wtb .lb{font-size:.7rem;font-weight:500;color:var(--t2);margin-top:1px}.wtb.on .lb{color:var(--p);font-weight:600}
+.wi{background:var(--w);border-radius:20px;padding:18px;box-shadow:0 1px 3px rgba(230,57,86,.04);border:1px solid rgba(230,57,86,.04);margin-bottom:12px}
+.wip{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:4px 11px;border-radius:var(--rf);margin-bottom:8px}
+.wid{font-size:.82rem;color:var(--t2);line-height:1.6}
+.dl{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.dc{background:var(--w);border-radius:20px;border:1.5px solid var(--bd);overflow:hidden;transition:.3s}
+.dc:hover{border-color:#E8B8C0}.dc.dn{border-color:#F8B4C4;background:#FFFBFC}.dc.ex{border-color:var(--p);box-shadow:0 4px 20px rgba(230,57,86,.08)}
+.dhr{display:flex;align-items:center;gap:11px;padding:15px 16px;cursor:pointer;user-select:none}
+.dnu{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;background:var(--pp);color:var(--p);transition:.3s}
+.dc.dn .dnu{background:var(--pl);color:var(--pd)}.dc.ex .dnu{background:var(--p);color:#fff}
+.di{flex:1;min-width:0}.dn2{font-size:.86rem;font-weight:600;color:var(--t1)}
+.ds{font-size:.73rem;color:var(--t3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dc.dn .ds{color:var(--p)}
+.dst{width:26px;height:26px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.3s;cursor:pointer}
+.dc.dn .dst{border-color:var(--p);background:var(--p)}
+.dst svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;display:none}.dc.dn .dst svg{display:block}
+.dch{width:18px;height:18px;stroke:var(--t3);fill:none;stroke-width:2;flex-shrink:0;transition:transform .3s}.dc.ex .dch{transform:rotate(180deg)}
+.dbd{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.23,1,.32,1)}.dc.ex .dbd{max-height:2200px}
+.dbc{padding:0 16px 16px}
+.dvd{height:1px;background:var(--bd);margin-bottom:14px}
+.meal-sec{margin-bottom:16px}
+.meal-h{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:8px 12px;border-radius:12px}
+.meal-h.tonic{background:linear-gradient(135deg,#FCE4EC,#F8BBD0)}.meal-h.cafe{background:#FFF8E1}.meal-h.almoco{background:#FFEBEE}.meal-h.jantar{background:#EDE7F6}
+.meal-h .mico{font-size:1.1rem}
+.meal-h .mtit{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.meal-h.tonic .mtit{color:#C2185B}.meal-h.cafe .mtit{color:#F57F17}.meal-h.almoco .mtit{color:#C62828}.meal-h.jantar .mtit{color:#4527A0}
+.meal-h .msub{font-size:.72rem;font-weight:400;margin-left:auto}
+.meal-h.tonic .msub{color:#E91E63}.meal-h.cafe .msub{color:#FFA000}.meal-h.almoco .msub{color:#E53935}.meal-h.jantar .msub{color:#7E57C2}
+.meal-name{font-size:.9rem;font-weight:700;color:var(--t1);margin-bottom:8px;padding-left:2px}
+.ming{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid #faf0f2}
+.ming:last-of-type{border-bottom:none}
+.ming-l{display:flex;align-items:center;gap:9px}
+.ming-e{font-size:.95rem;width:24px;text-align:center}
+.ming-n{font-size:.82rem;color:var(--t1);font-weight:500}
+.ming-q{font-size:.84rem;font-weight:700;color:var(--p);white-space:nowrap}
+.meal-tip{margin-top:8px;padding:10px 12px;background:var(--pp);border-radius:10px;font-size:.78rem;color:var(--t2);line-height:1.55}
+.meal-tip strong{color:var(--t1)}
+.day-cal{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:var(--pl);border-radius:12px;margin-top:12px;margin-bottom:8px}
+.day-cal .cal-v{font-size:1rem;font-weight:800;color:var(--p)}
+.day-cal .cal-l{font-size:.76rem;color:var(--t2)}
+.day-cal .cal-t{font-size:.7rem;color:var(--t3);margin-left:8px;padding-left:8px;border-left:1px solid var(--bd)}
+.btn-dn{width:100%;padding:11px;background:var(--pl);color:var(--p);border:none;border-radius:var(--rf);font-size:.82rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-dn:hover{background:var(--pp)}.btn-dn svg{width:15px;height:15px;stroke:var(--p);fill:none;stroke-width:2}
+.dc.dn .btn-dn{background:var(--pl);color:var(--pd)}.dc.dn .btn-dn svg{stroke:var(--pd)}
+.ms{background:linear-gradient(135deg,var(--acl),#FFF8F0);border:1.5px solid #F0D9C4;border-radius:24px;padding:22px;text-align:center;margin-bottom:16px}
+.ms .mi{font-size:1.8rem;margin-bottom:8px}.ms h3{font-size:1.02rem;font-weight:700;margin-bottom:5px}.ms p{font-size:.82rem;color:var(--t2);margin-bottom:14px}
+.btn-m{display:inline-flex;align-items:center;gap:7px;padding:13px 26px;background:var(--ac);color:#fff;border:none;border-radius:var(--rf);font-size:.88rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:.3s}
+.btn-m:hover{background:#C4855A;transform:translateY(-1px)}
+.hc{background:var(--w);border-radius:24px;padding:22px;box-shadow:0 1px 3px rgba(230,57,86,.04);border:1px solid rgba(230,57,86,.04);margin-bottom:16px}
+.hh{display:flex;align-items:center;gap:9px;margin-bottom:14px}.hhi{width:34px;height:34px;background:var(--pl);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.hh h3{font-size:.92rem;font-weight:700}
+.hit{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #faf0f2}.hit:last-child{border-bottom:none}
+.hdt{width:9px;height:9px;border-radius:50%;flex-shrink:0}.hif{flex:1}
+.hil{font-size:.8rem;font-weight:600}.hid{font-size:.72rem;color:var(--t3);margin-top:1px}
+.hdl{font-size:.8rem;font-weight:700;color:var(--p)}.hdl.n{color:var(--t3)}
+.mo{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);align-items:flex-end;justify-content:center}
+.mo.vis{display:flex}
+.msh{background:var(--w);border-radius:28px 28px 0 0;padding:26px 22px 36px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;animation:su .4s cubic-bezier(.23,1,.32,1);position:relative}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@media(min-width:600px){.mo{align-items:center}.msh{border-radius:24px;max-height:85vh}}
+.mhn{width:36px;height:4px;background:var(--bd);border-radius:4px;margin:0 auto 18px}
+.mcl{position:absolute;top:14px;right:14px;width:34px;height:34px;background:var(--pp);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mcl svg{width:16px;height:16px;stroke:var(--t2);fill:none;stroke-width:2}
+.mhd{text-align:center;margin-bottom:22px}.mhd .mhi{font-size:2rem;margin-bottom:8px}.mhd h2{font-size:1.2rem;font-weight:800;margin-bottom:5px}.mhd p{font-size:.86rem;color:var(--t2)}
+.msu{background:var(--pp);border-radius:var(--r);padding:14px;margin-bottom:18px;display:flex;justify-content:space-around}
+.mst{text-align:center}.mst .mv{font-size:1.15rem;font-weight:700;color:var(--p)}.mst .ml{font-size:.68rem;color:var(--t3);margin-top:1px}
+.mf{margin-bottom:14px;position:relative}.mf label{display:block;font-size:.82rem;font-weight:600;margin-bottom:6px}
+.btn-u{width:100%;padding:16px;background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;border:none;border-radius:var(--rf);font-size:.96rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:.3s;margin-top:6px}
+.btn-u:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(230,57,86,.3)}
+.disc{background:#FFF0F3;border:1px solid #F8B4C4;border-radius:12px;padding:10px 12px;display:flex;align-items:flex-start;gap:8px;margin-top:10px}
+.disc svg{width:14px;height:14px;stroke:var(--p);fill:none;stroke-width:2;flex-shrink:0;margin-top:2px}
+.disc p{font-size:.7rem;color:#8B3050;line-height:1.5}
+@media(max-width:480px){.hero h1{font-size:1.4rem}.card{padding:20px 16px}.dh{padding:20px 16px}.dhr{padding:12px 12px;gap:9px}.dbc{padding:0 12px 14px}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">
+<div class="logo-i"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg></div>
+<div class="logo-t">Stylo Maison <span>| App</span></div>
+</div>
+</header>
+
+<div class="app">
+
+<section id="scr-onboard" class="screen active">
+<div class="hero">
+<div class="badge">✦ Protocole Personnalisé</div>
+<h1>Votre programme de <em>nutrition sur mesure</em></h1>
+<p>Recettes complètes pour petit-déjeuner, déjeuner et dîner — ajustées à vos mesures chaque mois.</p>
+</div>
+<div class="card">
+<div class="card-label">Vos informations</div>
+<form id="frm" novalidate="">
+<div class="field"><label>Sexe</label>
+<div class="sel-row"><button type="button" class="sel-btn" data-v="M" onclick="selSex(this)">♂ Homme</button><button type="button" class="sel-btn" data-v="F" onclick="selSex(this)">♀ Femme</button></div></div>
+<div class="field"><label>Âge <span class="u">(ans)</span></label><div class="iw"><input type="number" id="i-age" placeholder="ex : 35" min="18" max="99" required=""><span class="sf">ans</span></div></div>
+<div class="field"><label>Taille <span class="u">(cm)</span></label><div class="iw"><input type="number" id="i-ht" placeholder="ex : 170" min="120" max="220" required=""><span class="sf">cm</span></div></div>
+<div class="field"><label>Poids actuel <span class="u">(kg)</span></label><div class="iw"><input type="number" id="i-wt" placeholder="ex : 78" min="40" max="250" step="0.1" required=""><span class="sf">kg</span></div></div>
+<input type="hidden" id="i-sex" value="">
+<button type="submit" class="btn">Générer mon protocole personnalisé →</button>
+</form>
+</div>
+<div class="trust"><p><strong>14 200+</strong> protocoles générés ce mois-ci</p></div>
+</section>
+
+<section id="scr-load" class="screen">
+<div class="lw">
+<div class="lv"><div class="lr"></div><div class="lr sp"></div></div>
+<h2>Préparation de votre protocole…</h2>
+<p>Calcul des dosages et des repas</p>
+<div class="pb">
+<div class="pbg"><div class="pbf" id="pf"></div></div>
+<div class="ps">
+<div class="psi" id="ps1"><div class="pid"><svg class="pck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg><div class="pdt"></div></div>Analyse du profil métabolique</div>
+<div class="psi" id="ps2"><div class="pid"><svg class="pck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg><div class="pdt"></div></div>Calcul des dosages du tonique</div>
+<div class="psi" id="ps3"><div class="pid"><svg class="pck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg><div class="pdt"></div></div>Sélection des repas français</div>
+<div class="psi" id="ps4"><div class="pid"><svg class="pck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg><div class="pdt"></div></div>Génération du protocole 28 jours</div>
+</div></div></div>
+</section>
+
+<section id="scr-dash" class="screen"><div id="dash"></div></section>
+</div>
+
+<div class="mo" id="modal"><div class="msh"><div class="mhn"></div><button class="mcl" onclick="cModal()"><svg viewBox="0 0 24 24" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><div id="mi"></div></div></div>
+
+<script>
+let S={user:{sex:'',age:0,ht:0,wt:0,iwt:0},month:1,week:1,expDay:null,done:{},hist:[]};
+const JOURS=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+const WKS=[
+{nm:"Adaptation",sub:"Phase initiale",c:"#E63956",cb:"#FDE8ED",m:.7,desc:"Votre organisme s'adapte progressivement. Dosages réduits à 70% pour le confort. Repas légers et faciles à digérer."},
+{nm:"Accélération",sub:"Intensification",c:"#C42D47",cb:"#FDE8ED",m:.85,desc:"Dosages à 85%. Repas plus protéinés pour soutenir le métabolisme. Vous commencez à ressentir plus de satiété."},
+{nm:"Croisière",sub:"Puissance totale",c:"#D4956A",cb:"#FFF4EC",m:1,desc:"Protocole à 100%. Synergie maximale des ingrédients. Recettes variées de la cuisine française pour des résultats visibles."},
+{nm:"Consolidation",sub:"Stabilisation",c:"#F06680",cb:"#FFF0F3",m:1,desc:"Phase d'ancrage métabolique. Votre nouveau rythme se stabilise. Mettez à jour vos mesures pour le mois suivant."}
+];
+
+const MEALS=[
+// ═══ SEMAINE 1 ═══
+[
+{c:["Tartine Avocat-Œuf Poché",310,[["🥑","Avocat mûr","½ pièce"],["🥚","Œuf poché","1 pièce"],["🍞","Pain complet","1 tranche"],["🌶️","Piment d'Espelette","1 pincée"]],"L'avocat apporte des acides gras essentiels. Pochez l'œuf 3 min dans l'eau frémissante avec du vinaigre."],
+a:["Poulet Grillé, Riz Complet et Haricots Verts",460,[["🍗","Blanc de poulet","150g"],["🍚","Riz complet","4 c. à soupe"],["🫛","Haricots verts","120g"],["🫒","Huile d'olive","1 c. à soupe"]],"Assaisonnez le poulet avec du thym et de l'ail. Les haricots verts al dente conservent plus de nutriments."],
+j:["Velouté de Courgettes au Basilic",230,[["🥒","Courgettes","250g"],["🧅","Oignon","½ pièce"],["🌿","Basilic frais","6 feuilles"],["🧀","Chèvre frais","20g"]],"Faites revenir l'oignon, ajoutez les courgettes et le bouillon. Mixez avec le basilic."]},
+
+{c:["Fromage Blanc, Muesli et Fruits Rouges",290,[["🥛","Fromage blanc 0%","150g"],["🥣","Muesli sans sucre","30g"],["🍓","Fruits rouges mélangés","80g"],["🍯","Miel d'acacia","1 c. à café"]],"Le fromage blanc est riche en protéines et pauvre en matières grasses. Antioxydants des fruits rouges."],
+a:["Pavé de Saumon, Purée de Brocolis",450,[["🐟","Pavé de saumon","150g"],["🥦","Brocolis","200g"],["🧄","Ail + échalote","1 gousse"],["🍋","Citron pressé","½ pièce"]],"Cuisez le saumon à la poêle 4 min par face. Purée de brocolis : vapeur puis mixé avec un filet d'huile d'olive."],
+j:["Salade Niçoise Allégée",250,[["🥫","Thon au naturel","1 boîte"],["🥚","Œuf dur","1 pièce"],["🫒","Olives noires","6 pièces"],["🥗","Mesclun + tomates cerises","à volonté"]],"Classique de la Côte d'Azur. Assaisonnement : huile d'olive, vinaigre de vin, moutarde de Dijon."]},
+
+{c:["Porridge Avoine-Pomme-Cannelle",320,[["🥣","Flocons d'avoine","40g"],["🍎","Pomme coupée","1 pièce"],["🥛","Lait d'amande","200ml"],["🌰","Cannelle","1 c. à café"]],"L'avoine est riche en bêta-glucane, qui régule le cholestérol. La cannelle améliore l'insuline."],
+a:["Bœuf Bourguignon Allégé",480,[["🥩","Bœuf (paleron)","140g"],["🍷","Vin rouge (cuisson)","5cl"],["🥕","Carottes + champignons","150g"],["🍚","Riz complet","3 c. à soupe"]],"Mijoter 2h à feu doux. Le vin s'évapore à la cuisson. Grand classique bourguignon revisité."],
+j:["Croque-Monsieur au Four",270,[["🍞","Pain de mie complet","2 tranches"],["🧀","Emmental râpé","20g"],["🥓","Jambon blanc","1 tranche"],["🥛","Béchamel légère","1 c. à soupe"]],"Au four 10 min à 200°C au lieu de la poêle. Béchamel : lait écrémé + maïzena + muscade."]},
+
+{c:["Smoothie Vert Épinards-Banane",280,[["🥬","Épinards frais","30g"],["🍌","Banane","1 pièce"],["🥛","Lait d'amande","250ml"],["🥜","Beurre de cacahuète","1 c. à soupe"]],"Mixez 40s. Les épinards sont riches en fer et magnésium, leur goût est masqué par la banane."],
+a:["Cabillaud en Papillote aux Légumes",430,[["🐟","Filet de cabillaud","180g"],["🫑","Poivron + courgette","150g"],["🍅","Tomate","1 pièce"],["🌿","Herbes de Provence","1 c. à café"]],"Emballez dans du papier sulfurisé. Four 20 min à 180°C. La papillote conserve saveurs et nutriments."],
+j:["Omelette aux Fines Herbes",240,[["🥚","Œufs","2 pièces"],["🌿","Ciboulette + persil + estragon","à volonté"],["🧀","Fromage de chèvre","20g"],["🥗","Salade verte","à volonté"]],"Classique parisien. Cuisson baveuse à feu doux pour un résultat onctueux."]},
+
+{c:["Galette de Sarrasin Jambon-Fromage",320,[["⚫","Farine de sarrasin","40g"],["🥓","Jambon blanc","1 tranche"],["🧀","Emmental râpé","20g"],["🥚","Œuf","1 pièce"]],"La galette bretonne par excellence. Le sarrasin est sans gluten et riche en protéines végétales."],
+a:["Poulet Basquaise",460,[["🍗","Cuisses de poulet (sans peau)","200g"],["🫑","Poivrons rouges + verts","150g"],["🍅","Tomates","2 pièces"],["🌶️","Piment d'Espelette","1 pincée"]],"Faites revenir le poulet, ajoutez poivrons et tomates. Mijoter 45 min. Tradition du Pays Basque."],
+j:["Velouté de Potimarron",220,[["🎃","Potimarron","250g"],["🧅","Oignon","½ pièce"],["🥛","Crème fraîche légère","1 c. à soupe"],["🌰","Noix de muscade","1 pincée"]],"Le potimarron n'a pas besoin d'être épluché. Soupe d'automne réconfortante."]},
+
+{c:["Tartine Beurre d'Amande et Miel",310,[["🍞","Pain complet au levain","1 tranche"],["🥜","Beurre d'amande","1 c. à soupe"],["🍯","Miel de lavande","1 c. à café"],["🍌","Banane en rondelles","½ pièce"]],"Le beurre d'amande est riche en vitamine E et magnésium. Le miel de lavande est typiquement provençal."],
+a:["Steak Haché, Gratin Dauphinois Allégé",470,[["🥩","Steak haché 5% MG","130g"],["🥔","Pommes de terre","200g"],["🥛","Lait écrémé + muscade","150ml"],["🥗","Salade verte","à volonté"]],"Fines tranches de pommes de terre, lait, muscade. Four 45 min à 180°C. Version allégée sans crème."],
+j:["Salade Tiède de Lentilles au Chèvre",260,[["🫘","Lentilles vertes du Puy","80g"],["🧀","Bûche de chèvre","30g"],["🥬","Roquette","à volonté"],["🥕","Échalote + vinaigre de Xérès","à goût"]],"Les lentilles du Puy sont un trésor français. Riches en protéines végétales et en fer."]},
+
+{c:["Pancakes Ricotta-Myrtilles",330,[["🥛","Ricotta","60g"],["🥚","Œuf","1 pièce"],["🥣","Farine complète","40g"],["🫐","Myrtilles","50g"]],"La ricotta rend les pancakes moelleux et protéinés. Les myrtilles sont riches en antioxydants."],
+a:["Rôti de Porc aux Pruneaux",470,[["🥩","Rôti de porc (filet)","160g"],["🍇","Pruneaux d'Agen","5 pièces"],["🥔","Pommes de terre rôties","150g"],["🌿","Thym + romarin","à goût"]],"Spécialité de Tours. Les pruneaux d'Agen fondent dans le jus. Classique du dimanche français."],
+j:["Soupe à l'Oignon Gratinée Light",230,[["🧅","Oignons","3 gros"],["🍞","Pain complet grillé","1 tranche"],["🧀","Gruyère râpé","20g"],["🍷","Bouillon + vin blanc","200ml"]],"Caramélisez les oignons longuement. Gratinez au four 5 min. Emblème des Halles de Paris."]}
+],
+// ═══ SEMAINE 2 ═══
+[
+{c:["Œufs Brouillés, Pain Complet, Tomate",300,[["🥚","Œufs","2 pièces"],["🍞","Pain complet","1 tranche"],["🍅","Tomate en rondelles","1 pièce"],["🌿","Ciboulette fraîche","à goût"]],"Cuisson lente à feu très doux en remuant sans cesse. Texture crémeuse à la française."],
+a:["Dorade Grillée, Riz et Ratatouille",450,[["🐟","Filet de dorade","180g"],["🍚","Riz basmati","3 c. à soupe"],["🍆","Ratatouille maison","150g"],["🫒","Huile d'olive","1 c. à soupe"]],"Ratatouille : aubergine, courgette, poivron, tomate, oignon. Plat provençal riche en légumes variés."],
+j:["Soupe de Lentilles Corail au Curry",240,[["🫘","Lentilles corail","80g"],["🥕","Carotte","1 pièce"],["🍛","Curry + curcuma","1 c. à café"],["🥥","Lait de coco light","50ml"]],"Les lentilles corail cuisent en 15 min sans trempage. Le curry a des propriétés anti-inflammatoires."]},
+
+{c:["Yaourt Grec, Granola Maison, Kiwi",290,[["🥛","Yaourt grec nature","150g"],["🥣","Granola sans sucre","30g"],["🥝","Kiwi","1 pièce"],["🍯","Sirop d'agave","1 c. à café"]],"Le kiwi contient plus de vitamine C qu'une orange. Le yaourt grec est deux fois plus riche en protéines."],
+a:["Blanquette de Veau Allégée",470,[["🥩","Épaule de veau","150g"],["🥕","Carottes + champignons","120g"],["🥛","Sauce blanche légère","100ml"],["🍚","Riz complet","3 c. à soupe"]],"Grand classique français. Sauce : bouillon + maïzena + crème légère + jaune d'œuf."],
+j:["Salade de Quinoa aux Légumes Grillés",250,[["🍚","Quinoa cuite","4 c. à soupe"],["🫑","Poivron grillé","½ pièce"],["🍆","Aubergine grillée","100g"],["🌿","Menthe + citron","à goût"]],"Grillez les légumes au four. Mélangez froid avec le quinoa. Fraîche et rassasiante."]},
+
+{c:["Toast au Saumon Fumé",330,[["🍞","Pain de seigle","1 tranche"],["🐟","Saumon fumé","40g"],["🧀","Cream cheese allégé","1 c. à soupe"],["🍋","Citron + aneth","à goût"]],"Le saumon fumé est riche en oméga-3 et en protéines. Le pain de seigle a un index glycémique bas."],
+a:["Poulet Rôti, Pommes de Terre et Carottes",460,[["🍗","Poulet fermier (cuisse sans peau)","200g"],["🥔","Pommes de terre","150g"],["🥕","Carottes","100g"],["🌿","Thym + laurier","à goût"]],"Le poulet rôti du dimanche... en semaine ! Classique familial français par excellence."],
+j:["Velouté de Champignons de Paris",230,[["🍄","Champignons de Paris","250g"],["🧅","Échalote","1 pièce"],["🥛","Crème fraîche légère","1 c. à soupe"],["🌿","Persil plat","à goût"]],"Faites revenir les champignons avec l'échalote. Mixez avec un peu de bouillon. Onctueux et parfumé."]},
+
+{c:["Bircher Muesli aux Fruits Secs",310,[["🥣","Flocons d'avoine","40g"],["🥛","Lait d'amande","100ml"],["🍎","Pomme râpée","1 pièce"],["🥜","Noisettes concassées","15g"]],"Préparez la veille au soir. Recette suisse adoptée par toute l'Europe. Pratique et nutritif."],
+a:["Tajine de Poisson aux Olives et Citron",450,[["🐟","Filet de lieu noir","180g"],["🍋","Citron confit","¼ pièce"],["🫒","Olives vertes","8 pièces"],["🥔","Pommes de terre + carottes","150g"]],"Influence maghrebine très présente en cuisine française. Cuisson douce en cocotte. Saveurs méditerranéennes."],
+j:["Salade de Chèvre Chaud",260,[["🧀","Crottin de chèvre","1 pièce"],["🥗","Mesclun","à volonté"],["🥜","Noix","5 pièces"],["🍯","Miel + vinaigre balsamique","1 c. à café"]],"Passez le chèvre au four 5 min sur du pain grillé. Un incontournable des bistrots parisiens."]},
+
+{c:["Crêpe Complète Œuf-Fromage",320,[["⚫","Farine de sarrasin","40g"],["🥚","Œuf","1 pièce"],["🧀","Gruyère râpé","20g"],["🥛","Lait","50ml"]],"La galette complète bretonne : sarrasin, œuf, fromage. Ajoutez du jambon pour plus de protéines."],
+a:["Filet Mignon, Purée de Céleri",460,[["🥩","Filet mignon de porc","150g"],["🌿","Moutarde à l'ancienne","1 c. à soupe"],["🥔","Céleri-rave","200g"],["🧀","Crème légère","1 c. à soupe"]],"Badigeonnez de moutarde à l'ancienne. Four 25 min à 180°C. La purée de céleri est légère et savoureuse."],
+j:["Bruschetta Tomate-Basilic",220,[["🍞","Pain de campagne grillé","2 tranches"],["🍅","Tomates mûres","2 pièces"],["🧄","Ail","1 gousse"],["🌿","Basilic frais","6 feuilles"]],"Frottez l'ail sur le pain grillé. Le lycopène de la tomate est un puissant antioxydant."]},
+
+{c:["Bol d'Açaï Banane-Granola",320,[["🫐","Pulpe d'açaï","100g"],["🍌","Banane","½ pièce"],["🥣","Granola","20g"],["🥥","Copeaux de coco","1 c. à soupe"]],"Açaï pur sans sirop ajouté. Riche en anthocyanes, puissants antioxydants."],
+a:["Moules Marinières, Frites de Patate Douce",470,[["🦪","Moules de bouchot","400g"],["🍠","Patate douce (frites au four)","150g"],["🧅","Échalote + vin blanc","à goût"],["🌿","Persil","à goût"]],"Les moules de bouchot sont une fierté française. Frites de patate douce au four : plus saines."],
+j:["Salade Méditerranéenne au Feta",250,[["🥗","Concombre + tomates","à volonté"],["🧀","Feta","30g"],["🫒","Olives noires","6 pièces"],["🌿","Origan + huile d'olive","à goût"]],"Inspiration grecque populaire dans le sud de la France. Fraîche et légère pour le soir."]},
+
+{c:["Pain Perdu à la Cannelle",310,[["🍞","Pain complet rassis","2 tranches"],["🥚","Œuf battu","1 pièce"],["🥛","Lait","50ml"],["🌰","Cannelle + vanille","à goût"]],"Anti-gaspi ! Le pain perdu transforme le pain rassis en délice. Classique du dimanche matin."],
+a:["Coq au Vin Allégé",480,[["🍗","Poulet fermier (cuisse)","200g"],["🍷","Vin rouge (cuisson)","10cl"],["🥕","Carottes + champignons + lardons","120g"],["🍚","Riz complet","3 c. à soupe"]],"Recette emblématique de la cuisine française. Le vin rouge s'évapore, ne reste que la saveur."],
+j:["Soupe de Poireaux-Pommes de Terre",210,[["🥬","Poireaux","200g"],["🥔","Pomme de terre","1 moyenne"],["🧅","Oignon","½ pièce"],["🌿","Crème légère + ciboulette","1 c."]],"Le potage Parmentier : réconfort absolu. Simple, économique et délicieux."]}
+],
+// ═══ SEMAINE 3 ═══
+[
+{c:["Tartine Chèvre Frais, Miel et Noix",310,[["🍞","Pain aux céréales","1 tranche"],["🧀","Chèvre frais","40g"],["🍯","Miel","1 c. à café"],["🥜","Noix","3 pièces"]],"Le mariage chèvre-miel-noix est un classique français. Protéines + bon gras + énergie."],
+a:["Escalope de Dinde, Quinoa et Épinards",450,[["🍗","Escalope de dinde","160g"],["🍚","Quinoa","4 c. à soupe"],["🥬","Épinards frais","100g"],["🫒","Huile d'olive + citron","1 c."]],"La dinde est la viande blanche la plus maigre. Le quinoa apporte tous les acides aminés essentiels."],
+j:["Quiche Sans Pâte aux Légumes",240,[["🥚","Œufs","3 pièces"],["🥦","Brocolis + poivron","120g"],["🧀","Gruyère râpé","20g"],["🥛","Lait + crème légère","80ml"]],"Sans pâte = moitié moins de calories. Mélangez œufs, lait, légumes et fromage. Four 25 min à 180°C."]},
+
+{c:["Smoothie Bowl Mangue-Passion",300,[["🥭","Mangue surgelée","100g"],["🍈","Fruit de la passion","1 pièce"],["🥛","Yaourt nature","100g"],["🥣","Graines de chia","1 c. à soupe"]],"Mixez épais comme un sorbet. Décorez avec les fruits frais. Tropical et vitaminé."],
+a:["Saumon en Croûte d'Herbes",470,[["🐟","Pavé de saumon","150g"],["🍞","Chapelure + herbes","2 c. à soupe"],["🥦","Brocolis vapeur","120g"],["🍚","Riz complet","3 c. à soupe"]],"Chapelure, persil, aneth et moutarde sur le saumon. Four 15 min à 200°C."],
+j:["Soupe de Tomates au Basilic",220,[["🍅","Tomates bien mûres","4 pièces"],["🧄","Ail","2 gousses"],["🌿","Basilic","8 feuilles"],["🫒","Huile d'olive","1 c."]],"Grillez les tomates au four, puis mixez. Le lycopène est mieux absorbé après cuisson."]},
+
+{c:["Porridge Chocolat-Noisette",330,[["🥣","Flocons d'avoine","40g"],["🍫","Cacao en poudre","1 c. à soupe"],["🥛","Lait d'amande","200ml"],["🌰","Noisettes concassées","15g"]],"Le cacao est riche en flavonoïdes. Améliore l'humeur et la circulation sanguine. Plaisir sain."],
+a:["Hachis Parmentier Allégé",480,[["🥩","Bœuf haché 5% MG","130g"],["🥔","Pommes de terre","200g"],["🧅","Oignon + carotte","80g"],["🧀","Gruyère râpé","15g"]],"Pilier de la cuisine familiale française. Version allégée avec viande maigre."],
+j:["Taboulé de Boulgour aux Herbes",240,[["🍚","Boulgour","60g"],["🍅","Tomate + concombre","100g"],["🌿","Menthe + persil","abondant"],["🍋","Citron + huile d'olive","1 c."]],"Herbes fraîches en quantité pour un maximum de saveur. Frais et léger."]},
+
+{c:["Galette d'Avoine à la Banane",300,[["🥣","Flocons d'avoine","40g"],["🍌","Banane","1 pièce"],["🥚","Œuf","1 pièce"],["🌰","Cannelle","à goût"]],"Écrasez la banane, mélangez avec œuf et avoine. Poêle antiadhésive sans matière grasse."],
+a:["Bar Grillé et Fenouil Braisé",460,[["🐟","Filet de bar (loup)","180g"],["🌿","Fenouil","200g"],["🫒","Huile d'olive","1 c. à soupe"],["🍋","Citron","½ pièce"]],"Le bar est le poisson noble de la Méditerranée. Le fenouil braisé est fondant et anisé."],
+j:["Œufs Cocotte aux Épinards",230,[["🥚","Œufs","2 pièces"],["🥬","Épinards","80g"],["🧀","Crème fraîche légère","1 c. à soupe"],["🌿","Noix de muscade","1 pincée"]],"Ramequins au four, bain-marie, 12 min à 180°C. Les œufs restent coulants au centre."]},
+
+{c:["Fromage Blanc, Compote et Amandes",290,[["🥛","Fromage blanc","150g"],["🍎","Compote pomme-poire","80g"],["🥜","Amandes effilées","15g"],["🌰","Cannelle","1 pincée"]],"Compote maison sans sucre ajouté. Les amandes apportent vitamine E et bon gras."],
+a:["Poulet à la Moutarde et Haricots Verts",460,[["🍗","Blancs de poulet","160g"],["🟡","Moutarde de Dijon","1 c. à soupe"],["🫛","Haricots verts","150g"],["🥛","Crème légère","2 c. à soupe"]],"Classique bistrot français. Saisissez le poulet, déglacez à la moutarde et crème."],
+j:["Tartare de Saumon Frais",250,[["🐟","Saumon frais","120g"],["🍋","Citron vert","1 pièce"],["🥑","Avocat","¼ pièce"],["🌿","Aneth + ciboulette","à goût"]],"Coupez le saumon en petits dés, mélangez avec citron et herbes. Frais et léger."]},
+
+{c:["Crêpes Complètes aux Fruits Frais",330,[["🥣","Farine complète","50g"],["🥚","Œuf","1 pièce"],["🥛","Lait","100ml"],["🍓","Fruits de saison","80g"]],"Pâte à crêpes légère : farine complète, œuf, lait. Petit-déjeuner festif du samedi."],
+a:["Gigot d'Agneau aux Flageolets",490,[["🥩","Agneau (épaule dégraissée)","150g"],["🫘","Flageolets","100g"],["🧄","Ail + romarin","à goût"],["🥗","Salade verte","à volonté"]],"Le gigot-flageolets est le repas dominical français par excellence."],
+j:["Wrap Poulet-Crudités",240,[["🌯","Tortilla complète","1 pièce"],["🍗","Poulet grillé","80g"],["🥬","Roquette + carotte râpée","à volonté"],["🥛","Sauce yaourt-moutarde","1 c."]],"Yaourt + moutarde + citron. Roulez serré et coupez en deux."]},
+
+{c:["Brioche Allégée avec Confiture Maison",320,[["🍞","Brioche allégée","1 tranche"],["🍓","Confiture de fraise","1 c. à soupe"],["🥛","Fromage blanc","80g"],["🍊","Jus d'orange pressé","1 verre"]],"Brunch du dimanche à la française. Confiture maison = moins de sucre."],
+a:["Pot-au-Feu Allégé",470,[["🥩","Bœuf (gîte)","140g"],["🥕","Carottes + poireaux + navets","200g"],["🥔","Pomme de terre","1 moyenne"],["🌿","Bouquet garni","à goût"]],"L'âme de la cuisine française familiale. Bouillon riche en minéraux. Tradition hivernale."],
+j:["Velouté de Petits Pois à la Menthe",210,[["🟢","Petits pois surgelés","200g"],["🌿","Menthe fraîche","8 feuilles"],["🧅","Oignon","½ pièce"],["🧀","Crème légère","1 c."]],"Couleur vive, saveur fraîche. Les petits pois sont riches en protéines végétales."]}
+],
+// ═══ SEMAINE 4 ═══
+[
+{c:["Overnight Oats Amande-Framboise",310,[["🥣","Flocons d'avoine","40g"],["🥛","Lait d'amande","100ml"],["🫐","Framboises","60g"],["🥜","Amandes effilées","10g"]],"Préparez le soir, mangez le matin. Les framboises sont peu caloriques et riches en antioxydants."],
+a:["Truite au Four, Riz Sauvage et Asperges",450,[["🐟","Filet de truite","180g"],["🍚","Riz sauvage","4 c. à soupe"],["🌿","Asperges vertes","6 pièces"],["🍋","Citron + beurre léger","à goût"]],"La truite est le poisson des rivières françaises. Les asperges sont un légume printanier noble."],
+j:["Soupe de Butternut au Gingembre",220,[["🎃","Courge butternut","250g"],["🫚","Gingembre frais","5g"],["🧅","Oignon","½ pièce"],["🥥","Lait de coco light","3 c."]],"Le butternut donne naturellement une soupe crémeuse. Le gingembre est thermogénique."]},
+
+{c:["Tartine Houmous et Radis",300,[["🍞","Pain complet","1 tranche"],["🫘","Houmous maison","2 c. à soupe"],["🌿","Radis en rondelles","4 pièces"],["🥒","Concombre","quelques tranches"]],"Le houmous apporte protéines végétales et fibres. Les radis sont croquants et peu caloriques."],
+a:["Magret de Canard, Purée de Patate Douce",480,[["🦆","Magret de canard (dégraissé)","120g"],["🍠","Patate douce","200g"],["🥗","Salade de roquette","à volonté"],["🍷","Réduction balsamique","1 c."]],"Quadrillez le gras, saisissez côté gras d'abord. Spécialité du Sud-Ouest."],
+j:["Salade d'Endives aux Noix et Roquefort",250,[["🥬","Endives","2 pièces"],["🧀","Roquefort","20g"],["🥜","Noix","4 pièces"],["🍎","Pomme verte","½ pièce"]],"Endive, Roquefort, noix : trio emblématique de la gastronomie française."]},
+
+{c:["Smoothie Fraise-Banane-Avoine",300,[["🍓","Fraises","100g"],["🍌","Banane","½ pièce"],["🥣","Avoine","2 c. à soupe"],["🥛","Lait d'amande","200ml"]],"Fraises françaises de saison. Riche en vitamine C et en fibres."],
+a:["Gratin de Courgettes au Poulet",460,[["🍗","Poulet en dés","150g"],["🥒","Courgettes","300g"],["🧀","Gruyère râpé","25g"],["🥛","Béchamel légère","3 c."]],"Rondelles de courgettes alternées avec le poulet, béchamel et gruyère. Four 20 min."],
+j:["Minestrone à la Française",230,[["🥕","Carottes + courgettes","100g"],["🫘","Haricots blancs","50g"],["🍝","Petites pâtes complètes","30g"],["🍅","Tomate + basilic","à goût"]],"Légumes de saison + légumineuses + pâtes. Repas complet en un bol."]},
+
+{c:["Œuf à la Coque et Mouillettes",290,[["🥚","Œufs","2 pièces"],["🍞","Pain complet en bâtonnets","2 tranches"],["🧈","Beurre demi-sel","1 noisette"],["🌿","Sel de Guérande","1 pincée"]],"3 minutes exactes pour un œuf parfait. Le sel de Guérande est un trésor breton."],
+a:["Pavé de Thon et Couscous de Légumes",460,[["🐟","Pavé de thon","150g"],["🍚","Semoule complète","60g"],["🥕","Carottes + courgettes + pois chiches","150g"],["🌿","Harissa légère + menthe","à goût"]],"Saisissez le thon 1 min par face (rosé au centre). Classique franco-maghrébin."],
+j:["Salade de Pois Chiches Méditerranéenne",250,[["🫘","Pois chiches cuits","120g"],["🍅","Tomates cerises","8 pièces"],["🥒","Concombre","½ pièce"],["🌿","Persil + cumin + citron","à goût"]],"Protéines végétales complètes. Le cumin facilite la digestion des légumineuses."]},
+
+{c:["Granola Maison, Yaourt et Pêche",300,[["🥣","Granola maison","30g"],["🥛","Yaourt nature","150g"],["🍑","Pêche","1 pièce"],["🍯","Miel de fleurs","1 c. à café"]],"Granola maison au four. Moins sucré que les versions commerciales."],
+a:["Sole Meunière et Purée de Céleri",460,[["🐟","Filets de sole","180g"],["🥔","Céleri-rave","200g"],["🧈","Beurre clarifié","1 c. à café"],["🍋","Citron + persil","à goût"]],"Monument de la cuisine française. Farinez légèrement, dorez au beurre clarifié."],
+j:["Pizza Maison sur Pain Pita",260,[["🍞","Pain pita complet","1 pièce"],["🍅","Sauce tomate","2 c. à soupe"],["🧀","Mozzarella light","30g"],["🌿","Roquette + origan","à goût"]],"Base pita = croûte fine et croustillante. Four 8 min à 220°C. Express et satisfaisant."]},
+
+{c:["Gaufre d'Avoine au Miel",320,[["🥣","Avoine","50g"],["🥚","Œuf","1 pièce"],["🍯","Miel","1 c. à soupe"],["🍓","Fruits de saison","80g"]],"Mixez avoine et œuf, cuisez en gaufrier ou poêle. Petit-déjeuner gourmand du samedi."],
+a:["Bœuf Stroganoff Allégé",470,[["🥩","Rumsteak en lamelles","150g"],["🍄","Champignons","100g"],["🧅","Oignon + cornichons","à goût"],["🥛","Crème légère + moutarde","2 c."]],"D'inspiration russe mais adopté par les bistrots français. Saisissez la viande à feu vif."],
+j:["Poke Bowl Saumon-Avocat",270,[["🐟","Saumon","80g"],["🥑","Avocat","¼ pièce"],["🍚","Riz japonais","3 c. à soupe"],["🥒","Concombre + edamame","à goût"]],"Tendance très populaire en France. Sauce soja + sésame + gingembre."]},
+
+{c:["Brunch Bowl Complet",330,[["🥚","Œuf au plat","1 pièce"],["🥑","Avocat","¼ pièce"],["🍅","Tomate rôtie","1 pièce"],["🍞","Pain complet grillé","1 tranche"]],"Dernier jour du mois ! Brunch bowl pour célébrer. Protéines + bon gras + vitamines."],
+a:["Poulet Fermier, Herbes de Provence",470,[["🍗","Poulet fermier (cuisse)","200g"],["🌿","Herbes de Provence","1 c. à soupe"],["🥔","Pommes de terre grenaille","150g"],["🥗","Salade variée","à volonté"]],"Grand classique du dimanche en France. Thym, romarin, origan, sarriette."],
+j:["Bouillon Détox de Fin de Cycle",200,[["🥬","Poireaux + épinards","100g"],["🥒","Courgette","1 pièce"],["🫚","Gingembre frais","5g"],["🌿","Curcuma + persil","à goût"]],"Bouillon vert pour clôturer le cycle. Préparez-vous à mettre à jour vos mesures !"]}
+]
+];
+
+function selSex(el){document.querySelectorAll('.sel-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on');document.getElementById('i-sex').value=el.dataset.v}
+function calcIMC(w,h){return(w/((h/100)**2)).toFixed(1)}
+function calcIdeal(h){return Math.round(22*((h/100)**2))}
+function calcBMR(s,w,h,a){return s==='M'?10*w+6.25*h-5*a+5:10*w+6.25*h-5*a-161}
+function calcTarget(bmr){return Math.round(bmr*1.4*0.8)}
+function calcTonic(w,a,mult){
+let cidre=Math.max(8,Math.round((10+(w-60)*0.08)*mult));
+let egcg=Math.round((320+w*1.5)*mult);
+let probio=w>85?7:w>70?6:5;
+let citron=Math.max(6,Math.round((8+(w-60)*0.05)*mult));
+let eau=Math.max(80,Math.round(140*mult)-cidre-citron+80);
+return{cidre,egcg,probio,citron,eau};
+}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+
+document.getElementById('frm').addEventListener('submit',function(e){
+e.preventDefault();
+let sex=document.getElementById('i-sex').value,age=parseInt(document.getElementById('i-age').value),ht=parseInt(document.getElementById('i-ht').value),wt=parseFloat(document.getElementById('i-wt').value),err=false;
+document.querySelectorAll('#frm input[type=number]').forEach(i=>i.classList.remove('err'));
+if(!sex){document.querySelectorAll('.sel-btn').forEach(b=>{b.style.borderColor='#e74c3c';setTimeout(()=>b.style.borderColor='',800)});err=true}
+if(!age||age<18||age>99){document.getElementById('i-age').classList.add('err');err=true}
+if(!ht||ht<120||ht>220){document.getElementById('i-ht').classList.add('err');err=true}
+if(!wt||wt<40||wt>250){document.getElementById('i-wt').classList.add('err');err=true}
+if(err)return;
+S.user={sex,age,ht,wt,iwt:wt};S.month=1;S.week=1;S.expDay=null;S.done={};
+S.hist=[{month:1,wt,imc:calcIMC(wt,ht),date:new Date().toLocaleDateString('fr-FR')}];
+runLoad();
+});
+
+function runLoad(){
+show('scr-load');let pf=document.getElementById('pf');pf.style.width='0%';
+for(let i=1;i<=4;i++){document.getElementById('ps'+i).classList.remove('on','ok')}
+[{id:'ps1',p:25,t:600},{id:'ps2',p:50,t:1600},{id:'ps3',p:75,t:2600},{id:'ps4',p:100,t:3500}].forEach((s,i,arr)=>{
+setTimeout(()=>{for(let j=0;j<i;j++){let e=document.getElementById(arr[j].id);e.classList.remove('on');e.classList.add('ok')}
+document.getElementById(s.id).classList.add('on');pf.style.width=s.p+'%'},s.t);
+});
+setTimeout(()=>{document.getElementById('ps4').classList.remove('on');document.getElementById('ps4').classList.add('ok');show('scr-dash');render()},4400);
+}
+
+function render(){
+let{sex,age,ht,wt,iwt}=S.user;
+let imc=calcIMC(wt,ht),ideal=calcIdeal(ht),bmr=calcBMR(sex,wt,ht,age),target=calcTarget(bmr);
+let cnt=Object.keys(S.done).length,lost=iwt-wt;
+let h='';
+h+=`<div class="dh"><div class="dml">Mois ${S.month} · Protocole actif</div>
+<div class="dmt">Programme 28 Jours</div>
+<div class="dms">Objectif calorique : ~${target} kcal/jour</div>
+<div class="dpb"><div class="dpf" style="width:${(cnt/28)*100}%"></div></div>
+<div class="dpt">${cnt}/28 jours complétés</div>
+<div class="dm">
+<div class="dmi"><div class="v">${wt} kg</div><div class="l">Poids</div>${lost>0?`<div class="d">-${lost.toFixed(1)} kg</div>`:''}</div>
+<div class="dmi"><div class="v">${imc}</div><div class="l">IMC</div></div>
+<div class="dmi"><div class="v">${ideal} kg</div><div class="l">Objectif</div></div>
+</div></div>`;
+h+=`<div class="wt">`;
+WKS.forEach((w,i)=>{h+=`<div class="wtb ${i+1===S.week?'on':''}" onclick="sw(${i+1})"><div class="n">S${i+1}</div><div class="lb">${w.nm}</div></div>`});
+h+=`</div>`;
+let cw=WKS[S.week-1];
+h+=`<div class="wi"><div class="wip" style="background:${cw.cb};color:${cw.c}">Phase ${S.week} · ${cw.nm}</div><div class="wid">${cw.desc}</div></div>`;
+h+=`<div class="dl">`;
+let wm=MEALS[S.week-1];
+for(let d=0;d<7;d++){
+let dg=(S.week-1)*7+d+1,dk=S.month+'-'+dg;
+let dn=S.done[dk],ex=S.expDay===dg;
+let meal=wm[d];
+let tonic=calcTonic(wt,age,cw.m);
+let isSun=d===6;
+let baseCal=meal.c[1]+meal.a[1]+meal.j[1];
+let scale=target/baseCal;
+let cls=`dc${dn?' dn':''}${ex?' ex':''}`;
+h+=`<div class="${cls}" id="dc-${dg}">`;
+h+=`<div class="dhr" onclick="td(${dg})">
+<div class="dnu">J${dg}</div>
+<div class="di"><div class="dn2">${JOURS[d]} — Jour ${dg}</div>
+<div class="ds">${dn?'✓ Complété':meal.c[0]+' · '+meal.a[0]+' · '+meal.j[0]}</div></div>
+<div class="dst" onclick="event.stopPropagation();tdn('${dk}',${dg})"><svg viewBox="0 0 24 24" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+<svg class="dch" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>`;
+h+=`<div class="dbd"><div class="dbc"><div class="dvd"></div>`;
+h+=`<div class="meal-sec">
+<div class="meal-h tonic"><span class="mico">🧪</span><span class="mtit">Tonique Matinal</span><span class="msub">20 min avant le PDJ</span></div>`;
+let ti=[[`🍎`,`Vinaigre de cidre bio`,`${isSun?Math.round(tonic.cidre*.5):tonic.cidre}ml`],
+[`🍵`,`Thé vert (EGCG)`,`${isSun?Math.round(tonic.egcg*.5):tonic.egcg}mg`],
+[`🍋`,`Citron frais pressé`,`${tonic.citron}ml`],
+[`💧`,`Eau tiède`,`${tonic.eau}ml`]];
+if(S.week>1||d>=2)ti.splice(2,0,[`🦠`,`Probiotique L. Gasseri`,`${tonic.probio} gouttes`]);
+ti.forEach(x=>{h+=`<div class="ming"><div class="ming-l"><div class="ming-e">${x[0]}</div><div class="ming-n">${x[1]}</div></div><div class="ming-q">${x[2]}</div></div>`});
+h+=`<div class="meal-tip"><strong>Préparation :</strong> Mélangez le tout dans un verre. Buvez à jeun, 20 min avant le petit-déjeuner.</div></div>`;
+h+=mealSec('cafe','☀️','Petit-Déjeuner',meal.c,scale);
+h+=mealSec('almoco','🌤️','Déjeuner',meal.a,scale);
+h+=mealSec('jantar','🌙','Dîner',meal.j,scale);
+h+=`<div class="day-cal"><div><div class="cal-v">~${target} kcal</div><div class="cal-l">Objectif du jour</div></div>
+<div class="cal-t">Base : ${baseCal} kcal<br>Échelle : ${scale.toFixed(2)}x</div></div>`;
+h+=`<button class="btn-dn" onclick="event.stopPropagation();tdn('${dk}',${dg})">
+<svg viewBox="0 0 24 24" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+${dn?'Complété ✓':'Marquer comme fait'}</button>`;
+h+=`</div></div></div>`;
+}
+h+=`</div>`;
+h+=`<div class="ms"><div class="mi">📊</div><h3>Mise à Jour Mensuelle</h3>
+<p>Saisissez vos nouvelles mesures pour recalculer le protocole et passer au mois suivant.</p>
+<button class="btn-m" onclick="oModal()">Mettre à jour mes mesures →</button></div>`;
+if(S.hist.length>1){
+h+=`<div class="hc"><div class="hh"><div class="hhi">📈</div><h3>Historique d'Évolution</h3></div>`;
+S.hist.forEach((x,i)=>{
+let dl=i>0?(S.hist[i-1].wt-x.wt).toFixed(1):0;
+h+=`<div class="hit"><div class="hdt" style="background:${i===S.hist.length-1?'var(--ac)':'var(--p)'}"></div>
+<div class="hif"><div class="hil">Mois ${x.month}</div><div class="hid">${x.date} · IMC ${x.imc}</div></div>
+<div><div style="font-size:.9rem;font-weight:700;text-align:right">${x.wt} kg</div>
+${i>0?`<div class="hdl${dl>0?'':' n'}">${dl>0?'-'+dl:'±0'} kg</div>`:`<div class="hdl n">Début</div>`}</div></div>`});
+h+=`</div>`}
+h+=`<div class="disc"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+<p>Ce protocole est informatif et ne remplace pas un suivi médical. Consultez un professionnel de santé avant de modifier votre alimentation.</p></div>`;
+document.getElementById('dash').innerHTML=h;
+}
+
+function mealSec(cls,ico,title,data,scale){
+let[t,cal,items,tip]=data;let adjCal=Math.round(cal*scale);
+let s=`<div class="meal-sec"><div class="meal-h ${cls}"><span class="mico">${ico}</span><span class="mtit">${title}</span><span class="msub">~${adjCal} kcal</span></div>`;
+s+=`<div class="meal-name">${t}</div>`;
+items.forEach(x=>{s+=`<div class="ming"><div class="ming-l"><div class="ming-e">${x[0]}</div><div class="ming-n">${x[1]}</div></div><div class="ming-q">${x[2]}</div></div>`});
+s+=`<div class="meal-tip"><strong>💡 </strong>${tip}</div></div>`;return s;
+}
+
+function sw(n){S.week=n;S.expDay=null;render()}
+function td(n){S.expDay=S.expDay===n?null:n;render()}
+function tdn(k,n){if(S.done[k])delete S.done[k];else S.done[k]=true;render()}
+
+function oModal(){
+let{wt,ht}=S.user;let cnt=Object.keys(S.done).length;
+document.getElementById('mi').innerHTML=`
+<div class="mhd"><div class="mhi">🎯</div><h2>Bilan du Mois ${S.month}</h2><p>Saisissez vos nouvelles mesures corporelles</p></div>
+<div class="msu"><div class="mst"><div class="mv">${cnt}/28</div><div class="ml">Jours faits</div></div>
+<div class="mst"><div class="mv">${wt} kg</div><div class="ml">Poids actuel</div></div>
+<div class="mst"><div class="mv">${calcIMC(wt,ht)}</div><div class="ml">IMC</div></div></div>
+<form onsubmit="subM(event)">
+<div class="mf"><label>Nouveau poids (kg)</label><div class="iw"><input type="number" id="m-wt" placeholder="${wt}" min="40" max="250" step="0.1" required><span class="sf">kg</span></div></div>
+<button type="submit" class="btn-u">Valider et passer au Mois ${S.month+1} →</button></form>`;
+document.getElementById('modal').classList.add('vis');
+}
+function subM(e){
+e.preventDefault();let nw=parseFloat(document.getElementById('m-wt').value);
+if(!nw||nw<40||nw>250)return;
+S.user.wt=nw;S.month++;S.week=1;S.expDay=null;S.done={};
+S.hist.push({month:S.month,wt:nw,imc:calcIMC(nw,S.user.ht),date:new Date().toLocaleDateString('fr-FR')});
+cModal();render();window.scrollTo({top:0,behavior:'smooth'});
+}
+function cModal(){document.getElementById('modal').classList.remove('vis')}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)cModal()});
+</script>
+
+
+</body></html>
