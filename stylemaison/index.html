@@ -1,489 +1,895 @@
-<!DOCTYPE html><html lang="fr"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stylo Maison App | Protocole 28 Jours</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>Stylo Maison | Votre Rituel Bien-être Personnalisé</title>
+
+<!-- PWA Meta Tags -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Stylo Maison">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#FFFAF5">
+<meta name="msapplication-navbutton-color" content="#D88B92">
+<meta name="application-name" content="Stylo Maison">
+<meta name="description" content="Programme féminin personnalisé de 6 mois — GLP-1 naturel & bien-être intérieur">
+
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSIjRDg4QjkyIi8+PHRleHQgeD0iOTAiIHk9IjEyMCIgZm9udC1zaXplPSI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPuKcqDwvdGV4dD48L3N2Zz4=">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23D88B92'/><text x='50' y='72' font-size='55' text-anchor='middle' fill='white'>✨</text></svg>">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--p:#E63956;--pd:#C42D47;--pm:#F06680;--pl:#FDE8ED;--pp:#FFF2F5;--bg:#FFFBFC;--ac:#D4956A;--acl:#FFF4EC;--t1:#2A1A1E;--t2:#6E525A;--t3:#9B858C;--w:#FFF;--bd:#F0D8DC;--ok:#D4396A;--okb:#FDE8ED;--r:16px;--rf:50px}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--t1);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
-header{padding:14px 20px;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:center;position:sticky;top:0;z-index:100}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-i{width:34px;height:34px;background:linear-gradient(135deg,var(--p),var(--pm));border-radius:9px;display:flex;align-items:center;justify-content:center}
-.logo-i svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
-.logo-t{font-weight:700;font-size:.95rem;color:var(--p)}
-.logo-t span{font-weight:300;color:var(--t3)}
-.app{max-width:540px;margin:0 auto;padding:24px 16px 60px}
-.screen{display:none}.screen.active{display:block;animation:fi .5s ease}
-@keyframes fi{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.hero{text-align:center;margin-bottom:28px}
-.badge{display:inline-flex;align-items:center;gap:5px;background:var(--pl);color:var(--p);font-size:.72rem;font-weight:600;padding:5px 13px;border-radius:var(--rf);margin-bottom:16px}
-.hero h1{font-size:1.55rem;font-weight:800;line-height:1.25;margin-bottom:10px;letter-spacing:-.4px}
-.hero h1 em{font-style:normal;color:var(--p)}
-.hero p{font-size:.9rem;color:var(--t2);max-width:380px;margin:0 auto}
-.card{background:var(--w);border-radius:24px;padding:26px 22px;box-shadow:0 4px 20px rgba(230,57,86,.06);border:1px solid rgba(230,57,86,.06)}
-.card-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin-bottom:20px;text-align:center}
-.field{margin-bottom:14px}
-.field label{display:block;font-size:.82rem;font-weight:600;color:var(--t1);margin-bottom:6px}
-.field label .u{font-weight:400;color:var(--t3)}
+:root{
+--bg:#FFFCFA;--card:#FFFAF5;--card2:#FFF8F3;--accent:#D88B92;--accent-h:#C47A82;--accent-l:#FDF0F2;
+--accent-ul:#FFFAF8;--t1:#363636;--t2:#6B7280;--t3:#9CA3AF;--border:#F0E6E0;
+--gold:#C9956E;--gold-l:#FFF5EC;--gold-b:#8B6B4A;
+--r:32px;--rs:20px;--rxs:14px;--sh:0 2px 40px rgba(216,139,146,.06);--shc:0 4px 60px rgba(216,139,146,.04);
+--shb:0 8px 30px rgba(216,139,146,.22);--tr:all .4s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--t1);line-height:1.6;min-height:100vh;min-height:100dvh;-webkit-font-smoothing:antialiased;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+body.standalone{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+h1,h2,h3,.ob-hero h1,.mh-l h2,.mo-box h2,.pwa-head-txt h3,.hist-h h3,.upd-card h3{font-family:'Playfair Display',serif}
+.screen{display:none;min-height:100vh;min-height:100dvh;animation:sfi .8s cubic-bezier(.4,0,.2,1) forwards}
+.screen.active{display:flex;flex-direction:column}
+@keyframes sfi{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* NAV */
+.nav{padding:18px 24px;display:flex;align-items:center;justify-content:center;position:sticky;top:0;background:rgba(255,252,250,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:50;border-bottom:1px solid rgba(240,230,224,.5)}
+.logo-g{display:flex;align-items:center;gap:12px}
+.logo-ic{width:40px;height:40px;background:linear-gradient(135deg,#D88B92,#C47A82);border-radius:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(216,139,146,.18)}
+.logo-ic svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.logo-tx{font-weight:600;font-size:1.05rem;color:var(--t1);letter-spacing:-.3px}
+.logo-tx span{font-weight:300;color:var(--t3);font-style:italic}
+
+/* ONBOARDING */
+.ob-ctn{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 24px 60px;max-width:480px;margin:0 auto;width:100%}
+.ob-hero{text-align:center;margin-bottom:40px;padding-top:10px}
+.h-emo{font-size:3rem;margin-bottom:20px;display:block;animation:gb 3s ease-in-out infinite}
+@keyframes gb{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.ob-hero h1{font-size:1.75rem;font-weight:600;letter-spacing:-.3px;line-height:1.3;margin-bottom:12px;font-family:'Playfair Display',serif}
+.ob-hero h1 em{font-style:italic;color:var(--accent)}
+.ob-hero p{font-size:.95rem;font-weight:300;color:var(--t2);max-width:340px;margin:0 auto;line-height:1.7}
+.f-card{background:var(--card);border-radius:var(--r);padding:36px 28px;width:100%;box-shadow:var(--shc);border:1px solid var(--border)}
+.f-lbl{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--t3);margin-bottom:24px;text-align:center}
+.fg{margin-bottom:18px}
+.fg label{display:block;font-size:.82rem;font-weight:500;color:var(--t1);margin-bottom:8px;padding-left:4px}
+.fg label .u{font-weight:300;color:var(--t3);font-size:.78rem}
 .iw{position:relative}
-.iw input,.mf input{width:100%;padding:14px 48px 14px 15px;background:var(--pp);border:2px solid transparent;border-radius:var(--r);font-size:1rem;font-family:'Inter',sans-serif;font-weight:500;color:var(--t1);outline:none;transition:.3s}
-.iw input::placeholder,.mf input::placeholder{color:var(--t3);font-weight:400}
-.iw input:focus,.mf input:focus{border-color:var(--p);background:var(--w);box-shadow:0 0 0 4px rgba(230,57,86,.1)}
-.iw input.err{border-color:#e74c3c;background:#FFF5F5;animation:shk .4s}
-.iw .sf,.mf .sf{position:absolute;right:15px;top:50%;transform:translateY(-50%);font-size:.82rem;color:var(--t3);pointer-events:none}
-@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-.sel-row{display:flex;gap:8px;margin-bottom:14px}
-.sel-btn{flex:1;padding:13px;background:var(--pp);border:2px solid transparent;border-radius:var(--r);font-size:.9rem;font-weight:600;font-family:'Inter',sans-serif;color:var(--t2);cursor:pointer;text-align:center;transition:.3s}
-.sel-btn:hover{border-color:var(--pm)}
-.sel-btn.on{border-color:var(--p);background:var(--pl);color:var(--p)}
-.btn{width:100%;padding:16px;background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;border:none;border-radius:var(--rf);font-size:.96rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:.3s;margin-top:4px}
-.btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(230,57,86,.3)}
-.btn:active{transform:translateY(0)}
-.trust{margin-top:22px;text-align:center}
-.trust p{font-size:.76rem;color:var(--t3)}.trust strong{color:var(--t2)}
-.lw{text-align:center;padding:50px 0 30px}
-.lv{width:72px;height:72px;margin:0 auto 24px;position:relative}
-.lr{width:72px;height:72px;border:3px solid var(--pl);border-radius:50%;position:absolute}
-.lr.sp{border-color:transparent;border-top-color:var(--p);animation:spin 1.2s cubic-bezier(.5,0,.5,1) infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.lw h2{font-size:1.1rem;font-weight:700;margin-bottom:5px}
-.lw p{font-size:.86rem;color:var(--t3);margin-bottom:28px}
-.pb{max-width:280px;margin:0 auto}
-.pbg{width:100%;height:5px;background:var(--pl);border-radius:10px;overflow:hidden;margin-bottom:12px}
-.pbf{height:100%;width:0;background:linear-gradient(90deg,var(--p),var(--pm));border-radius:10px;transition:width .4s}
-.ps{display:flex;flex-direction:column;gap:8px;text-align:left}
-.psi{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--t3);transition:.4s}
-.psi.on{color:var(--t1);font-weight:500}.psi.ok{color:var(--p)}
-.pid{width:18px;height:18px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.4s}
-.psi.on .pid{border-color:var(--p);background:var(--pl)}.psi.ok .pid{border-color:var(--p);background:var(--p)}
-.pck{display:none;width:10px;height:10px;stroke:#fff;stroke-width:3;fill:none}.psi.ok .pck{display:block}
-.pdt{width:4px;height:4px;border-radius:50%;background:transparent}.psi.on .pdt{background:var(--p);animation:pls 1.5s infinite}.psi.ok .pdt{display:none}
-@keyframes pls{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.4}}
-.dh{background:linear-gradient(135deg,var(--p),var(--pd));border-radius:24px;padding:24px 22px;margin-bottom:14px;position:relative;overflow:hidden}
-.dh::before{content:'';position:absolute;width:160px;height:160px;background:rgba(255,255,255,.06);border-radius:50%;top:-50px;right:-40px}
-.dml{font-size:.68rem;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:5px}
-.dmt{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:4px}
-.dms{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:14px}
-.dpb{height:5px;background:rgba(255,255,255,.15);border-radius:10px;overflow:hidden;margin-bottom:6px}
-.dpf{height:100%;background:rgba(255,255,255,.8);border-radius:10px;transition:width .5s}
-.dpt{font-size:.72rem;color:rgba(255,255,255,.4)}
-.dm{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);position:relative;z-index:1}
-.dmi{text-align:center}.dmi .v{font-size:1.05rem;font-weight:700;color:#fff}.dmi .l{font-size:.65rem;color:rgba(255,255,255,.4);margin-top:1px}.dmi .d{font-size:.68rem;font-weight:600;color:#FFB4C6;margin-top:1px}
-.wt{display:flex;gap:7px;margin-bottom:14px}
-.wtb{flex:1;padding:11px 6px;background:var(--w);border:2px solid var(--bd);border-radius:var(--r);text-align:center;cursor:pointer;transition:.3s;font-family:'Inter',sans-serif}
-.wtb:hover{border-color:var(--pm)}.wtb.on{border-color:var(--p);background:var(--pl)}
-.wtb .n{font-size:.66rem;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.4px}
-.wtb.on .n{color:var(--p)}
-.wtb .lb{font-size:.7rem;font-weight:500;color:var(--t2);margin-top:1px}.wtb.on .lb{color:var(--p);font-weight:600}
-.wi{background:var(--w);border-radius:20px;padding:18px;box-shadow:0 1px 3px rgba(230,57,86,.04);border:1px solid rgba(230,57,86,.04);margin-bottom:12px}
-.wip{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:4px 11px;border-radius:var(--rf);margin-bottom:8px}
-.wid{font-size:.82rem;color:var(--t2);line-height:1.6}
-.dl{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-.dc{background:var(--w);border-radius:20px;border:1.5px solid var(--bd);overflow:hidden;transition:.3s}
-.dc:hover{border-color:#E8B8C0}.dc.dn{border-color:#F8B4C4;background:#FFFBFC}.dc.ex{border-color:var(--p);box-shadow:0 4px 20px rgba(230,57,86,.08)}
-.dhr{display:flex;align-items:center;gap:11px;padding:15px 16px;cursor:pointer;user-select:none}
-.dnu{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;background:var(--pp);color:var(--p);transition:.3s}
-.dc.dn .dnu{background:var(--pl);color:var(--pd)}.dc.ex .dnu{background:var(--p);color:#fff}
-.di{flex:1;min-width:0}.dn2{font-size:.86rem;font-weight:600;color:var(--t1)}
-.ds{font-size:.73rem;color:var(--t3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dc.dn .ds{color:var(--p)}
-.dst{width:26px;height:26px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.3s;cursor:pointer}
-.dc.dn .dst{border-color:var(--p);background:var(--p)}
-.dst svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;display:none}.dc.dn .dst svg{display:block}
-.dch{width:18px;height:18px;stroke:var(--t3);fill:none;stroke-width:2;flex-shrink:0;transition:transform .3s}.dc.ex .dch{transform:rotate(180deg)}
-.dbd{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.23,1,.32,1)}.dc.ex .dbd{max-height:2200px}
-.dbc{padding:0 16px 16px}
-.dvd{height:1px;background:var(--bd);margin-bottom:14px}
-.meal-sec{margin-bottom:16px}
-.meal-h{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:8px 12px;border-radius:12px}
-.meal-h.tonic{background:linear-gradient(135deg,#FCE4EC,#F8BBD0)}.meal-h.cafe{background:#FFF8E1}.meal-h.almoco{background:#FFEBEE}.meal-h.jantar{background:#EDE7F6}
-.meal-h .mico{font-size:1.1rem}
-.meal-h .mtit{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
-.meal-h.tonic .mtit{color:#C2185B}.meal-h.cafe .mtit{color:#F57F17}.meal-h.almoco .mtit{color:#C62828}.meal-h.jantar .mtit{color:#4527A0}
-.meal-h .msub{font-size:.72rem;font-weight:400;margin-left:auto}
-.meal-h.tonic .msub{color:#E91E63}.meal-h.cafe .msub{color:#FFA000}.meal-h.almoco .msub{color:#E53935}.meal-h.jantar .msub{color:#7E57C2}
-.meal-name{font-size:.9rem;font-weight:700;color:var(--t1);margin-bottom:8px;padding-left:2px}
-.ming{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid #faf0f2}
-.ming:last-of-type{border-bottom:none}
-.ming-l{display:flex;align-items:center;gap:9px}
-.ming-e{font-size:.95rem;width:24px;text-align:center}
-.ming-n{font-size:.82rem;color:var(--t1);font-weight:500}
-.ming-q{font-size:.84rem;font-weight:700;color:var(--p);white-space:nowrap}
-.meal-tip{margin-top:8px;padding:10px 12px;background:var(--pp);border-radius:10px;font-size:.78rem;color:var(--t2);line-height:1.55}
-.meal-tip strong{color:var(--t1)}
-.day-cal{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:var(--pl);border-radius:12px;margin-top:12px;margin-bottom:8px}
-.day-cal .cal-v{font-size:1rem;font-weight:800;color:var(--p)}
-.day-cal .cal-l{font-size:.76rem;color:var(--t2)}
-.day-cal .cal-t{font-size:.7rem;color:var(--t3);margin-left:8px;padding-left:8px;border-left:1px solid var(--bd)}
-.btn-dn{width:100%;padding:11px;background:var(--pl);color:var(--p);border:none;border-radius:var(--rf);font-size:.82rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:6px}
-.btn-dn:hover{background:var(--pp)}.btn-dn svg{width:15px;height:15px;stroke:var(--p);fill:none;stroke-width:2}
-.dc.dn .btn-dn{background:var(--pl);color:var(--pd)}.dc.dn .btn-dn svg{stroke:var(--pd)}
-.ms{background:linear-gradient(135deg,var(--acl),#FFF8F0);border:1.5px solid #F0D9C4;border-radius:24px;padding:22px;text-align:center;margin-bottom:16px}
-.ms .mi{font-size:1.8rem;margin-bottom:8px}.ms h3{font-size:1.02rem;font-weight:700;margin-bottom:5px}.ms p{font-size:.82rem;color:var(--t2);margin-bottom:14px}
-.btn-m{display:inline-flex;align-items:center;gap:7px;padding:13px 26px;background:var(--ac);color:#fff;border:none;border-radius:var(--rf);font-size:.88rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:.3s}
-.btn-m:hover{background:#C4855A;transform:translateY(-1px)}
-.hc{background:var(--w);border-radius:24px;padding:22px;box-shadow:0 1px 3px rgba(230,57,86,.04);border:1px solid rgba(230,57,86,.04);margin-bottom:16px}
-.hh{display:flex;align-items:center;gap:9px;margin-bottom:14px}.hhi{width:34px;height:34px;background:var(--pl);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.95rem}
-.hh h3{font-size:.92rem;font-weight:700}
-.hit{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #faf0f2}.hit:last-child{border-bottom:none}
-.hdt{width:9px;height:9px;border-radius:50%;flex-shrink:0}.hif{flex:1}
-.hil{font-size:.8rem;font-weight:600}.hid{font-size:.72rem;color:var(--t3);margin-top:1px}
-.hdl{font-size:.8rem;font-weight:700;color:var(--p)}.hdl.n{color:var(--t3)}
-.mo{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);align-items:flex-end;justify-content:center}
-.mo.vis{display:flex}
-.msh{background:var(--w);border-radius:28px 28px 0 0;padding:26px 22px 36px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;animation:su .4s cubic-bezier(.23,1,.32,1);position:relative}
-@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
-@media(min-width:600px){.mo{align-items:center}.msh{border-radius:24px;max-height:85vh}}
-.mhn{width:36px;height:4px;background:var(--bd);border-radius:4px;margin:0 auto 18px}
-.mcl{position:absolute;top:14px;right:14px;width:34px;height:34px;background:var(--pp);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.mcl svg{width:16px;height:16px;stroke:var(--t2);fill:none;stroke-width:2}
-.mhd{text-align:center;margin-bottom:22px}.mhd .mhi{font-size:2rem;margin-bottom:8px}.mhd h2{font-size:1.2rem;font-weight:800;margin-bottom:5px}.mhd p{font-size:.86rem;color:var(--t2)}
-.msu{background:var(--pp);border-radius:var(--r);padding:14px;margin-bottom:18px;display:flex;justify-content:space-around}
-.mst{text-align:center}.mst .mv{font-size:1.15rem;font-weight:700;color:var(--p)}.mst .ml{font-size:.68rem;color:var(--t3);margin-top:1px}
-.mf{margin-bottom:14px;position:relative}.mf label{display:block;font-size:.82rem;font-weight:600;margin-bottom:6px}
-.btn-u{width:100%;padding:16px;background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;border:none;border-radius:var(--rf);font-size:.96rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:.3s;margin-top:6px}
-.btn-u:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(230,57,86,.3)}
-.disc{background:#FFF0F3;border:1px solid #F8B4C4;border-radius:12px;padding:10px 12px;display:flex;align-items:flex-start;gap:8px;margin-top:10px}
-.disc svg{width:14px;height:14px;stroke:var(--p);fill:none;stroke-width:2;flex-shrink:0;margin-top:2px}
-.disc p{font-size:.7rem;color:#8B3050;line-height:1.5}
-@media(max-width:480px){.hero h1{font-size:1.4rem}.card{padding:20px 16px}.dh{padding:20px 16px}.dhr{padding:12px 12px;gap:9px}.dbc{padding:0 12px 14px}}
+.iw input,.iw select{width:100%;padding:16px 50px 16px 20px;background:#fff;border:2px solid transparent;border-radius:var(--rs);font-size:1rem;font-family:'Inter',sans-serif;font-weight:400;color:var(--t1);outline:none;transition:var(--tr);box-shadow:var(--sh);appearance:none;-webkit-appearance:none}
+.iw input::placeholder{color:var(--t3);font-weight:300}
+.iw input:focus,.iw select:focus{border-color:var(--accent);box-shadow:0 0 0 6px rgba(216,139,146,.08)}
+.iw input.err{border-color:#E07878;animation:fshk .45s cubic-bezier(.36,.07,.19,.97)}
+@keyframes fshk{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.isf{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:.82rem;font-weight:400;color:var(--t3);pointer-events:none}
+.sx-sel{display:flex;gap:12px;margin-bottom:18px}
+.sx-b{flex:1;padding:18px 14px;background:#fff;border:2px solid transparent;border-radius:var(--rs);font-size:.92rem;font-weight:500;font-family:'Inter',sans-serif;color:var(--t2);cursor:pointer;text-align:center;transition:var(--tr);box-shadow:var(--sh);display:flex;flex-direction:column;align-items:center;gap:6px}
+.sx-b .si{font-size:1.5rem;line-height:1}.sx-b .sl{font-size:.78rem;font-weight:400;color:var(--t3)}
+.sx-b:hover{border-color:var(--border);transform:translateY(-1px)}
+.sx-b.on{border-color:var(--accent);background:var(--accent-ul);color:var(--accent);box-shadow:0 0 0 5px rgba(216,139,146,.06)}
+.sx-b.on .sl{color:var(--accent);font-weight:500}
+.f-div{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:24px 0}
+.btn-p{width:100%;padding:18px 24px;background:linear-gradient(135deg,#D88B92,#C47A82);color:#fff;border:none;border-radius:var(--r);font-size:.95rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:var(--tr);box-shadow:var(--shb);margin-top:8px;letter-spacing:-.2px;position:relative;overflow:hidden}
+.btn-p:hover{background:linear-gradient(135deg,#C47A82,#B06A72);transform:translateY(-2px);box-shadow:0 12px 40px rgba(216,139,146,.28)}
+.btn-p:active{transform:translateY(0)}
+.tl{margin-top:28px;text-align:center;font-size:.76rem;color:var(--t3);font-weight:300}
+.tl strong{color:var(--t2);font-weight:500}
+
+/* PROCESSING */
+.pr-ctn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;max-width:420px;margin:0 auto;width:100%;text-align:center}
+.pr-orb{width:100px;height:100px;position:relative;margin-bottom:40px}
+.orb-r{position:absolute;inset:0;border-radius:50%;border:2px solid var(--accent-l)}
+.orb-r.sp{border-color:transparent;border-top-color:var(--accent);border-right-color:var(--accent);animation:os 1.8s cubic-bezier(.5,0,.5,1) infinite}
+.orb-r.pl{animation:op 2s ease-in-out infinite;border-color:var(--accent-l)}
+@keyframes os{to{transform:rotate(360deg)}}
+@keyframes op{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.6}}
+.orb-c{position:absolute;inset:20px;background:var(--card);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;animation:ob 2s ease-in-out infinite}
+@keyframes ob{0%,100%{transform:scale(1)}50%{transform:scale(.92)}}
+.pr-ctn h2{font-size:1.25rem;font-weight:600;letter-spacing:-.3px;font-family:'Playfair Display',serif}
+.pr-ctn .sub{font-size:.88rem;font-weight:300;color:var(--t3);margin-bottom:44px;margin-top:6px}
+.pt{width:100%;max-width:300px;margin-bottom:32px}
+.pbg{width:100%;height:4px;background:var(--accent-l);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.pbf{height:100%;width:0%;background:linear-gradient(90deg,#D88B92,#E0A89A);border-radius:10px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.pst{display:flex;flex-direction:column;gap:14px;text-align:left;width:100%;max-width:300px}
+.psi{display:flex;align-items:center;gap:12px;font-size:.82rem;font-weight:300;color:var(--t3);transition:all .5s}
+.psi.ac{color:var(--t1);font-weight:500}.psi.dn{color:var(--accent);font-weight:400}
+.psd{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .5s}
+.psi.ac .psd{border-color:var(--accent);background:var(--accent-ul)}
+.psi.dn .psd{border-color:var(--accent);background:var(--accent)}
+.psd .ck{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;display:none}
+.psi.dn .psd .ck{display:block}
+.psd .pd{width:6px;height:6px;border-radius:50%;background:transparent}
+.psi.ac .psd .pd{background:var(--accent);animation:pdp 1.5s ease-in-out infinite}
+.psi.dn .psd .pd{display:none}
+@keyframes pdp{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.8);opacity:.3}}
+
+/* ═══════ DASHBOARD ═══════ */
+.d-ctn{flex:1;padding:0 20px 40px;max-width:540px;margin:0 auto;width:100%}
+
+/* Streak Banner */
+.streak-banner{background:linear-gradient(135deg,#C9956E,#B8845E);border-radius:var(--r);padding:20px 22px;margin-bottom:16px;color:#fff;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden}
+.streak-banner::before{content:'';position:absolute;width:150px;height:150px;background:rgba(255,255,255,.06);border-radius:50%;top:-50px;right:-30px}
+.streak-banner .sb-fire{font-size:2.2rem;animation:sbb 1.5s ease-in-out infinite}
+@keyframes sbb{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.15) rotate(5deg)}}
+.streak-banner .sb-info{flex:1;position:relative;z-index:1}
+.streak-banner .sb-val{font-size:1.8rem;font-weight:800;letter-spacing:-1px;line-height:1;font-family:'Playfair Display',serif}
+.streak-banner .sb-lbl{font-size:.78rem;font-weight:400;opacity:.7;margin-top:3px}
+.streak-banner .sb-next{font-size:.68rem;font-weight:500;background:rgba(255,255,255,.15);backdrop-filter:blur(4px);padding:4px 12px;border-radius:var(--r);margin-top:8px;display:inline-block}
+.streak-badges{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.streak-badges::-webkit-scrollbar{display:none}
+.sbg{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--r);font-size:.72rem;font-weight:600;border:1.5px solid;white-space:nowrap;flex-shrink:0}
+.sbg.earned{background:var(--gold-l);color:var(--gold-b);border-color:var(--gold)}
+.sbg.locked{background:#F9FAFB;color:var(--t3);border-color:var(--border);opacity:.6}
+.sbg .sbg-ico{font-size:1rem}
+
+/* ═══ PWA INSTALL CARD ═══ */
+.pwa-card{background:linear-gradient(135deg,#FFF8F2,#FFF0E8);border:1.5px solid var(--gold);border-radius:24px;padding:22px 20px;margin-bottom:16px;position:relative;animation:pwaIn .6s ease-out}
+@keyframes pwaIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.pwa-close{position:absolute;top:14px;right:14px;width:30px;height:30px;background:rgba(0,0,0,.04);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr)}
+.pwa-close:hover{background:rgba(0,0,0,.08)}
+.pwa-close svg{width:12px;height:12px;stroke:var(--t3);fill:none;stroke-width:2.5;stroke-linecap:round}
+.pwa-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.pwa-icon{width:50px;height:50px;background:linear-gradient(135deg,#D88B92,#C47A82);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 4px 16px rgba(216,139,146,.18);flex-shrink:0}
+.pwa-head-txt h3{font-size:1rem;font-weight:600;letter-spacing:-.2px;margin-bottom:2px;font-family:'Playfair Display',serif}
+.pwa-head-txt p{font-size:.76rem;color:var(--t2);font-weight:300}
+.pwa-divider{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px 0;opacity:.4}
+.pwa-instructions{display:flex;flex-direction:column;gap:14px}
+.pwa-inst{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:rgba(255,255,255,.7);border-radius:16px;border:1px solid rgba(240,230,224,.6)}
+.pwa-inst-ico{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.pwa-inst-ico.ios{background:#F3F4F6}.pwa-inst-ico.and{background:#F0F9F4}
+.pwa-inst-info{flex:1}
+.pwa-inst-info .pi-os{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.pwa-inst-info .pi-os.ios{color:#6B7280}.pwa-inst-info .pi-os.and{color:#059669}
+.pwa-inst-info .pi-steps{font-size:.8rem;color:var(--t2);font-weight:300;line-height:1.6}
+.pwa-inst-info .pi-steps strong{font-weight:600;color:var(--t1)}
+.pwa-inst-info .pi-steps .key{display:inline-flex;align-items:center;gap:3px;background:var(--card);padding:2px 8px;border-radius:6px;font-weight:500;font-size:.75rem;color:var(--t1);border:1px solid var(--border);margin:0 2px;white-space:nowrap}
+.pwa-footer{text-align:center;margin-top:14px;font-size:.7rem;color:var(--t3);font-weight:300}
+.pwa-footer strong{color:var(--t2);font-weight:500}
+
+/* Month Ribbon */
+.m-rib{display:flex;gap:6px;overflow-x:auto;padding:4px 0 16px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.m-rib::-webkit-scrollbar{display:none}
+.m-pill{flex-shrink:0;padding:8px 14px;background:var(--card2);border:1.5px solid var(--border);border-radius:var(--r);font-size:.7rem;font-weight:500;color:var(--t3);cursor:pointer;transition:var(--tr);display:flex;align-items:center;gap:5px;white-space:nowrap;font-family:'Inter',sans-serif}
+.m-pill:hover{border-color:#E8D8D4}.m-pill.on{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 16px rgba(216,139,146,.2)}
+.m-pill.past{color:var(--accent);border-color:var(--accent-l);background:var(--accent-l)}
+
+/* Month Header */
+.mh{border-radius:var(--r);padding:28px 24px;margin-bottom:16px;position:relative;overflow:hidden;color:#fff}
+.mh::before{content:'';position:absolute;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%;top:-60px;right:-50px}
+.mh::after{content:'';position:absolute;width:120px;height:120px;background:rgba(255,255,255,.04);border-radius:50%;bottom:-30px;left:-20px}
+.mh-top{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.mh-l .mh-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);padding:5px 12px;border-radius:var(--r);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.mh-l h2{font-size:1.45rem;font-weight:700;letter-spacing:-.2px;margin-bottom:3px;font-family:'Playfair Display',serif}
+.mh-l .mh-sub{font-size:.82rem;font-weight:300;opacity:.6;font-style:italic}
+.mh-ico{font-size:2.2rem;opacity:.8}
+.mh-prog{position:relative;z-index:1;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12)}
+.mh-pb{height:4px;background:rgba(255,255,255,.15);border-radius:10px;overflow:hidden;margin-bottom:8px}
+.mh-pf{height:100%;background:rgba(255,255,255,.8);border-radius:10px;transition:width .5s}
+.mh-pt{display:flex;justify-content:space-between;font-size:.72rem;opacity:.5}
+.mh-met{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px;position:relative;z-index:1}
+.mh-mi{background:rgba(255,255,255,.1);backdrop-filter:blur(4px);border-radius:var(--rxs);padding:12px 8px;text-align:center}
+.mh-mi .v{font-size:1.1rem;font-weight:700;font-family:'Playfair Display',serif}.mh-mi .l{font-size:.62rem;opacity:.5;margin-top:2px;text-transform:uppercase;letter-spacing:.6px}
+
+/* Goal Progress */
+.gp{background:var(--card);border-radius:var(--r);padding:22px;margin-bottom:16px;text-align:center;border:1px solid var(--border)}
+.gp-t{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);margin-bottom:12px}
+.gp-v{font-size:2rem;font-weight:700;color:var(--accent);margin-bottom:4px;font-family:'Playfair Display',serif}
+.gp-s{font-size:.82rem;font-weight:300;color:var(--t2);margin-bottom:16px}
+.gp-bar{height:6px;background:var(--accent-l);border-radius:10px;overflow:hidden}
+.gp-fill{height:100%;background:linear-gradient(90deg,#D88B92,#E0A89A);border-radius:10px;transition:width .6s}
+
+/* Week Tabs */
+.wt{display:flex;gap:6px;margin-bottom:14px}
+.wtb{flex:1;padding:12px 6px;background:#fff;border:1.5px solid var(--border);border-radius:var(--rs);text-align:center;cursor:pointer;transition:var(--tr);font-family:'Inter',sans-serif}
+.wtb:hover{border-color:#E8D8D4;transform:translateY(-1px)}
+.wtb.on{border-color:var(--accent);background:var(--accent-ul);box-shadow:0 0 0 4px rgba(216,139,146,.06)}
+.wtb .wn{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--t3)}.wtb.on .wn{color:var(--accent)}
+.wtb .wl{font-size:.72rem;font-weight:500;color:var(--t2);margin-top:2px}.wtb.on .wl{color:var(--accent);font-weight:600}
+
+/* Week Info */
+.wi{background:var(--card);border-radius:var(--rs);padding:18px 20px;margin-bottom:18px;border:1px solid var(--border)}
+.wi-badge{display:inline-flex;padding:4px 12px;border-radius:var(--r);font-size:.68rem;font-weight:600;margin-bottom:8px}
+.wi-desc{font-size:.84rem;color:var(--t2);font-weight:300;line-height:1.65;font-style:italic}
+
+/* Day Cards */
+.dl{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.dc{background:#fff;border-radius:24px;border:1.5px solid var(--border);overflow:hidden;transition:var(--tr)}
+.dc:hover{border-color:#E8D8D4}.dc.done{border-color:var(--accent-l);background:var(--accent-ul)}.dc.ex{border-color:var(--accent);box-shadow:0 4px 24px rgba(216,139,146,.08)}
+.dh{display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;user-select:none}
+.dnu{width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;transition:var(--tr)}
+.dnu.pen{background:var(--card);color:var(--accent)}.dnu.dn{background:var(--accent);color:#fff}
+.di{flex:1;min-width:0}
+.di-t{font-size:.88rem;font-weight:600;color:var(--t1)}.di-s{font-size:.73rem;color:var(--t3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dc.done .di-s{color:var(--accent)}
+.dst{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--tr);cursor:pointer}
+.dc.done .dst{border-color:var(--accent);background:var(--accent)}
+.dst svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;display:none}
+.dc.done .dst svg{display:block}
+.dch{width:18px;height:18px;stroke:var(--t3);fill:none;stroke-width:2;flex-shrink:0;transition:transform .3s;stroke-linecap:round}
+.dc.ex .dch{transform:rotate(180deg);stroke:var(--accent)}
+
+/* Day Expanded Body */
+.dbd{max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.23,1,.32,1)}
+.dc.ex .dbd{max-height:3000px}
+.dbc{padding:0 18px 20px}
+.dvd{height:1px;background:var(--border);margin-bottom:18px}
+.prot-h{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.prot-h .pi{font-size:1.1rem}.prot-h .pt-lbl{font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent)}
+.dose-total{background:linear-gradient(135deg,#D88B92,#C47A82);border-radius:var(--rs);padding:18px 20px;text-align:center;margin-bottom:18px;color:#fff;position:relative;overflow:hidden}
+.dose-total::before{content:'';position:absolute;width:100px;height:100px;background:rgba(255,255,255,.06);border-radius:50%;top:-30px;right:-20px}
+.dose-total .dt-val{font-size:2rem;font-weight:700;letter-spacing:-1px;position:relative;z-index:1;font-family:'Playfair Display',serif}
+.dose-total .dt-lbl{font-size:.68rem;font-weight:400;opacity:.6;text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;position:relative;z-index:1}
+.comp-bar{display:flex;height:8px;border-radius:10px;overflow:hidden;margin-bottom:18px;gap:2px}
+.comp-bar .cb-s{height:100%;border-radius:10px;transition:width .5s}
+.ing-list{display:flex;flex-direction:column;gap:4px;margin-bottom:18px}
+.ing-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--card2);border-radius:var(--rxs);transition:var(--tr)}
+.ing-row:hover{background:var(--card)}
+.ing-l{display:flex;align-items:center;gap:10px}
+.ing-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.ing-ico{font-size:1rem;flex-shrink:0;width:24px;text-align:center}
+.ing-info{display:flex;flex-direction:column}
+.ing-n{font-size:.82rem;font-weight:500;color:var(--t1)}.ing-d{font-size:.68rem;color:var(--t3);font-weight:300;margin-top:1px}
+.ing-v{font-size:.92rem;font-weight:700;color:var(--t1);white-space:nowrap}
+.ing-v span{font-size:.72rem;font-weight:400;color:var(--t3);margin-left:2px}
+.zz-badge{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:var(--r);font-size:.72rem;font-weight:600;margin-bottom:14px}
+.zz-badge.hi{background:#FFF4EE;color:#C48A60}.zz-badge.lo{background:#F0EEF8;color:#8878B0}
+.inst{background:var(--card);border-radius:var(--rs);padding:18px;margin-bottom:14px;border:1px solid var(--border)}
+.inst-h{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--t3);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.inst-h .ih-ico{font-size:.85rem}
+.inst-steps{display:flex;flex-direction:column;gap:8px}
+.inst-s{display:flex;align-items:flex-start;gap:10px;font-size:.8rem;color:var(--t2);font-weight:300;line-height:1.6}
+.inst-num{width:22px;height:22px;border-radius:50%;background:var(--accent-l);color:var(--accent);font-size:.68rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.day-tip{background:var(--accent-ul);border-radius:var(--rxs);padding:14px 16px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px}
+.day-tip .tip-ico{font-size:1rem;flex-shrink:0;margin-top:1px}
+.day-tip .tip-tx{font-size:.78rem;color:var(--t2);font-weight:300;line-height:1.65}
+.day-tip .tip-tx strong{color:var(--t1);font-weight:500}
+
+/* Dose Button */
+.btn-dose{width:100%;padding:16px;border:none;border-radius:var(--r);font-size:.88rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden}
+.btn-dose.pen{background:linear-gradient(135deg,#D88B92,#C47A82);color:#fff;box-shadow:var(--shb)}
+.btn-dose.pen:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(216,139,146,.3)}
+.btn-dose.pen:active{transform:translateY(0)}
+.btn-dose.dn{background:linear-gradient(135deg,#7EB09A,#6A9A86);color:#fff;box-shadow:0 8px 30px rgba(106,154,134,.2)}
+.btn-dose svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* Update Card */
+.upd-card{background:linear-gradient(135deg,var(--card),var(--accent-ul));border:1.5px solid var(--border);border-radius:var(--r);padding:28px 22px;text-align:center;margin-bottom:20px;margin-top:10px}
+.upd-card .ui{font-size:2rem;margin-bottom:10px}
+.upd-card h3{font-size:1.05rem;font-weight:600;margin-bottom:6px;font-family:'Playfair Display',serif}
+.upd-card p{font-size:.82rem;color:var(--t2);font-weight:300;margin-bottom:18px;line-height:1.6}
+.btn-upd{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:linear-gradient(135deg,#D88B92,#C47A82);color:#fff;border:none;border-radius:var(--r);font-size:.88rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:var(--tr)}
+.btn-upd:hover{background:linear-gradient(135deg,#C47A82,#B06A72);transform:translateY(-2px);box-shadow:var(--shb)}
+
+/* History */
+.hist{background:#fff;border-radius:24px;padding:22px;box-shadow:var(--sh);border:1px solid var(--border);margin-bottom:16px}
+.hist-h{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.hist-h .hhi{width:34px;height:34px;background:var(--accent-l);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.hist-h h3{font-size:.92rem;font-weight:600;font-family:'Playfair Display',serif}
+.hist-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.hist-row:last-child{border-bottom:none}
+.hr-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.hr-info{flex:1}.hr-l{font-size:.8rem;font-weight:600}.hr-d{font-size:.7rem;color:var(--t3);margin-top:1px}
+.hr-val{text-align:right}.hr-w{font-size:.9rem;font-weight:700}.hr-ch{font-size:.7rem;font-weight:600}
+.hr-ch.pos{color:#7EB09A}.hr-ch.neg{color:var(--accent)}.hr-ch.neu{color:var(--t3)}
+
+/* Disclaimer */
+.disc{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:14px 16px;display:flex;align-items:flex-start;gap:10px;margin-top:10px;margin-bottom:16px}
+.disc svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:2;flex-shrink:0;margin-top:2px;stroke-linecap:round}
+.disc p{font-size:.72rem;color:var(--t2);line-height:1.6;font-weight:300}
+
+/* Footer */
+.app-footer{text-align:center;padding:20px;border-top:1px solid var(--border);margin-top:10px}
+.app-footer .f-ver{font-size:.72rem;color:var(--t3);margin-bottom:10px}
+.btn-reset{background:none;border:none;font-family:'Inter',sans-serif;font-size:.74rem;color:var(--t3);cursor:pointer;text-decoration:underline;padding:6px 12px;border-radius:8px;transition:var(--tr)}
+.btn-reset:hover{color:var(--accent);background:var(--accent-ul)}
+
+/* ═══════ MODALS ═══════ */
+.mo-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(54,54,54,.5);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.mo-overlay.vis{display:flex}
+.mo-box{background:#fff;max-width:350px;width:100%;border-radius:32px;padding:36px 28px;text-align:center;position:relative;animation:mpop .5s cubic-bezier(.34,1.56,.64,1) forwards;box-shadow:0 25px 80px rgba(54,54,54,.12)}
+@keyframes mpop{from{opacity:0;transform:scale(.85) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mo-box .mo-emo{font-size:3.5rem;margin-bottom:16px;display:block;animation:meb 1s ease-in-out infinite alternate}
+@keyframes meb{from{transform:scale(1) rotate(-5deg)}to{transform:scale(1.1) rotate(5deg)}}
+.mo-box h2{font-size:1.35rem;font-weight:700;color:var(--accent);margin-bottom:8px;letter-spacing:-.3px;font-family:'Playfair Display',serif}
+.mo-box .mo-sub{font-size:.88rem;font-weight:300;color:var(--t2);line-height:1.65;margin-bottom:24px}
+.mo-box .mo-streak-val{font-size:2.8rem;font-weight:800;color:var(--gold);margin-bottom:4px;letter-spacing:-2px;font-family:'Playfair Display',serif}
+.mo-box .mo-streak-lbl{font-size:.78rem;color:var(--t3);margin-bottom:20px}
+.mo-box .mo-reward{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:var(--gold-l);border:1.5px solid var(--gold);border-radius:var(--r);font-size:.82rem;font-weight:600;color:var(--gold-b);margin-bottom:22px}
+.mo-box .mo-reward .mr-ico{font-size:1.2rem}
+.btn-modal{width:100%;padding:16px;border:none;border-radius:var(--r);font-size:.92rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:var(--tr)}
+.btn-modal.primary{background:linear-gradient(135deg,#D88B92,#C47A82);color:#fff;box-shadow:var(--shb)}
+.btn-modal.primary:hover{background:linear-gradient(135deg,#C47A82,#B06A72);transform:translateY(-2px)}
+.btn-modal.gold{background:linear-gradient(135deg,#C9956E,#B8845E);color:#fff;box-shadow:0 8px 30px rgba(201,149,110,.25)}
+.btn-modal.gold:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(201,149,110,.35)}
+.btn-modal.ghost{background:transparent;color:var(--t3);margin-top:8px;font-weight:400;font-size:.82rem}
+.btn-modal.ghost:hover{color:var(--accent)}
+.mo-close{position:absolute;top:16px;right:16px;width:34px;height:34px;background:var(--card);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr)}
+.mo-close:hover{background:var(--accent-l)}
+.mo-close svg{width:14px;height:14px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round}
+.mo-box .m-sum{display:flex;justify-content:space-around;background:var(--card);border-radius:var(--rs);padding:16px;margin-bottom:20px;text-align:center}
+.mo-box .m-si .sv{font-size:1.1rem;font-weight:700;color:var(--accent);font-family:'Playfair Display',serif}.mo-box .m-si .slb{font-size:.66rem;color:var(--t3);margin-top:2px}
+.mo-box .m-fg{margin-bottom:16px;text-align:left}
+.mo-box .m-fg label{display:block;font-size:.82rem;font-weight:500;margin-bottom:8px;padding-left:4px}
+.mo-box .warn-ico{font-size:2.5rem;margin-bottom:12px;display:block}
+.btn-modal.danger{background:linear-gradient(135deg,#E07878,#D06868);color:#fff;box-shadow:0 8px 30px rgba(224,120,120,.2)}
+.btn-modal.danger:hover{background:linear-gradient(135deg,#D06868,#C05858);transform:translateY(-2px)}
+
+/* Confetti Canvas */
+#confetti-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2000}
+
+/* Particles */
+.particle{position:fixed;pointer-events:none;z-index:1500;border-radius:50%;animation:partFall linear forwards}
+@keyframes partFall{0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1)}100%{opacity:0;transform:translateY(120px) rotate(720deg) scale(0)}}
+
+@media(max-width:400px){
+.ob-hero h1{font-size:1.5rem}.f-card{padding:28px 18px;border-radius:28px}
+.mh{padding:22px 18px}.dh{padding:14px 14px;gap:10px}.dbc{padding:0 14px 16px}
+.mo-box{padding:28px 20px;border-radius:28px}.streak-banner{padding:16px 18px;gap:12px}
+.pwa-card{padding:18px 16px}.pwa-inst{padding:12px 14px}
+}
 </style>
 </head>
 <body>
 
-<header>
-<div class="logo">
-<div class="logo-i"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg></div>
-<div class="logo-t">Stylo Maison <span>| App</span></div>
-</div>
-</header>
+<canvas id="confetti-canvas"></canvas>
 
-<div class="app">
-
-<section id="scr-onboard" class="screen active">
-<div class="hero">
-<div class="badge">✦ Protocole Personnalisé</div>
-<h1>Votre programme de <em>nutrition sur mesure</em></h1>
-<p>Recettes complètes pour petit-déjeuner, déjeuner et dîner — ajustées à vos mesures chaque mois.</p>
+<!-- ═══ SCREEN 1: ONBOARDING ═══ -->
+<section id="scr-ob" class="screen">
+<nav class="nav"><div class="logo-g"><div class="logo-ic"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="logo-tx">Stylo Maison <span>Bien-être</span></div></div></nav>
+<div class="ob-ctn">
+<div class="ob-hero"><span class="h-emo">✨</span><h1>Votre <em>Métamorphose Biologique</em> commence ici</h1><p>6 mois de nutrition sur mesure, conçue avec élégance par intelligence artificielle.</p></div>
+<div class="f-card"><div class="f-lbl">Votre Profil</div>
+<form id="frm" novalidate>
+<div class="fg"><label>Sexe biologique</label><div class="sx-sel"><button type="button" class="sx-b" data-s="H" onclick="selSex(this)"><span class="si">♂</span><span class="sl">Homme</span></button><button type="button" class="sx-b" data-s="F" onclick="selSex(this)"><span class="si">♀</span><span class="sl">Femme</span></button></div><input type="hidden" id="i-sex" value=""></div>
+<div class="f-div"></div>
+<div class="fg"><label>Âge <span class="u">(ans)</span></label><div class="iw"><input type="number" id="i-age" placeholder="ex : 35" min="18" max="99" required><span class="isf">ans</span></div></div>
+<div class="fg"><label>Taille <span class="u">(centimètres)</span></label><div class="iw"><input type="number" id="i-ht" placeholder="ex : 165" min="120" max="230" required><span class="isf">cm</span></div></div>
+<div class="fg"><label>Poids actuel <span class="u">(kilogrammes)</span></label><div class="iw"><input type="number" id="i-wt" placeholder="ex : 68" min="35" max="250" step="0.1" required><span class="isf">kg</span></div></div>
+<div class="fg"><label>Poids rêvé <span class="u">(kilogrammes)</span></label><div class="iw"><input type="number" id="i-gl" placeholder="ex : 58" min="35" max="200" step="0.1" required><span class="isf">kg</span></div></div>
+<div class="f-div"></div>
+<button type="submit" class="btn-p">Commencer mon Voyage de 6 Mois ✨</button>
+</form></div>
+<div class="tl"><strong>24 800+</strong> femmes accompagnées en France ce mois-ci</div>
 </div>
-<div class="card">
-<div class="card-label">Vos informations</div>
-<form id="frm" novalidate="">
-<div class="field"><label>Sexe</label>
-<div class="sel-row"><button type="button" class="sel-btn" data-v="M" onclick="selSex(this)">♂ Homme</button><button type="button" class="sel-btn" data-v="F" onclick="selSex(this)">♀ Femme</button></div></div>
-<div class="field"><label>Âge <span class="u">(ans)</span></label><div class="iw"><input type="number" id="i-age" placeholder="ex : 35" min="18" max="99" required=""><span class="sf">ans</span></div></div>
-<div class="field"><label>Taille <span class="u">(cm)</span></label><div class="iw"><input type="number" id="i-ht" placeholder="ex : 170" min="120" max="220" required=""><span class="sf">cm</span></div></div>
-<div class="field"><label>Poids actuel <span class="u">(kg)</span></label><div class="iw"><input type="number" id="i-wt" placeholder="ex : 78" min="40" max="250" step="0.1" required=""><span class="sf">kg</span></div></div>
-<input type="hidden" id="i-sex" value="">
-<button type="submit" class="btn">Générer mon protocole personnalisé →</button>
-</form>
-</div>
-<div class="trust"><p><strong>14 200+</strong> protocoles générés ce mois-ci</p></div>
 </section>
 
-<section id="scr-load" class="screen">
-<div class="lw">
-<div class="lv"><div class="lr"></div><div class="lr sp"></div></div>
-<h2>Préparation de votre protocole…</h2>
-<p>Calcul des dosages et des repas</p>
-<div class="pb">
-<div class="pbg"><div class="pbf" id="pf"></div></div>
-<div class="ps">
-<div class="psi" id="ps1"><div class="pid"><svg class="pck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg><div class="pdt"></div></div>Analyse du profil métabolique</div>
-<div class="psi" id="ps2"><div class="pid"><svg class="pck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg><div class="pdt"></div></div>Calcul des dosages du tonique</div>
-<div class="psi" id="ps3"><div class="pid"><svg class="pck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg><div class="pdt"></div></div>Sélection des repas français</div>
-<div class="psi" id="ps4"><div class="pid"><svg class="pck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg><div class="pdt"></div></div>Génération du protocole 28 jours</div>
+<!-- ═══ SCREEN 2: PROCESSING ═══ -->
+<section id="scr-pr" class="screen">
+<nav class="nav"><div class="logo-g"><div class="logo-ic"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="logo-tx">Stylo Maison <span>Bien-être</span></div></div></nav>
+<div class="pr-ctn"><div class="pr-orb"><div class="orb-r pl"></div><div class="orb-r sp"></div><div class="orb-c">🌸</div></div>
+<h2>Préparation de votre rituel…</h2><p class="sub">Votre programme sur mesure prend forme</p>
+<div class="pt"><div class="pbg"><div class="pbf" id="pf"></div></div>
+<div class="pst">
+<div class="psi" id="s1"><div class="psd"><svg class="ck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><div class="pd"></div></div><span>Analyse de votre équilibre intérieur…</span></div>
+<div class="psi" id="s2"><div class="psd"><svg class="ck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><div class="pd"></div></div><span>Calibrage de vos actifs naturels…</span></div>
+<div class="psi" id="s3"><div class="psd"><svg class="ck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><div class="pd"></div></div><span>Sélection de vos rituels bien-être…</span></div>
+<div class="psi" id="s4"><div class="psd"><svg class="ck" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><div class="pd"></div></div><span>Finalisation de votre programme 6 mois…</span></div>
 </div></div></div>
 </section>
 
-<section id="scr-dash" class="screen"><div id="dash"></div></section>
-</div>
+<!-- ═══ SCREEN 3: DASHBOARD ═══ -->
+<section id="scr-db" class="screen">
+<nav class="nav"><div class="logo-g"><div class="logo-ic"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="logo-tx">Stylo Maison <span>Bien-être</span></div></div></nav>
+<div class="d-ctn" id="dash"></div>
+</section>
 
-<div class="mo" id="modal"><div class="msh"><div class="mhn"></div><button class="mcl" onclick="cModal()"><svg viewBox="0 0 24 24" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><div id="mi"></div></div></div>
+<!-- ═══ MODAL CONTAINER ═══ -->
+<div class="mo-overlay" id="mo-overlay"><div class="mo-box" id="mo-box"></div></div>
 
 <script>
-let S={user:{sex:'',age:0,ht:0,wt:0,iwt:0},month:1,week:1,expDay:null,done:{},hist:[]};
+(function(){
+'use strict';
+
+/* ═══════════════════════════════════════════
+   CONFIG
+   ═══════════════════════════════════════════ */
+
 const JOURS=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-const WKS=[
-{nm:"Adaptation",sub:"Phase initiale",c:"#E63956",cb:"#FDE8ED",m:.7,desc:"Votre organisme s'adapte progressivement. Dosages réduits à 70% pour le confort. Repas légers et faciles à digérer."},
-{nm:"Accélération",sub:"Intensification",c:"#C42D47",cb:"#FDE8ED",m:.85,desc:"Dosages à 85%. Repas plus protéinés pour soutenir le métabolisme. Vous commencez à ressentir plus de satiété."},
-{nm:"Croisière",sub:"Puissance totale",c:"#D4956A",cb:"#FFF4EC",m:1,desc:"Protocole à 100%. Synergie maximale des ingrédients. Recettes variées de la cuisine française pour des résultats visibles."},
-{nm:"Consolidation",sub:"Stabilisation",c:"#F06680",cb:"#FFF0F3",m:1,desc:"Phase d'ancrage métabolique. Votre nouveau rythme se stabilise. Mettez à jour vos mesures pour le mois suivant."}
+const DAY_MOD=[1.00,1.02,1.00,1.05,0.98,0.90,0.85];
+
+const MONTHS=[
+{num:1,name:"L'Éveil Doux",sub:"Renaissance Intestinale",icon:"✨",focus:"Harmonie Digestive",
+ grad:"linear-gradient(135deg,#D88B92,#C47A82)",cl:"#D88B92",clb:"#FDF0F2",
+ vinR:.40,egcgM:.60,probio:5,citron:15,
+ desc:"Phase de renaissance intestinale tout en douceur. Le vinaigre de cidre restaure l'équilibre de votre flore, scellant les jonctions cellulaires pour un bien-être profond et lumineux.",
+ tips:["Température idéale : 37°C, douce comme un bain tiède, pour préserver tous les bienfaits.","Choisissez un vinaigre non pasteurisé avec « la mère » — un véritable trésor de la nature.","Les probiotiques L. Gasseri sont délicats — ajoutez-les en dernier pour préserver leur efficacité.","Une légère sensation de chaleur est tout à fait normale les premiers jours — votre corps s'éveille.","Offrez-vous au moins 1,5L d'eau supplémentaire — votre peau vous remerciera aussi.","Le repos digestif du week-end est un cadeau précieux pour votre régénération intérieure.","Prenez votre élixir à jeun, 20 minutes avant le premier repas, pour une absorption optimale."]},
+{num:2,name:"La Floraison",sub:"Éveil Naturel du GLP-1",icon:"🌸",focus:"Satiété Naturelle",
+ grad:"linear-gradient(135deg,#E0A89A,#D88B92)",cl:"#E0A89A",clb:"#FFF5F0",
+ vinR:.30,egcgM:1.00,probio:8,citron:15,
+ desc:"L'EGCG, joyau du thé vert, éveille tout en douceur vos récepteurs de satiété. Votre appétit s'apaise naturellement, comme une fleur qui s'ouvre au soleil.",
+ tips:["L'EGCG est le joyau du thé vert — un stimulant naturel et délicat de votre satiété.","La sécrétion de GLP-1 apaise naturellement l'appétit — une satiété sereine et prolongée.","8 milliards d'UFC renforcent votre jardin intérieur, flore productrice de bien-être.","Une promenade de 20 minutes après le repas double les bienfaits — un moment de douceur pour vous.","Votre sensibilité à l'insuline s'améliore dès la 2ème semaine — les résultats arrivent.","L'EGCG est mieux absorbé à jeun — votre rituel matinal est le moment idéal.","La synergie EGCG + acide acétique éveille vos cellules intestinales en harmonie."]},
+{num:3,name:"Le Renouveau",sub:"Renouvellement Cellulaire Profond",icon:"🌿",focus:"Vitalité Intérieure",
+ grad:"linear-gradient(135deg,#C07A8A,#A86878)",cl:"#C07A8A",clb:"#F8E8ED",
+ vinR:.35,egcgM:1.20,probio:10,citron:20,
+ desc:"L'intensité atteint son apogée dans l'harmonie. La synergie de vos actifs naturels active un renouvellement cellulaire profond et lumineux.",
+ tips:["L'EGCG à 120% éveille doucement la noradrénaline, messagère de la transformation corporelle.","10 milliards d'UFC — la diversité maximale pour un microbiome épanoui et radieux.","Le citron à 20ml apporte sa vitamine C protectrice — bouclier naturel pour vos actifs.","Votre dépense énergétique au repos augmente de 4 à 8% — votre corps se renouvelle en silence.","Phase de pleine intensité — écoutez votre corps avec tendresse et hydratez-vous généreusement.","Votre silhouette se redessine naturellement — les centimètres s'affinent en douceur.","Votre microbiome produit ses propres acides gras bénéfiques — il prend soin de vous."]},
+{num:4,name:"La Danse Métabolique",sub:"Harmonie Zig-Zag Élégante",icon:"🦋",focus:"Flexibilité Intérieure",
+ grad:"linear-gradient(135deg,#B07898,#987088)",cl:"#B07898",clb:"#F5E8F0",
+ vinR:.32,egcgM:1.00,probio:8,citron:15,zigzag:true,
+ desc:"Une alternance rythmée et douce entre jours d'élan et jours de repos. Votre métabolisme danse et se réinvente, sans jamais stagner.",
+ tips:["La stratégie Zig-Zag empêche votre métabolisme de s'endormir — une danse pleine de grâce.","Jours d'élan = montée douce. Jours de grâce = repos actif. L'équilibre est la clé.","Votre flexibilité métabolique s'éveille — votre corps apprend à danser entre les sources d'énergie.","Les jours plus légers sont aussi précieux que les jours intenses — honorez chaque rythme.","Le plateau est un mécanisme naturel — le Zig-Zag le contourne avec élégance.","Votre corps reste en éveil doux, sans jamais se lasser ni s'épuiser.","Phase psychologiquement importante — votre constance est votre plus belle force."]},
+{num:5,name:"L'Harmonie",sub:"Sérénité Hormonale",icon:"🕊️",focus:"Équilibre & Leptine",
+ grad:"linear-gradient(135deg,#D09888,#C08878)",cl:"#D09888",clb:"#FFF3EF",
+ vinR:.28,egcgM:.85,probio:7,citron:15,
+ desc:"Vos hormones de satiété trouvent leur équilibre. La leptine et l'insuline s'harmonisent pour un bien-être durable et sans effort.",
+ tips:["La leptine retrouve son équilibre — adieu les envies compulsives, bonjour la sérénité.","Des dosages constants pour une harmonie hormonale parfaite et apaisante.","L'insuline se normalise — votre corps cesse de stocker inutilement.","Votre microbiome est mature — les probiotiques l'entretiennent comme un jardin fleuri.","L'équilibre hormonal est la clé anti-effet yoyo — votre transformation est durable.","Une meilleure leptine favorise aussi un sommeil plus profond et réparateur.","Votre métabolisme se recalibre en permanence — il trouve son nouveau point d'équilibre."]},
+{num:6,name:"La Métamorphose",sub:"Rituel de Vie",icon:"👑",focus:"Éclat Durable",
+ grad:"linear-gradient(135deg,#C89878,#B08868)",cl:"#C89878",clb:"#FFF6EE",
+ vinR:.22,egcgM:.70,probio:5,citron:12,
+ desc:"Votre transformation est accomplie. Ce rituel de maintien tout en douceur préserve votre éclat intérieur, naturellement et pour toujours.",
+ tips:["Le rituel de vie est conçu pour durer — une habitude précieuse et naturelle.","Votre microbiome, remodelé en 5 mois, est désormais votre allié fidèle.","La réduction progressive évite tout choc — votre corps s'adapte en douceur.","Ajustez ±10% selon votre ressenti — vous connaissez maintenant votre corps par cœur.","La Métamorphose est un nouveau départ qui dure pour toujours.","Élixir matinal, hydratation, alimentation consciente — les trois piliers de votre éclat.","6 mois ont reconfiguré votre biologie. Le maintien est devenu naturel et joyeux."]}
 ];
 
-const MEALS=[
-// ═══ SEMAINE 1 ═══
-[
-{c:["Tartine Avocat-Œuf Poché",310,[["🥑","Avocat mûr","½ pièce"],["🥚","Œuf poché","1 pièce"],["🍞","Pain complet","1 tranche"],["🌶️","Piment d'Espelette","1 pincée"]],"L'avocat apporte des acides gras essentiels. Pochez l'œuf 3 min dans l'eau frémissante avec du vinaigre."],
-a:["Poulet Grillé, Riz Complet et Haricots Verts",460,[["🍗","Blanc de poulet","150g"],["🍚","Riz complet","4 c. à soupe"],["🫛","Haricots verts","120g"],["🫒","Huile d'olive","1 c. à soupe"]],"Assaisonnez le poulet avec du thym et de l'ail. Les haricots verts al dente conservent plus de nutriments."],
-j:["Velouté de Courgettes au Basilic",230,[["🥒","Courgettes","250g"],["🧅","Oignon","½ pièce"],["🌿","Basilic frais","6 feuilles"],["🧀","Chèvre frais","20g"]],"Faites revenir l'oignon, ajoutez les courgettes et le bouillon. Mixez avec le basilic."]},
-
-{c:["Fromage Blanc, Muesli et Fruits Rouges",290,[["🥛","Fromage blanc 0%","150g"],["🥣","Muesli sans sucre","30g"],["🍓","Fruits rouges mélangés","80g"],["🍯","Miel d'acacia","1 c. à café"]],"Le fromage blanc est riche en protéines et pauvre en matières grasses. Antioxydants des fruits rouges."],
-a:["Pavé de Saumon, Purée de Brocolis",450,[["🐟","Pavé de saumon","150g"],["🥦","Brocolis","200g"],["🧄","Ail + échalote","1 gousse"],["🍋","Citron pressé","½ pièce"]],"Cuisez le saumon à la poêle 4 min par face. Purée de brocolis : vapeur puis mixé avec un filet d'huile d'olive."],
-j:["Salade Niçoise Allégée",250,[["🥫","Thon au naturel","1 boîte"],["🥚","Œuf dur","1 pièce"],["🫒","Olives noires","6 pièces"],["🥗","Mesclun + tomates cerises","à volonté"]],"Classique de la Côte d'Azur. Assaisonnement : huile d'olive, vinaigre de vin, moutarde de Dijon."]},
-
-{c:["Porridge Avoine-Pomme-Cannelle",320,[["🥣","Flocons d'avoine","40g"],["🍎","Pomme coupée","1 pièce"],["🥛","Lait d'amande","200ml"],["🌰","Cannelle","1 c. à café"]],"L'avoine est riche en bêta-glucane, qui régule le cholestérol. La cannelle améliore l'insuline."],
-a:["Bœuf Bourguignon Allégé",480,[["🥩","Bœuf (paleron)","140g"],["🍷","Vin rouge (cuisson)","5cl"],["🥕","Carottes + champignons","150g"],["🍚","Riz complet","3 c. à soupe"]],"Mijoter 2h à feu doux. Le vin s'évapore à la cuisson. Grand classique bourguignon revisité."],
-j:["Croque-Monsieur au Four",270,[["🍞","Pain de mie complet","2 tranches"],["🧀","Emmental râpé","20g"],["🥓","Jambon blanc","1 tranche"],["🥛","Béchamel légère","1 c. à soupe"]],"Au four 10 min à 200°C au lieu de la poêle. Béchamel : lait écrémé + maïzena + muscade."]},
-
-{c:["Smoothie Vert Épinards-Banane",280,[["🥬","Épinards frais","30g"],["🍌","Banane","1 pièce"],["🥛","Lait d'amande","250ml"],["🥜","Beurre de cacahuète","1 c. à soupe"]],"Mixez 40s. Les épinards sont riches en fer et magnésium, leur goût est masqué par la banane."],
-a:["Cabillaud en Papillote aux Légumes",430,[["🐟","Filet de cabillaud","180g"],["🫑","Poivron + courgette","150g"],["🍅","Tomate","1 pièce"],["🌿","Herbes de Provence","1 c. à café"]],"Emballez dans du papier sulfurisé. Four 20 min à 180°C. La papillote conserve saveurs et nutriments."],
-j:["Omelette aux Fines Herbes",240,[["🥚","Œufs","2 pièces"],["🌿","Ciboulette + persil + estragon","à volonté"],["🧀","Fromage de chèvre","20g"],["🥗","Salade verte","à volonté"]],"Classique parisien. Cuisson baveuse à feu doux pour un résultat onctueux."]},
-
-{c:["Galette de Sarrasin Jambon-Fromage",320,[["⚫","Farine de sarrasin","40g"],["🥓","Jambon blanc","1 tranche"],["🧀","Emmental râpé","20g"],["🥚","Œuf","1 pièce"]],"La galette bretonne par excellence. Le sarrasin est sans gluten et riche en protéines végétales."],
-a:["Poulet Basquaise",460,[["🍗","Cuisses de poulet (sans peau)","200g"],["🫑","Poivrons rouges + verts","150g"],["🍅","Tomates","2 pièces"],["🌶️","Piment d'Espelette","1 pincée"]],"Faites revenir le poulet, ajoutez poivrons et tomates. Mijoter 45 min. Tradition du Pays Basque."],
-j:["Velouté de Potimarron",220,[["🎃","Potimarron","250g"],["🧅","Oignon","½ pièce"],["🥛","Crème fraîche légère","1 c. à soupe"],["🌰","Noix de muscade","1 pincée"]],"Le potimarron n'a pas besoin d'être épluché. Soupe d'automne réconfortante."]},
-
-{c:["Tartine Beurre d'Amande et Miel",310,[["🍞","Pain complet au levain","1 tranche"],["🥜","Beurre d'amande","1 c. à soupe"],["🍯","Miel de lavande","1 c. à café"],["🍌","Banane en rondelles","½ pièce"]],"Le beurre d'amande est riche en vitamine E et magnésium. Le miel de lavande est typiquement provençal."],
-a:["Steak Haché, Gratin Dauphinois Allégé",470,[["🥩","Steak haché 5% MG","130g"],["🥔","Pommes de terre","200g"],["🥛","Lait écrémé + muscade","150ml"],["🥗","Salade verte","à volonté"]],"Fines tranches de pommes de terre, lait, muscade. Four 45 min à 180°C. Version allégée sans crème."],
-j:["Salade Tiède de Lentilles au Chèvre",260,[["🫘","Lentilles vertes du Puy","80g"],["🧀","Bûche de chèvre","30g"],["🥬","Roquette","à volonté"],["🥕","Échalote + vinaigre de Xérès","à goût"]],"Les lentilles du Puy sont un trésor français. Riches en protéines végétales et en fer."]},
-
-{c:["Pancakes Ricotta-Myrtilles",330,[["🥛","Ricotta","60g"],["🥚","Œuf","1 pièce"],["🥣","Farine complète","40g"],["🫐","Myrtilles","50g"]],"La ricotta rend les pancakes moelleux et protéinés. Les myrtilles sont riches en antioxydants."],
-a:["Rôti de Porc aux Pruneaux",470,[["🥩","Rôti de porc (filet)","160g"],["🍇","Pruneaux d'Agen","5 pièces"],["🥔","Pommes de terre rôties","150g"],["🌿","Thym + romarin","à goût"]],"Spécialité de Tours. Les pruneaux d'Agen fondent dans le jus. Classique du dimanche français."],
-j:["Soupe à l'Oignon Gratinée Light",230,[["🧅","Oignons","3 gros"],["🍞","Pain complet grillé","1 tranche"],["🧀","Gruyère râpé","20g"],["🍷","Bouillon + vin blanc","200ml"]],"Caramélisez les oignons longuement. Gratinez au four 5 min. Emblème des Halles de Paris."]}
-],
-// ═══ SEMAINE 2 ═══
-[
-{c:["Œufs Brouillés, Pain Complet, Tomate",300,[["🥚","Œufs","2 pièces"],["🍞","Pain complet","1 tranche"],["🍅","Tomate en rondelles","1 pièce"],["🌿","Ciboulette fraîche","à goût"]],"Cuisson lente à feu très doux en remuant sans cesse. Texture crémeuse à la française."],
-a:["Dorade Grillée, Riz et Ratatouille",450,[["🐟","Filet de dorade","180g"],["🍚","Riz basmati","3 c. à soupe"],["🍆","Ratatouille maison","150g"],["🫒","Huile d'olive","1 c. à soupe"]],"Ratatouille : aubergine, courgette, poivron, tomate, oignon. Plat provençal riche en légumes variés."],
-j:["Soupe de Lentilles Corail au Curry",240,[["🫘","Lentilles corail","80g"],["🥕","Carotte","1 pièce"],["🍛","Curry + curcuma","1 c. à café"],["🥥","Lait de coco light","50ml"]],"Les lentilles corail cuisent en 15 min sans trempage. Le curry a des propriétés anti-inflammatoires."]},
-
-{c:["Yaourt Grec, Granola Maison, Kiwi",290,[["🥛","Yaourt grec nature","150g"],["🥣","Granola sans sucre","30g"],["🥝","Kiwi","1 pièce"],["🍯","Sirop d'agave","1 c. à café"]],"Le kiwi contient plus de vitamine C qu'une orange. Le yaourt grec est deux fois plus riche en protéines."],
-a:["Blanquette de Veau Allégée",470,[["🥩","Épaule de veau","150g"],["🥕","Carottes + champignons","120g"],["🥛","Sauce blanche légère","100ml"],["🍚","Riz complet","3 c. à soupe"]],"Grand classique français. Sauce : bouillon + maïzena + crème légère + jaune d'œuf."],
-j:["Salade de Quinoa aux Légumes Grillés",250,[["🍚","Quinoa cuite","4 c. à soupe"],["🫑","Poivron grillé","½ pièce"],["🍆","Aubergine grillée","100g"],["🌿","Menthe + citron","à goût"]],"Grillez les légumes au four. Mélangez froid avec le quinoa. Fraîche et rassasiante."]},
-
-{c:["Toast au Saumon Fumé",330,[["🍞","Pain de seigle","1 tranche"],["🐟","Saumon fumé","40g"],["🧀","Cream cheese allégé","1 c. à soupe"],["🍋","Citron + aneth","à goût"]],"Le saumon fumé est riche en oméga-3 et en protéines. Le pain de seigle a un index glycémique bas."],
-a:["Poulet Rôti, Pommes de Terre et Carottes",460,[["🍗","Poulet fermier (cuisse sans peau)","200g"],["🥔","Pommes de terre","150g"],["🥕","Carottes","100g"],["🌿","Thym + laurier","à goût"]],"Le poulet rôti du dimanche... en semaine ! Classique familial français par excellence."],
-j:["Velouté de Champignons de Paris",230,[["🍄","Champignons de Paris","250g"],["🧅","Échalote","1 pièce"],["🥛","Crème fraîche légère","1 c. à soupe"],["🌿","Persil plat","à goût"]],"Faites revenir les champignons avec l'échalote. Mixez avec un peu de bouillon. Onctueux et parfumé."]},
-
-{c:["Bircher Muesli aux Fruits Secs",310,[["🥣","Flocons d'avoine","40g"],["🥛","Lait d'amande","100ml"],["🍎","Pomme râpée","1 pièce"],["🥜","Noisettes concassées","15g"]],"Préparez la veille au soir. Recette suisse adoptée par toute l'Europe. Pratique et nutritif."],
-a:["Tajine de Poisson aux Olives et Citron",450,[["🐟","Filet de lieu noir","180g"],["🍋","Citron confit","¼ pièce"],["🫒","Olives vertes","8 pièces"],["🥔","Pommes de terre + carottes","150g"]],"Influence maghrebine très présente en cuisine française. Cuisson douce en cocotte. Saveurs méditerranéennes."],
-j:["Salade de Chèvre Chaud",260,[["🧀","Crottin de chèvre","1 pièce"],["🥗","Mesclun","à volonté"],["🥜","Noix","5 pièces"],["🍯","Miel + vinaigre balsamique","1 c. à café"]],"Passez le chèvre au four 5 min sur du pain grillé. Un incontournable des bistrots parisiens."]},
-
-{c:["Crêpe Complète Œuf-Fromage",320,[["⚫","Farine de sarrasin","40g"],["🥚","Œuf","1 pièce"],["🧀","Gruyère râpé","20g"],["🥛","Lait","50ml"]],"La galette complète bretonne : sarrasin, œuf, fromage. Ajoutez du jambon pour plus de protéines."],
-a:["Filet Mignon, Purée de Céleri",460,[["🥩","Filet mignon de porc","150g"],["🌿","Moutarde à l'ancienne","1 c. à soupe"],["🥔","Céleri-rave","200g"],["🧀","Crème légère","1 c. à soupe"]],"Badigeonnez de moutarde à l'ancienne. Four 25 min à 180°C. La purée de céleri est légère et savoureuse."],
-j:["Bruschetta Tomate-Basilic",220,[["🍞","Pain de campagne grillé","2 tranches"],["🍅","Tomates mûres","2 pièces"],["🧄","Ail","1 gousse"],["🌿","Basilic frais","6 feuilles"]],"Frottez l'ail sur le pain grillé. Le lycopène de la tomate est un puissant antioxydant."]},
-
-{c:["Bol d'Açaï Banane-Granola",320,[["🫐","Pulpe d'açaï","100g"],["🍌","Banane","½ pièce"],["🥣","Granola","20g"],["🥥","Copeaux de coco","1 c. à soupe"]],"Açaï pur sans sirop ajouté. Riche en anthocyanes, puissants antioxydants."],
-a:["Moules Marinières, Frites de Patate Douce",470,[["🦪","Moules de bouchot","400g"],["🍠","Patate douce (frites au four)","150g"],["🧅","Échalote + vin blanc","à goût"],["🌿","Persil","à goût"]],"Les moules de bouchot sont une fierté française. Frites de patate douce au four : plus saines."],
-j:["Salade Méditerranéenne au Feta",250,[["🥗","Concombre + tomates","à volonté"],["🧀","Feta","30g"],["🫒","Olives noires","6 pièces"],["🌿","Origan + huile d'olive","à goût"]],"Inspiration grecque populaire dans le sud de la France. Fraîche et légère pour le soir."]},
-
-{c:["Pain Perdu à la Cannelle",310,[["🍞","Pain complet rassis","2 tranches"],["🥚","Œuf battu","1 pièce"],["🥛","Lait","50ml"],["🌰","Cannelle + vanille","à goût"]],"Anti-gaspi ! Le pain perdu transforme le pain rassis en délice. Classique du dimanche matin."],
-a:["Coq au Vin Allégé",480,[["🍗","Poulet fermier (cuisse)","200g"],["🍷","Vin rouge (cuisson)","10cl"],["🥕","Carottes + champignons + lardons","120g"],["🍚","Riz complet","3 c. à soupe"]],"Recette emblématique de la cuisine française. Le vin rouge s'évapore, ne reste que la saveur."],
-j:["Soupe de Poireaux-Pommes de Terre",210,[["🥬","Poireaux","200g"],["🥔","Pomme de terre","1 moyenne"],["🧅","Oignon","½ pièce"],["🌿","Crème légère + ciboulette","1 c."]],"Le potage Parmentier : réconfort absolu. Simple, économique et délicieux."]}
-],
-// ═══ SEMAINE 3 ═══
-[
-{c:["Tartine Chèvre Frais, Miel et Noix",310,[["🍞","Pain aux céréales","1 tranche"],["🧀","Chèvre frais","40g"],["🍯","Miel","1 c. à café"],["🥜","Noix","3 pièces"]],"Le mariage chèvre-miel-noix est un classique français. Protéines + bon gras + énergie."],
-a:["Escalope de Dinde, Quinoa et Épinards",450,[["🍗","Escalope de dinde","160g"],["🍚","Quinoa","4 c. à soupe"],["🥬","Épinards frais","100g"],["🫒","Huile d'olive + citron","1 c."]],"La dinde est la viande blanche la plus maigre. Le quinoa apporte tous les acides aminés essentiels."],
-j:["Quiche Sans Pâte aux Légumes",240,[["🥚","Œufs","3 pièces"],["🥦","Brocolis + poivron","120g"],["🧀","Gruyère râpé","20g"],["🥛","Lait + crème légère","80ml"]],"Sans pâte = moitié moins de calories. Mélangez œufs, lait, légumes et fromage. Four 25 min à 180°C."]},
-
-{c:["Smoothie Bowl Mangue-Passion",300,[["🥭","Mangue surgelée","100g"],["🍈","Fruit de la passion","1 pièce"],["🥛","Yaourt nature","100g"],["🥣","Graines de chia","1 c. à soupe"]],"Mixez épais comme un sorbet. Décorez avec les fruits frais. Tropical et vitaminé."],
-a:["Saumon en Croûte d'Herbes",470,[["🐟","Pavé de saumon","150g"],["🍞","Chapelure + herbes","2 c. à soupe"],["🥦","Brocolis vapeur","120g"],["🍚","Riz complet","3 c. à soupe"]],"Chapelure, persil, aneth et moutarde sur le saumon. Four 15 min à 200°C."],
-j:["Soupe de Tomates au Basilic",220,[["🍅","Tomates bien mûres","4 pièces"],["🧄","Ail","2 gousses"],["🌿","Basilic","8 feuilles"],["🫒","Huile d'olive","1 c."]],"Grillez les tomates au four, puis mixez. Le lycopène est mieux absorbé après cuisson."]},
-
-{c:["Porridge Chocolat-Noisette",330,[["🥣","Flocons d'avoine","40g"],["🍫","Cacao en poudre","1 c. à soupe"],["🥛","Lait d'amande","200ml"],["🌰","Noisettes concassées","15g"]],"Le cacao est riche en flavonoïdes. Améliore l'humeur et la circulation sanguine. Plaisir sain."],
-a:["Hachis Parmentier Allégé",480,[["🥩","Bœuf haché 5% MG","130g"],["🥔","Pommes de terre","200g"],["🧅","Oignon + carotte","80g"],["🧀","Gruyère râpé","15g"]],"Pilier de la cuisine familiale française. Version allégée avec viande maigre."],
-j:["Taboulé de Boulgour aux Herbes",240,[["🍚","Boulgour","60g"],["🍅","Tomate + concombre","100g"],["🌿","Menthe + persil","abondant"],["🍋","Citron + huile d'olive","1 c."]],"Herbes fraîches en quantité pour un maximum de saveur. Frais et léger."]},
-
-{c:["Galette d'Avoine à la Banane",300,[["🥣","Flocons d'avoine","40g"],["🍌","Banane","1 pièce"],["🥚","Œuf","1 pièce"],["🌰","Cannelle","à goût"]],"Écrasez la banane, mélangez avec œuf et avoine. Poêle antiadhésive sans matière grasse."],
-a:["Bar Grillé et Fenouil Braisé",460,[["🐟","Filet de bar (loup)","180g"],["🌿","Fenouil","200g"],["🫒","Huile d'olive","1 c. à soupe"],["🍋","Citron","½ pièce"]],"Le bar est le poisson noble de la Méditerranée. Le fenouil braisé est fondant et anisé."],
-j:["Œufs Cocotte aux Épinards",230,[["🥚","Œufs","2 pièces"],["🥬","Épinards","80g"],["🧀","Crème fraîche légère","1 c. à soupe"],["🌿","Noix de muscade","1 pincée"]],"Ramequins au four, bain-marie, 12 min à 180°C. Les œufs restent coulants au centre."]},
-
-{c:["Fromage Blanc, Compote et Amandes",290,[["🥛","Fromage blanc","150g"],["🍎","Compote pomme-poire","80g"],["🥜","Amandes effilées","15g"],["🌰","Cannelle","1 pincée"]],"Compote maison sans sucre ajouté. Les amandes apportent vitamine E et bon gras."],
-a:["Poulet à la Moutarde et Haricots Verts",460,[["🍗","Blancs de poulet","160g"],["🟡","Moutarde de Dijon","1 c. à soupe"],["🫛","Haricots verts","150g"],["🥛","Crème légère","2 c. à soupe"]],"Classique bistrot français. Saisissez le poulet, déglacez à la moutarde et crème."],
-j:["Tartare de Saumon Frais",250,[["🐟","Saumon frais","120g"],["🍋","Citron vert","1 pièce"],["🥑","Avocat","¼ pièce"],["🌿","Aneth + ciboulette","à goût"]],"Coupez le saumon en petits dés, mélangez avec citron et herbes. Frais et léger."]},
-
-{c:["Crêpes Complètes aux Fruits Frais",330,[["🥣","Farine complète","50g"],["🥚","Œuf","1 pièce"],["🥛","Lait","100ml"],["🍓","Fruits de saison","80g"]],"Pâte à crêpes légère : farine complète, œuf, lait. Petit-déjeuner festif du samedi."],
-a:["Gigot d'Agneau aux Flageolets",490,[["🥩","Agneau (épaule dégraissée)","150g"],["🫘","Flageolets","100g"],["🧄","Ail + romarin","à goût"],["🥗","Salade verte","à volonté"]],"Le gigot-flageolets est le repas dominical français par excellence."],
-j:["Wrap Poulet-Crudités",240,[["🌯","Tortilla complète","1 pièce"],["🍗","Poulet grillé","80g"],["🥬","Roquette + carotte râpée","à volonté"],["🥛","Sauce yaourt-moutarde","1 c."]],"Yaourt + moutarde + citron. Roulez serré et coupez en deux."]},
-
-{c:["Brioche Allégée avec Confiture Maison",320,[["🍞","Brioche allégée","1 tranche"],["🍓","Confiture de fraise","1 c. à soupe"],["🥛","Fromage blanc","80g"],["🍊","Jus d'orange pressé","1 verre"]],"Brunch du dimanche à la française. Confiture maison = moins de sucre."],
-a:["Pot-au-Feu Allégé",470,[["🥩","Bœuf (gîte)","140g"],["🥕","Carottes + poireaux + navets","200g"],["🥔","Pomme de terre","1 moyenne"],["🌿","Bouquet garni","à goût"]],"L'âme de la cuisine française familiale. Bouillon riche en minéraux. Tradition hivernale."],
-j:["Velouté de Petits Pois à la Menthe",210,[["🟢","Petits pois surgelés","200g"],["🌿","Menthe fraîche","8 feuilles"],["🧅","Oignon","½ pièce"],["🧀","Crème légère","1 c."]],"Couleur vive, saveur fraîche. Les petits pois sont riches en protéines végétales."]}
-],
-// ═══ SEMAINE 4 ═══
-[
-{c:["Overnight Oats Amande-Framboise",310,[["🥣","Flocons d'avoine","40g"],["🥛","Lait d'amande","100ml"],["🫐","Framboises","60g"],["🥜","Amandes effilées","10g"]],"Préparez le soir, mangez le matin. Les framboises sont peu caloriques et riches en antioxydants."],
-a:["Truite au Four, Riz Sauvage et Asperges",450,[["🐟","Filet de truite","180g"],["🍚","Riz sauvage","4 c. à soupe"],["🌿","Asperges vertes","6 pièces"],["🍋","Citron + beurre léger","à goût"]],"La truite est le poisson des rivières françaises. Les asperges sont un légume printanier noble."],
-j:["Soupe de Butternut au Gingembre",220,[["🎃","Courge butternut","250g"],["🫚","Gingembre frais","5g"],["🧅","Oignon","½ pièce"],["🥥","Lait de coco light","3 c."]],"Le butternut donne naturellement une soupe crémeuse. Le gingembre est thermogénique."]},
-
-{c:["Tartine Houmous et Radis",300,[["🍞","Pain complet","1 tranche"],["🫘","Houmous maison","2 c. à soupe"],["🌿","Radis en rondelles","4 pièces"],["🥒","Concombre","quelques tranches"]],"Le houmous apporte protéines végétales et fibres. Les radis sont croquants et peu caloriques."],
-a:["Magret de Canard, Purée de Patate Douce",480,[["🦆","Magret de canard (dégraissé)","120g"],["🍠","Patate douce","200g"],["🥗","Salade de roquette","à volonté"],["🍷","Réduction balsamique","1 c."]],"Quadrillez le gras, saisissez côté gras d'abord. Spécialité du Sud-Ouest."],
-j:["Salade d'Endives aux Noix et Roquefort",250,[["🥬","Endives","2 pièces"],["🧀","Roquefort","20g"],["🥜","Noix","4 pièces"],["🍎","Pomme verte","½ pièce"]],"Endive, Roquefort, noix : trio emblématique de la gastronomie française."]},
-
-{c:["Smoothie Fraise-Banane-Avoine",300,[["🍓","Fraises","100g"],["🍌","Banane","½ pièce"],["🥣","Avoine","2 c. à soupe"],["🥛","Lait d'amande","200ml"]],"Fraises françaises de saison. Riche en vitamine C et en fibres."],
-a:["Gratin de Courgettes au Poulet",460,[["🍗","Poulet en dés","150g"],["🥒","Courgettes","300g"],["🧀","Gruyère râpé","25g"],["🥛","Béchamel légère","3 c."]],"Rondelles de courgettes alternées avec le poulet, béchamel et gruyère. Four 20 min."],
-j:["Minestrone à la Française",230,[["🥕","Carottes + courgettes","100g"],["🫘","Haricots blancs","50g"],["🍝","Petites pâtes complètes","30g"],["🍅","Tomate + basilic","à goût"]],"Légumes de saison + légumineuses + pâtes. Repas complet en un bol."]},
-
-{c:["Œuf à la Coque et Mouillettes",290,[["🥚","Œufs","2 pièces"],["🍞","Pain complet en bâtonnets","2 tranches"],["🧈","Beurre demi-sel","1 noisette"],["🌿","Sel de Guérande","1 pincée"]],"3 minutes exactes pour un œuf parfait. Le sel de Guérande est un trésor breton."],
-a:["Pavé de Thon et Couscous de Légumes",460,[["🐟","Pavé de thon","150g"],["🍚","Semoule complète","60g"],["🥕","Carottes + courgettes + pois chiches","150g"],["🌿","Harissa légère + menthe","à goût"]],"Saisissez le thon 1 min par face (rosé au centre). Classique franco-maghrébin."],
-j:["Salade de Pois Chiches Méditerranéenne",250,[["🫘","Pois chiches cuits","120g"],["🍅","Tomates cerises","8 pièces"],["🥒","Concombre","½ pièce"],["🌿","Persil + cumin + citron","à goût"]],"Protéines végétales complètes. Le cumin facilite la digestion des légumineuses."]},
-
-{c:["Granola Maison, Yaourt et Pêche",300,[["🥣","Granola maison","30g"],["🥛","Yaourt nature","150g"],["🍑","Pêche","1 pièce"],["🍯","Miel de fleurs","1 c. à café"]],"Granola maison au four. Moins sucré que les versions commerciales."],
-a:["Sole Meunière et Purée de Céleri",460,[["🐟","Filets de sole","180g"],["🥔","Céleri-rave","200g"],["🧈","Beurre clarifié","1 c. à café"],["🍋","Citron + persil","à goût"]],"Monument de la cuisine française. Farinez légèrement, dorez au beurre clarifié."],
-j:["Pizza Maison sur Pain Pita",260,[["🍞","Pain pita complet","1 pièce"],["🍅","Sauce tomate","2 c. à soupe"],["🧀","Mozzarella light","30g"],["🌿","Roquette + origan","à goût"]],"Base pita = croûte fine et croustillante. Four 8 min à 220°C. Express et satisfaisant."]},
-
-{c:["Gaufre d'Avoine au Miel",320,[["🥣","Avoine","50g"],["🥚","Œuf","1 pièce"],["🍯","Miel","1 c. à soupe"],["🍓","Fruits de saison","80g"]],"Mixez avoine et œuf, cuisez en gaufrier ou poêle. Petit-déjeuner gourmand du samedi."],
-a:["Bœuf Stroganoff Allégé",470,[["🥩","Rumsteak en lamelles","150g"],["🍄","Champignons","100g"],["🧅","Oignon + cornichons","à goût"],["🥛","Crème légère + moutarde","2 c."]],"D'inspiration russe mais adopté par les bistrots français. Saisissez la viande à feu vif."],
-j:["Poke Bowl Saumon-Avocat",270,[["🐟","Saumon","80g"],["🥑","Avocat","¼ pièce"],["🍚","Riz japonais","3 c. à soupe"],["🥒","Concombre + edamame","à goût"]],"Tendance très populaire en France. Sauce soja + sésame + gingembre."]},
-
-{c:["Brunch Bowl Complet",330,[["🥚","Œuf au plat","1 pièce"],["🥑","Avocat","¼ pièce"],["🍅","Tomate rôtie","1 pièce"],["🍞","Pain complet grillé","1 tranche"]],"Dernier jour du mois ! Brunch bowl pour célébrer. Protéines + bon gras + vitamines."],
-a:["Poulet Fermier, Herbes de Provence",470,[["🍗","Poulet fermier (cuisse)","200g"],["🌿","Herbes de Provence","1 c. à soupe"],["🥔","Pommes de terre grenaille","150g"],["🥗","Salade variée","à volonté"]],"Grand classique du dimanche en France. Thym, romarin, origan, sarriette."],
-j:["Bouillon Détox de Fin de Cycle",200,[["🥬","Poireaux + épinards","100g"],["🥒","Courgette","1 pièce"],["🫚","Gingembre frais","5g"],["🌿","Curcuma + persil","à goût"]],"Bouillon vert pour clôturer le cycle. Préparez-vous à mettre à jour vos mesures !"]}
-]
+const WEEKS=[
+{name:"Douceur",mod:.75,desc:"Phase de douceur — dosages à 75% pour accueillir votre corps en toute bienveillance."},
+{name:"Épanouissement",mod:.90,desc:"Montée en douceur — dosages à 90%, votre corps s'épanouit."},
+{name:"Plénitude",mod:1.00,desc:"Plénitude — dosages à 100%. Harmonie maximale de vos actifs."},
+{name:"Transition",mod:.95,desc:"Transition en douceur — 95% pour préparer le chapitre suivant."}
 ];
 
-function selSex(el){document.querySelectorAll('.sel-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on');document.getElementById('i-sex').value=el.dataset.v}
+const PREP_STEPS=[
+"Faire tiédir l'eau filtrée à 37°C — douce comme un bain tiède.",
+"Verser délicatement le vinaigre de cidre bio non pasteurisé.",
+"Ajouter l'extrait d'EGCG (poudre ou gélule ouverte).",
+"Presser le citron frais et l'incorporer avec soin.",
+"Ajouter les probiotiques L. Gasseri en tout dernier.",
+"Mélanger avec douceur à l'aide d'une cuillère en bois.",
+"Savourer à jeun, 20 minutes avant votre premier repas."
+];
+
+const ING_COLORS={vin:'#D88B92',egcg:'#7EB09A',prob:'#A890C4',cit:'#D4A574',eau:'#8AB4D4'};
+
+const BADGES=[
+{streak:7,name:"La Pionnière",emoji:"🌱",title:"Badge Débloqué : La Pionnière !",
+ sub:"7 jours de constance douce. Votre flore intestinale commence sa renaissance. Chaque jour compte, et vous êtes magnifique."},
+{streak:14,name:"La Gardienne",emoji:"🌸",title:"Badge Débloqué : La Gardienne !",
+ sub:"14 jours sans faille ! Votre microbiome s'épanouit. Les bonnes bactéries fleurissent dans votre jardin intérieur."},
+{streak:30,name:"La Renaissance",emoji:"✨",title:"Badge Débloqué : La Renaissance !",
+ sub:"30 jours d'élégance constante. Votre métabolisme se transforme en profondeur. Le GLP-1 naturel illumine votre bien-être."},
+{streak:60,name:"La Déesse",emoji:"💎",title:"Badge Débloqué : La Déesse !",
+ sub:"60 jours de grâce absolue. Votre corps rayonne de l'intérieur. Vous êtes une source d'inspiration."},
+{streak:90,name:"La Reine",emoji:"👑",title:"Badge Débloqué : La Reine !",
+ sub:"90 jours légendaires. Vous avez reconfiguré votre biologie avec une élégance rare. Vous êtes la Reine de votre bien-être."}
+];
+
+/* ═══ STATE ═══ */
+let ST={user:null,month:0,week:0,expDay:null,done:{},streak:0,lastCheckIn:null,earnedBadges:[],pwaDismissed:false};
+
+/* ═══ HELPERS ═══ */
 function calcIMC(w,h){return(w/((h/100)**2)).toFixed(1)}
-function calcIdeal(h){return Math.round(22*((h/100)**2))}
-function calcBMR(s,w,h,a){return s==='M'?10*w+6.25*h-5*a+5:10*w+6.25*h-5*a-161}
-function calcTarget(bmr){return Math.round(bmr*1.4*0.8)}
-function calcTonic(w,a,mult){
-let cidre=Math.max(8,Math.round((10+(w-60)*0.08)*mult));
-let egcg=Math.round((320+w*1.5)*mult);
-let probio=w>85?7:w>70?6:5;
-let citron=Math.max(6,Math.round((8+(w-60)*0.05)*mult));
-let eau=Math.max(80,Math.round(140*mult)-cidre-citron+80);
-return{cidre,egcg,probio,citron,eau};
-}
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+function calcBMR(s,w,h,a){return s==='H'?Math.round(10*w+6.25*h-5*a+5):Math.round(10*w+6.25*h-5*a-161)}
+function todayStr(){return new Date().toISOString().split('T')[0]}
+function yesterdayStr(){let d=new Date();d.setDate(d.getDate()-1);return d.toISOString().split('T')[0]}
+function isStandalone(){return window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true}
 
+/* ═══ CORE CALCULATION ENGINE ═══ */
+function calcProtocol(user,mIdx,wIdx,dIdx){
+const mp=MONTHS[mIdx],wp=WEEKS[wIdx],dm=DAY_MOD[dIdx];
+let baseDose=user.weight*1.8;
+if(user.sex==='H')baseDose*=1.15;
+let baseEGCG=user.weight*4.2;
+if((user.weight-user.goal)>15)baseEGCG*=1.20;
+let vin=baseDose*mp.vinR*wp.mod*dm;
+let egcg=baseEGCG*mp.egcgM*wp.mod*dm;
+let probio=mp.probio;
+let citron=mp.citron*wp.mod*dm;
+let zzHi=false,zzLo=false;
+if(mp.zigzag){
+const gd=wIdx*7+dIdx+1;
+if(gd%2===0){vin*=1.10;egcg*=1.10;zzHi=true}
+else{vin*=0.70;egcg*=0.70;zzLo=true}
+}
+let totalTarget=baseDose*wp.mod*dm;
+let eau=Math.max(80,Math.round(totalTarget-vin-citron));
+vin=Math.round(vin*10)/10;egcg=Math.round(egcg);citron=Math.round(citron*10)/10;
+let total=Math.round(vin+citron+eau);
+let pVin=Math.round(vin/total*100),pCit=Math.round(citron/total*100),pEau=100-pVin-pCit;
+return{total,vin,egcg,probio,citron,eau,pVin,pCit,pEau,zzHi,zzLo};
+}
+
+/* ═══ STREAK LOGIC ═══ */
+function processCheckIn(){
+let today=todayStr(),yesterday=yesterdayStr();
+if(ST.lastCheckIn===today)return;
+if(ST.lastCheckIn===yesterday){ST.streak++}
+else if(ST.lastCheckIn!==today){ST.streak=1}
+ST.lastCheckIn=today;
+let newBadge=null;
+for(let b of BADGES){
+if(ST.streak>=b.streak&&!ST.earnedBadges.includes(b.streak)){
+ST.earnedBadges.push(b.streak);newBadge=b;
+}
+}
+save();
+if(newBadge){setTimeout(()=>showBadgeModal(newBadge),600)}
+}
+
+function checkStreakContinuity(){
+if(!ST.lastCheckIn)return;
+let last=new Date(ST.lastCheckIn),now=new Date(todayStr());
+let diff=Math.floor((now-last)/(1000*60*60*24));
+if(diff>1){ST.streak=0;save()}
+}
+
+/* ═══ CONFETTI ═══ */
+function fireConfetti(){
+let canvas=document.getElementById('confetti-canvas');
+let ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+let particles=[];
+const colors=['#D88B92','#C9956E','#7EB09A','#A890C4','#E8B4B8','#E0A89A'];
+for(let i=0;i<120;i++){
+particles.push({x:canvas.width/2+((Math.random()-.5)*200),y:canvas.height/2,
+vx:(Math.random()-.5)*16,vy:Math.random()*-18-4,
+w:Math.random()*8+4,h:Math.random()*6+3,
+color:colors[Math.floor(Math.random()*colors.length)],
+rot:Math.random()*360,rv:(Math.random()-.5)*12,
+life:1,decay:Math.random()*.012+.008})}
+function frame(){
+ctx.clearRect(0,0,canvas.width,canvas.height);let alive=false;
+for(let p of particles){if(p.life<=0)continue;alive=true;
+p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.vx*=.99;p.rot+=p.rv;p.life-=p.decay;
+ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+ctx.globalAlpha=p.life;ctx.fillStyle=p.color;
+ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()}
+if(alive)requestAnimationFrame(frame);else ctx.clearRect(0,0,canvas.width,canvas.height)}
+frame();
+}
+
+function miniParticles(el){
+let rect=el.getBoundingClientRect();
+let cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+for(let i=0;i<8;i++){
+let p=document.createElement('div');p.className='particle';
+let size=Math.random()*6+4;
+let colors=['#D88B92','#C9956E','#7EB09A','#A890C4'];
+p.style.cssText=`left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;background:${colors[i%4]};animation-duration:${.6+Math.random()*.4}s;`;
+document.body.appendChild(p);setTimeout(()=>p.remove(),1200)}
+}
+
+/* ═══ MODAL SYSTEM ═══ */
+function showModal(html){
+document.getElementById('mo-box').innerHTML=html;
+document.getElementById('mo-overlay').classList.add('vis');
+}
+function closeModal(){document.getElementById('mo-overlay').classList.remove('vis')}
+window.closeModal=closeModal;
+document.getElementById('mo-overlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
+
+function showBadgeModal(badge){
+fireConfetti();
+showModal(`
+<button class="mo-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+<span class="mo-emo">${badge.emoji}</span>
+<h2>${badge.title}</h2>
+<div class="mo-streak-val">${badge.streak}</div>
+<div class="mo-streak-lbl">jours consécutifs de constance</div>
+<div class="mo-reward"><span class="mr-ico">⭐</span>${badge.name}</div>
+<p class="mo-sub">${badge.sub}</p>
+<button class="btn-modal gold" onclick="closeModal()">Poursuivre mon voyage ✨</button>`);
+}
+
+window.openUpdateModal=function(){
+let u=ST.user,cnt=0;for(let k in ST.done)if(k.startsWith(ST.month+'-'))cnt++;
+showModal(`
+<button class="mo-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+<span class="mo-emo">🌸</span>
+<h2>Votre Bilan — Mois ${ST.month+1}</h2>
+<p class="mo-sub">${MONTHS[ST.month].name} · Renouveau mensuel</p>
+<div class="m-sum">
+<div class="m-si"><div class="sv">${cnt}/28</div><div class="slb">Jours accomplis</div></div>
+<div class="m-si"><div class="sv">${u.weight} kg</div><div class="slb">Poids actuel</div></div>
+<div class="m-si"><div class="sv">${calcIMC(u.weight,u.height)}</div><div class="slb">IMC</div></div>
+</div>
+<form onsubmit="submitUpdate(event)">
+<div class="m-fg"><label>Votre nouveau poids (kg)</label>
+<div class="iw"><input type="number" id="m-wt" placeholder="${u.weight}" min="35" max="250" step="0.1" required value="${u.weight}"><span class="isf">kg</span></div>
+</div>
+<button type="submit" class="btn-modal primary">${ST.month<5?'Passer au Chapitre suivant ✨':'Couronner ma Métamorphose 👑'}</button>
+<button type="button" class="btn-modal ghost" onclick="closeModal()">Pas maintenant</button>
+</form>`);
+};
+
+window.submitUpdate=function(e){
+e.preventDefault();let nw=+document.getElementById('m-wt').value;
+if(!nw||nw<35||nw>250){document.getElementById('m-wt').classList.add('err');return}
+let u=ST.user;u.weight=nw;u.imc=+calcIMC(nw,u.height);
+u.bmr=calcBMR(u.sex,nw,u.height,u.age);u.dailyTarget=Math.round(u.bmr*1.4*.8);
+let nm=Math.min(ST.month+1,5);
+u.history.push({month:nm+1,weight:nw,imc:u.imc,date:new Date().toLocaleDateString('fr-FR')});
+ST.month=nm;ST.week=0;ST.expDay=null;
+save();closeModal();
+setTimeout(()=>{fireConfetti();render();window.scrollTo({top:0,behavior:'smooth'})},300);
+};
+
+window.openResetModal=function(){
+showModal(`
+<button class="mo-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+<span class="warn-ico">🌙</span>
+<h2 style="color:#D88B92">Recommencer à zéro ?</h2>
+<p class="mo-sub">Cette action effacera définitivement toutes vos données : profil, historique, constance et badges. Êtes-vous certaine de vouloir repartir du début ?</p>
+<button class="btn-modal danger" onclick="confirmReset()">Oui, tout effacer</button>
+<button class="btn-modal ghost" onclick="closeModal()">Non, je continue</button>`);
+};
+
+window.confirmReset=function(){
+try{localStorage.removeItem('stylo_app_v3')}catch(e){}
+ST={user:null,month:0,week:0,expDay:null,done:{},streak:0,lastCheckIn:null,earnedBadges:[],pwaDismissed:false};
+closeModal();showScr('scr-ob');
+};
+
+window.dismissPwa=function(){
+ST.pwaDismissed=true;save();
+let card=document.getElementById('pwa-install-card');
+if(card){card.style.transition='all .4s ease';card.style.opacity='0';card.style.transform='translateY(-10px)';card.style.maxHeight='0';card.style.padding='0';card.style.margin='0';card.style.overflow='hidden';
+setTimeout(()=>{card.remove()},450)}
+};
+
+/* ═══ SCREEN MANAGEMENT ═══ */
+function showScr(id){
+['scr-ob','scr-pr','scr-db'].forEach(s=>{let e=document.getElementById(s);e.classList.remove('active');e.style.display='none'});
+let t=document.getElementById(id);t.style.display='flex';void t.offsetWidth;t.classList.add('active');
+window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ═══ PERSISTENCE ═══ */
+const SK='stylo_app_v3';
+function save(){try{localStorage.setItem(SK,JSON.stringify(ST))}catch(e){}}
+function load(){try{let r=localStorage.getItem(SK);return r?JSON.parse(r):null}catch(e){return null}}
+
+/* ═══ SEX SELECTION ═══ */
+window.selSex=function(b){document.querySelectorAll('.sx-b').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('i-sex').value=b.dataset.s};
+
+/* ═══ FORM SUBMIT ═══ */
 document.getElementById('frm').addEventListener('submit',function(e){
 e.preventDefault();
-let sex=document.getElementById('i-sex').value,age=parseInt(document.getElementById('i-age').value),ht=parseInt(document.getElementById('i-ht').value),wt=parseFloat(document.getElementById('i-wt').value),err=false;
-document.querySelectorAll('#frm input[type=number]').forEach(i=>i.classList.remove('err'));
-if(!sex){document.querySelectorAll('.sel-btn').forEach(b=>{b.style.borderColor='#e74c3c';setTimeout(()=>b.style.borderColor='',800)});err=true}
-if(!age||age<18||age>99){document.getElementById('i-age').classList.add('err');err=true}
-if(!ht||ht<120||ht>220){document.getElementById('i-ht').classList.add('err');err=true}
-if(!wt||wt<40||wt>250){document.getElementById('i-wt').classList.add('err');err=true}
+let sex=document.getElementById('i-sex').value,age=+document.getElementById('i-age').value,
+ht=+document.getElementById('i-ht').value,wt=+document.getElementById('i-wt').value,
+gl=+document.getElementById('i-gl').value,err=false;
+document.querySelectorAll('.iw input').forEach(i=>i.classList.remove('err'));
+if(!sex){document.querySelectorAll('.sx-b').forEach(b=>{b.style.borderColor='#E07878';setTimeout(()=>b.style.borderColor='',1200)});err=true}
+[['i-age',age,18,99],['i-ht',ht,120,230],['i-wt',wt,35,250],['i-gl',gl,35,200]].forEach(c=>{
+if(!c[1]||isNaN(c[1])||c[1]<c[2]||c[1]>c[3]){document.getElementById(c[0]).classList.add('err');err=true}});
 if(err)return;
-S.user={sex,age,ht,wt,iwt:wt};S.month=1;S.week=1;S.expDay=null;S.done={};
-S.hist=[{month:1,wt,imc:calcIMC(wt,ht),date:new Date().toLocaleDateString('fr-FR')}];
-runLoad();
+let bmr=calcBMR(sex,wt,ht,age);
+ST.user={sex,age,height:ht,weight:wt,goal:gl,initialWeight:wt,imc:+calcIMC(wt,ht),bmr,dailyTarget:Math.round(bmr*1.4*.8),
+history:[{month:1,weight:wt,imc:+calcIMC(wt,ht),date:new Date().toLocaleDateString('fr-FR')}],createdAt:new Date().toISOString()};
+ST.month=0;ST.week=0;ST.expDay=null;ST.done={};ST.streak=0;ST.lastCheckIn=null;ST.earnedBadges=[];ST.pwaDismissed=false;
+save();runLoading();
 });
 
-function runLoad(){
-show('scr-load');let pf=document.getElementById('pf');pf.style.width='0%';
-for(let i=1;i<=4;i++){document.getElementById('ps'+i).classList.remove('on','ok')}
-[{id:'ps1',p:25,t:600},{id:'ps2',p:50,t:1600},{id:'ps3',p:75,t:2600},{id:'ps4',p:100,t:3500}].forEach((s,i,arr)=>{
-setTimeout(()=>{for(let j=0;j<i;j++){let e=document.getElementById(arr[j].id);e.classList.remove('on');e.classList.add('ok')}
-document.getElementById(s.id).classList.add('on');pf.style.width=s.p+'%'},s.t);
-});
-setTimeout(()=>{document.getElementById('ps4').classList.remove('on');document.getElementById('ps4').classList.add('ok');show('scr-dash');render()},4400);
+/* ═══ LOADING ═══ */
+function runLoading(){
+showScr('scr-pr');
+let pf=document.getElementById('pf');pf.style.width='0%';
+for(let i=1;i<=4;i++){let e=document.getElementById('s'+i);e.classList.remove('ac','dn')}
+[{id:'s1',p:20,t:0},{id:'s2',p:45,t:1200},{id:'s3',p:75,t:2400},{id:'s4',p:100,t:3600}].forEach((s,i,arr)=>{
+setTimeout(()=>{for(let j=0;j<i;j++){let e=document.getElementById(arr[j].id);e.classList.remove('ac');e.classList.add('dn')}
+document.getElementById(s.id).classList.add('ac');pf.style.width=s.p+'%'},s.t)});
+setTimeout(()=>{document.getElementById('s4').classList.remove('ac');document.getElementById('s4').classList.add('dn')},4200);
+setTimeout(()=>{showScr('scr-db');render()},4800);
 }
 
+/* ═══════════════════════════════════════════
+   DASHBOARD RENDERER
+   ═══════════════════════════════════════════ */
 function render(){
-let{sex,age,ht,wt,iwt}=S.user;
-let imc=calcIMC(wt,ht),ideal=calcIdeal(ht),bmr=calcBMR(sex,wt,ht,age),target=calcTarget(bmr);
-let cnt=Object.keys(S.done).length,lost=iwt-wt;
+if(!ST.user)return;
+let u=ST.user,mIdx=ST.month,wIdx=ST.week;
+let mp=MONTHS[mIdx],wp=WEEKS[wIdx];
+let cnt=0;for(let k in ST.done)if(k.startsWith(mIdx+'-'))cnt++;
+let remaining=Math.max(0,(u.weight-u.goal)).toFixed(1);
+let lost=Math.max(0,(u.initialWeight-u.weight)).toFixed(1);
+let progressPct=u.initialWeight>u.goal?Math.min(100,Math.round(lost/(u.initialWeight-u.goal)*100)):100;
+
+let nextBadge=null;
+for(let b of BADGES){if(ST.streak<b.streak){nextBadge=b;break}}
+
+let showPwa=!ST.pwaDismissed&&!isStandalone();
+
 let h='';
-h+=`<div class="dh"><div class="dml">Mois ${S.month} · Protocole actif</div>
-<div class="dmt">Programme 28 Jours</div>
-<div class="dms">Objectif calorique : ~${target} kcal/jour</div>
-<div class="dpb"><div class="dpf" style="width:${(cnt/28)*100}%"></div></div>
-<div class="dpt">${cnt}/28 jours complétés</div>
-<div class="dm">
-<div class="dmi"><div class="v">${wt} kg</div><div class="l">Poids</div>${lost>0?`<div class="d">-${lost.toFixed(1)} kg</div>`:''}</div>
-<div class="dmi"><div class="v">${imc}</div><div class="l">IMC</div></div>
-<div class="dmi"><div class="v">${ideal} kg</div><div class="l">Objectif</div></div>
+
+/* STREAK BANNER */
+h+=`<div class="streak-banner">
+<div class="sb-fire">${ST.streak>=30?'👑':ST.streak>=7?'🔥':'🌟'}</div>
+<div class="sb-info">
+<div class="sb-val">${ST.streak}</div>
+<div class="sb-lbl">${ST.streak<=1?'jour de constance':'jours de constance'}</div>
+${nextBadge?`<div class="sb-next">Prochain badge dans ${nextBadge.streak-ST.streak} jour${nextBadge.streak-ST.streak>1?'s':''} → ${nextBadge.emoji} ${nextBadge.name}</div>`
+:'<div class="sb-next">👑 Tous les badges débloqués — Félicitations !</div>'}
 </div></div>`;
-h+=`<div class="wt">`;
-WKS.forEach((w,i)=>{h+=`<div class="wtb ${i+1===S.week?'on':''}" onclick="sw(${i+1})"><div class="n">S${i+1}</div><div class="lb">${w.nm}</div></div>`});
-h+=`</div>`;
-let cw=WKS[S.week-1];
-h+=`<div class="wi"><div class="wip" style="background:${cw.cb};color:${cw.c}">Phase ${S.week} · ${cw.nm}</div><div class="wid">${cw.desc}</div></div>`;
-h+=`<div class="dl">`;
-let wm=MEALS[S.week-1];
-for(let d=0;d<7;d++){
-let dg=(S.week-1)*7+d+1,dk=S.month+'-'+dg;
-let dn=S.done[dk],ex=S.expDay===dg;
-let meal=wm[d];
-let tonic=calcTonic(wt,age,cw.m);
-let isSun=d===6;
-let baseCal=meal.c[1]+meal.a[1]+meal.j[1];
-let scale=target/baseCal;
-let cls=`dc${dn?' dn':''}${ex?' ex':''}`;
-h+=`<div class="${cls}" id="dc-${dg}">`;
-h+=`<div class="dhr" onclick="td(${dg})">
-<div class="dnu">J${dg}</div>
-<div class="di"><div class="dn2">${JOURS[d]} — Jour ${dg}</div>
-<div class="ds">${dn?'✓ Complété':meal.c[0]+' · '+meal.a[0]+' · '+meal.j[0]}</div></div>
-<div class="dst" onclick="event.stopPropagation();tdn('${dk}',${dg})"><svg viewBox="0 0 24 24" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-<svg class="dch" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+
+/* BADGES ROW */
+h+=`<div class="streak-badges">`;
+BADGES.forEach(b=>{
+let earned=ST.earnedBadges.includes(b.streak);
+h+=`<div class="sbg ${earned?'earned':'locked'}"><span class="sbg-ico">${b.emoji}</span>${b.name}${earned?'':' · '+b.streak+'j'}</div>`;
+});h+=`</div>`;
+
+/* ═══ PWA INSTALL CARD ═══ */
+if(showPwa){
+h+=`<div class="pwa-card" id="pwa-install-card">
+<button class="pwa-close" onclick="dismissPwa()" aria-label="Fermer"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+<div class="pwa-head">
+<div class="pwa-icon">📱</div>
+<div class="pwa-head-txt">
+<h3>Gardez votre Rituel avec vous</h3>
+<p>Installez l'application gratuitement pour un accès rapide et élégant.</p>
+</div></div>
+<div class="pwa-divider"></div>
+<div class="pwa-instructions">
+<div class="pwa-inst">
+<div class="pwa-inst-ico ios">🍎</div>
+<div class="pwa-inst-info">
+<div class="pi-os ios">Pour iPhone · Safari</div>
+<div class="pi-steps">Appuyez sur l'icône <span class="key">📤 Partager</span> en bas de l'écran, puis sélectionnez <span class="key">➕ Sur l'écran d'accueil</span>.</div>
+</div></div>
+<div class="pwa-inst">
+<div class="pwa-inst-ico and">🤖</div>
+<div class="pwa-inst-info">
+<div class="pi-os and">Pour Android · Chrome</div>
+<div class="pi-steps">Appuyez sur <span class="key">⋮ les trois points</span> en haut à droite, puis sélectionnez <span class="key">Ajouter à l'écran d'accueil</span>.</div>
+</div></div>
+</div>
+<div class="pwa-footer">Une fois installée, votre application fonctionne <strong>hors ligne</strong> et en <strong>plein écran</strong>.</div>
 </div>`;
+}
+
+/* MONTH RIBBON */
+h+=`<div class="m-rib">`;
+MONTHS.forEach((m,i)=>{
+let cls=i===mIdx?'on':i<mIdx?'past':'';
+h+=`<div class="m-pill ${cls}" onclick="setMonth(${i})"><span>${m.icon}</span> Mois ${m.num}</div>`;
+});h+=`</div>`;
+
+/* MONTH HEADER */
+h+=`<div class="mh" style="background:${mp.grad}">
+<div class="mh-top"><div class="mh-l">
+<div class="mh-badge">${mp.icon} Mois ${mp.num} · ${mp.focus}</div>
+<h2>${mp.name}</h2><div class="mh-sub">${mp.sub}</div>
+</div><div class="mh-ico">${mp.icon}</div></div>
+<div class="mh-prog"><div class="mh-pb"><div class="mh-pf" style="width:${(cnt/28)*100}%"></div></div>
+<div class="mh-pt"><span>${cnt}/28 jours accomplis</span><span>Semaine ${wIdx+1}/4</span></div></div>
+<div class="mh-met">
+<div class="mh-mi"><div class="v">${u.weight} kg</div><div class="l">Poids</div></div>
+<div class="mh-mi"><div class="v">${calcIMC(u.weight,u.height)}</div><div class="l">IMC</div></div>
+<div class="mh-mi"><div class="v">${u.dailyTarget}</div><div class="l">kcal/j</div></div>
+</div></div>`;
+
+/* GOAL PROGRESS */
+h+=`<div class="gp"><div class="gp-t">Votre chemin vers l'objectif</div>
+<div class="gp-v">Encore ${remaining} kg</div>
+<div class="gp-s">${+lost>0?lost+' kg en moins depuis le début — ':''}Objectif : ${u.goal} kg</div>
+<div class="gp-bar"><div class="gp-fill" style="width:${progressPct}%"></div></div></div>`;
+
+/* WEEK TABS */
+h+=`<div class="wt">`;
+WEEKS.forEach((w,i)=>{h+=`<div class="wtb ${i===wIdx?'on':''}" onclick="setWeek(${i})"><div class="wn">S${i+1}</div><div class="wl">${w.name}</div></div>`});
+h+=`</div>`;
+
+/* WEEK INFO */
+h+=`<div class="wi"><div class="wi-badge" style="background:${mp.clb};color:${mp.cl}">Chapitre ${mIdx+1} · Semaine ${wIdx+1} — ${wp.name}</div><div class="wi-desc">${wp.desc}</div></div>`;
+
+/* DAY CARDS */
+h+=`<div class="dl">`;
+for(let d=0;d<7;d++){
+let gDay=wIdx*7+d+1;
+let dk=mIdx+'-'+gDay;
+let isDone=ST.done[dk];
+let isEx=ST.expDay===gDay;
+let pr=calcProtocol(u,mIdx,wIdx,d);
+let tip=mp.tips[d];
+let cls=`dc${isDone?' done':''}${isEx?' ex':''}`;
+
+h+=`<div class="${cls}" id="dc${gDay}">`;
+h+=`<div class="dh" onclick="toggleDay(${gDay})">
+<div class="dnu ${isDone?'dn':'pen'}">J${gDay}</div>
+<div class="di"><div class="di-t">${JOURS[d]} — Jour ${gDay}</div>
+<div class="di-s">${isDone?'✓ Rituel accompli':'Élixir : '+pr.total+' ml · EGCG : '+pr.egcg+' mg'}</div></div>
+<svg class="dch" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>`;
+
 h+=`<div class="dbd"><div class="dbc"><div class="dvd"></div>`;
-h+=`<div class="meal-sec">
-<div class="meal-h tonic"><span class="mico">🧪</span><span class="mtit">Tonique Matinal</span><span class="msub">20 min avant le PDJ</span></div>`;
-let ti=[[`🍎`,`Vinaigre de cidre bio`,`${isSun?Math.round(tonic.cidre*.5):tonic.cidre}ml`],
-[`🍵`,`Thé vert (EGCG)`,`${isSun?Math.round(tonic.egcg*.5):tonic.egcg}mg`],
-[`🍋`,`Citron frais pressé`,`${tonic.citron}ml`],
-[`💧`,`Eau tiède`,`${tonic.eau}ml`]];
-if(S.week>1||d>=2)ti.splice(2,0,[`🦠`,`Probiotique L. Gasseri`,`${tonic.probio} gouttes`]);
-ti.forEach(x=>{h+=`<div class="ming"><div class="ming-l"><div class="ming-e">${x[0]}</div><div class="ming-n">${x[1]}</div></div><div class="ming-q">${x[2]}</div></div>`});
-h+=`<div class="meal-tip"><strong>Préparation :</strong> Mélangez le tout dans un verre. Buvez à jeun, 20 min avant le petit-déjeuner.</div></div>`;
-h+=mealSec('cafe','☀️','Petit-Déjeuner',meal.c,scale);
-h+=mealSec('almoco','🌤️','Déjeuner',meal.a,scale);
-h+=mealSec('jantar','🌙','Dîner',meal.j,scale);
-h+=`<div class="day-cal"><div><div class="cal-v">~${target} kcal</div><div class="cal-l">Objectif du jour</div></div>
-<div class="cal-t">Base : ${baseCal} kcal<br>Échelle : ${scale.toFixed(2)}x</div></div>`;
-h+=`<button class="btn-dn" onclick="event.stopPropagation();tdn('${dk}',${dg})">
-<svg viewBox="0 0 24 24" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-${dn?'Complété ✓':'Marquer comme fait'}</button>`;
+h+=`<div class="prot-h"><span class="pi">🌿</span><span class="pt-lbl">Rituel Beauté Intérieure — Jour ${gDay}</span></div>`;
+
+if(pr.zzHi)h+=`<div class="zz-badge hi">🌟 Jour d'Élan — Dose Renforcée (+10%)</div>`;
+if(pr.zzLo)h+=`<div class="zz-badge lo">🌙 Jour de Grâce — Dose Allégée (−30%)</div>`;
+
+h+=`<div class="dose-total"><div class="dt-val">${pr.total} ml</div><div class="dt-lbl">Élixir du Jour</div></div>`;
+
+h+=`<div class="comp-bar">
+<div class="cb-s" style="width:${pr.pVin}%;background:${ING_COLORS.vin}"></div>
+<div class="cb-s" style="width:${pr.pCit}%;background:${ING_COLORS.cit}"></div>
+<div class="cb-s" style="width:${pr.pEau}%;background:${ING_COLORS.eau}"></div></div>`;
+
+h+=`<div class="ing-list">`;
+h+=ingRow('🍎',ING_COLORS.vin,'Vinaigre de Cidre Bio','Non pasteurisé, trésor de la nature',pr.vin,'ml');
+h+=ingRow('🍵',ING_COLORS.egcg,'EGCG (Thé Vert)','Extrait précieux de thé vert',pr.egcg,'mg');
+h+=ingRow('🦠',ING_COLORS.prob,'Probiotiques L. Gasseri','Lactobacillus gasseri BNR17',pr.probio,'Mrd UFC');
+h+=ingRow('🍋',ING_COLORS.cit,'Citron Frais Pressé','Bio, fraîchement pressé',pr.citron,'ml');
+h+=ingRow('💧',ING_COLORS.eau,'Eau Tiède Filtrée','37°C — pure et filtrée',pr.eau,'ml');
+h+=`</div>`;
+
+h+=`<div class="inst"><div class="inst-h"><span class="ih-ico">🌸</span>Rituel de Préparation</div><div class="inst-steps">`;
+PREP_STEPS.forEach((s,i)=>{h+=`<div class="inst-s"><div class="inst-num">${i+1}</div><span>${s}</span></div>`});
+h+=`</div></div>`;
+
+h+=`<div class="day-tip"><div class="tip-ico">💫</div><div class="tip-tx"><strong>Conseil bien-être :</strong> ${tip}</div></div>`;
+
+h+=`<button class="btn-dose ${isDone?'dn':'pen'}" id="btn-d-${dk}" onclick="event.stopPropagation();takeDose('${dk}',this)">
+<svg viewBox="0 0 24 24">${isDone?'<polyline points="20 6 9 17 4 12"/>':'<path d="M12 5v14M5 12h14"/>'}</svg>
+${isDone?'Rituel accompli ✓':'J\'ai pris mon élixir ✨'}</button>`;
+
 h+=`</div></div></div>`;
 }
 h+=`</div>`;
-h+=`<div class="ms"><div class="mi">📊</div><h3>Mise à Jour Mensuelle</h3>
-<p>Saisissez vos nouvelles mesures pour recalculer le protocole et passer au mois suivant.</p>
-<button class="btn-m" onclick="oModal()">Mettre à jour mes mesures →</button></div>`;
-if(S.hist.length>1){
-h+=`<div class="hc"><div class="hh"><div class="hhi">📈</div><h3>Historique d'Évolution</h3></div>`;
-S.hist.forEach((x,i)=>{
-let dl=i>0?(S.hist[i-1].wt-x.wt).toFixed(1):0;
-h+=`<div class="hit"><div class="hdt" style="background:${i===S.hist.length-1?'var(--ac)':'var(--p)'}"></div>
-<div class="hif"><div class="hil">Mois ${x.month}</div><div class="hid">${x.date} · IMC ${x.imc}</div></div>
-<div><div style="font-size:.9rem;font-weight:700;text-align:right">${x.wt} kg</div>
-${i>0?`<div class="hdl${dl>0?'':' n'}">${dl>0?'-'+dl:'±0'} kg</div>`:`<div class="hdl n">Début</div>`}</div></div>`});
+
+/* UPDATE CTA */
+h+=`<div class="upd-card"><div class="ui">🌸</div><h3>Bilan & Renouveau</h3>
+<p>Mettez à jour votre poids pour affiner vos dosages et entamer le prochain chapitre de votre transformation.</p>
+<button class="btn-upd" onclick="openUpdateModal()">Mon bilan mensuel (Chapitre suivant) ✨</button></div>`;
+
+/* HISTORY */
+if(u.history&&u.history.length>1){
+h+=`<div class="hist"><div class="hist-h"><div class="hhi">📖</div><h3>Mon Journal d'Évolution</h3></div>`;
+u.history.forEach((x,i)=>{
+let dl=i>0?(u.history[i-1].weight-x.weight).toFixed(1):0;
+let clr=i===u.history.length-1?'#C89878':'#D88B92';
+h+=`<div class="hist-row"><div class="hr-dot" style="background:${clr}"></div>
+<div class="hr-info"><div class="hr-l">Mois ${x.month} — ${MONTHS[Math.min(x.month-1,5)].name}</div><div class="hr-d">${x.date} · IMC ${x.imc}</div></div>
+<div class="hr-val"><div class="hr-w">${x.weight} kg</div>
+${i>0?`<div class="hr-ch ${+dl>0?'pos':'neu'}">${+dl>0?'−'+dl:'±0'} kg</div>`:`<div class="hr-ch neu">Début</div>`}</div></div>`});
 h+=`</div>`}
-h+=`<div class="disc"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-<p>Ce protocole est informatif et ne remplace pas un suivi médical. Consultez un professionnel de santé avant de modifier votre alimentation.</p></div>`;
+
+/* DISCLAIMER */
+h+=`<div class="disc"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+<p>Ce programme est proposé à titre informatif et ne remplace en aucun cas un avis médical. Consultez votre professionnel de santé avant tout changement alimentaire.</p></div>`;
+
+/* FOOTER */
+h+=`<div class="app-footer">
+<div class="f-ver">Stylo Maison · Bien-être v2.0 — Programme 6 mois · ${u.sex==='H'?'Homme':'Femme'}, ${u.age} ans, ${u.height} cm</div>
+<button class="btn-reset" onclick="openResetModal()">Recommencer à zéro</button>
+</div>`;
+
 document.getElementById('dash').innerHTML=h;
 }
 
-function mealSec(cls,ico,title,data,scale){
-let[t,cal,items,tip]=data;let adjCal=Math.round(cal*scale);
-let s=`<div class="meal-sec"><div class="meal-h ${cls}"><span class="mico">${ico}</span><span class="mtit">${title}</span><span class="msub">~${adjCal} kcal</span></div>`;
-s+=`<div class="meal-name">${t}</div>`;
-items.forEach(x=>{s+=`<div class="ming"><div class="ming-l"><div class="ming-e">${x[0]}</div><div class="ming-n">${x[1]}</div></div><div class="ming-q">${x[2]}</div></div>`});
-s+=`<div class="meal-tip"><strong>💡 </strong>${tip}</div></div>`;return s;
+function ingRow(ico,clr,name,desc,val,unit){
+return`<div class="ing-row"><div class="ing-l"><div class="ing-dot" style="background:${clr}"></div><div class="ing-ico">${ico}</div><div class="ing-info"><div class="ing-n">${name}</div><div class="ing-d">${desc}</div></div></div><div class="ing-v">${val}<span>${unit}</span></div></div>`;
 }
 
-function sw(n){S.week=n;S.expDay=null;render()}
-function td(n){S.expDay=S.expDay===n?null:n;render()}
-function tdn(k,n){if(S.done[k])delete S.done[k];else S.done[k]=true;render()}
+/* ═══ INTERACTIONS ═══ */
+window.setMonth=function(m){ST.month=m;ST.week=0;ST.expDay=null;save();render()};
+window.setWeek=function(w){ST.week=w;ST.expDay=null;save();render()};
+window.toggleDay=function(d){ST.expDay=ST.expDay===d?null:d;render()};
 
-function oModal(){
-let{wt,ht}=S.user;let cnt=Object.keys(S.done).length;
-document.getElementById('mi').innerHTML=`
-<div class="mhd"><div class="mhi">🎯</div><h2>Bilan du Mois ${S.month}</h2><p>Saisissez vos nouvelles mesures corporelles</p></div>
-<div class="msu"><div class="mst"><div class="mv">${cnt}/28</div><div class="ml">Jours faits</div></div>
-<div class="mst"><div class="mv">${wt} kg</div><div class="ml">Poids actuel</div></div>
-<div class="mst"><div class="mv">${calcIMC(wt,ht)}</div><div class="ml">IMC</div></div></div>
-<form onsubmit="subM(event)">
-<div class="mf"><label>Nouveau poids (kg)</label><div class="iw"><input type="number" id="m-wt" placeholder="${wt}" min="40" max="250" step="0.1" required><span class="sf">kg</span></div></div>
-<button type="submit" class="btn-u">Valider et passer au Mois ${S.month+1} →</button></form>`;
-document.getElementById('modal').classList.add('vis');
+window.takeDose=function(dk,el){
+if(ST.done[dk]){delete ST.done[dk];save();render();return}
+ST.done[dk]=true;miniParticles(el);processCheckIn();save();render();
+};
+
+/* ═══ PWA STANDALONE DETECTION ═══ */
+function detectStandalone(){
+if(isStandalone()){document.body.classList.add('standalone')}
 }
-function subM(e){
-e.preventDefault();let nw=parseFloat(document.getElementById('m-wt').value);
-if(!nw||nw<40||nw>250)return;
-S.user.wt=nw;S.month++;S.week=1;S.expDay=null;S.done={};
-S.hist.push({month:S.month,wt:nw,imc:calcIMC(nw,S.user.ht),date:new Date().toLocaleDateString('fr-FR')});
-cModal();render();window.scrollTo({top:0,behavior:'smooth'});
+
+/* ═══ INIT ═══ */
+function init(){
+detectStandalone();
+let saved=load();
+if(saved&&saved.user&&saved.user.sex){
+ST=saved;
+if(!ST.streak)ST.streak=0;
+if(!ST.lastCheckIn)ST.lastCheckIn=null;
+if(!ST.earnedBadges)ST.earnedBadges=[];
+if(ST.pwaDismissed===undefined)ST.pwaDismissed=false;
+checkStreakContinuity();
+showScr('scr-db');render();
+}else{showScr('scr-ob')}
 }
-function cModal(){document.getElementById('modal').classList.remove('vis')}
-document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)cModal()});
+init();
+
+})();
 </script>
-
-
-</body></html>
+</body>
+</html>
