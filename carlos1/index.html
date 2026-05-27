@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setenário do Anjo da Guarda</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #2A1612;
+      color: #F8F1E7;
+      font-family: 'Merriweather', serif;
+      overflow-x: hidden;
+    }
+
+    .top-bar {
+      width: 100%;
+      background: #4A2E26;
+      color: #F1C27D;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 21px;
+      letter-spacing: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: 14px 0;
+      opacity: 0.95;
+      position: relative;
+    }
+
+    .top-bar-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+
+    .top-bar-track span {
+      padding-right: 80px;
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0%);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+      padding: 90px 9% 70px;
+      background:
+        radial-gradient(circle at 78% 35%, rgba(217, 163, 95, 0.20), transparent 32%),
+        linear-gradient(180deg, #2A1612 0%, #321B16 100%);
+    }
+
+    .content {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      color: #D9A35F;
+      font-size: 22px;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 5vw, 76px);
+      line-height: 1.02;
+      color: #F1C27D;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 18px rgba(217, 163, 95, 0.18);
+    }
+
+    .subtitle {
+      font-size: clamp(21px, 2vw, 29px);
+      line-height: 1.45;
+      color: #FFF6EA;
+      max-width: 680px;
+      margin: 0 auto 36px;
+    }
+
+    .prayer-card {
+      margin: 30px auto 42px;
+      padding: 38px 34px;
+      max-width: 610px;
+      border: 1px solid rgba(241, 194, 125, 0.45);
+      background: linear-gradient(180deg, rgba(74, 46, 38, 0.92), rgba(60, 35, 29, 0.92));
+      border-radius: 18px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24), inset 0 0 35px rgba(217, 163, 95, 0.05);
+    }
+
+    .prayer-card p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(29px, 3vw, 42px);
+      line-height: 1.16;
+      color: #F8F1E7;
+    }
+
+    .prayer-card span {
+      color: #F1C27D;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .cta {
+      display: inline-block;
+      background: linear-gradient(180deg, #F1C27D, #D9A35F);
+      color: #2A1612;
+      font-size: 22px;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 20px 38px;
+      border-radius: 999px;
+      box-shadow: 0 12px 28px rgba(217, 163, 95, 0.28);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(217, 163, 95, 0.36);
+    }
+
+    .trust {
+      margin-top: 22px;
+      font-size: 17px;
+      color: #E8D7C5;
+      line-height: 1.6;
+    }
+
+    .image-wrap {
+      position: relative;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .image-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -16px;
+      border: 2px solid rgba(241, 194, 125, 0.75);
+      border-radius: 8px;
+      z-index: 0;
+    }
+
+    .angel-img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: block;
+      border-radius: 4px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.42);
+    }
+
+    .section {
+      padding: 80px 9%;
+      background: #F8F1E7;
+      color: #2A1612;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 4vw, 64px);
+      color: #4A2E26;
+      margin-bottom: 24px;
+    }
+
+    .section p {
+      max-width: 850px;
+      margin: 0 auto;
+      font-size: 23px;
+      line-height: 1.65;
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 46px;
+    }
+
+    .day-card {
+      background: #FFF9F0;
+      border: 1px solid rgba(74, 46, 38, 0.16);
+      border-radius: 18px;
+      padding: 28px 22px;
+      box-shadow: 0 10px 30px rgba(42, 22, 18, 0.08);
+    }
+
+    .day-card strong {
+      font-family: 'Cormorant Garamond', serif;
+      display: block;
+      font-size: 34px;
+      color: #9A642D;
+      margin-bottom: 10px;
+    }
+
+    .day-card span {
+      font-size: 19px;
+      line-height: 1.5;
+      color: #3A241E;
+    }
+
+    .final-cta {
+      padding: 85px 9%;
+      text-align: center;
+      background: linear-gradient(180deg, #321B16 0%, #2A1612 100%);
+    }
+
+    .final-cta h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 4vw, 66px);
+      color: #F1C27D;
+      margin-bottom: 20px;
+    }
+
+    .final-cta p {
+      max-width: 780px;
+      margin: 0 auto 34px;
+      font-size: 24px;
+      line-height: 1.6;
+      color: #F8F1E7;
+    }
+
+    @media (max-width: 950px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 60px 6% 70px;
+        gap: 48px;
+      }
+
+      .content {
+        order: 1;
+      }
+
+      .image-wrap {
+        order: 2;
+        max-width: 520px;
+      }
+
+      .days {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .top-bar {
+        font-size: 17px;
+        letter-spacing: 2px;
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+
+      .prayer-card {
+        padding: 30px 22px;
+      }
+
+      .cta {
+        width: 100%;
+        font-size: 20px;
+        padding: 19px 24px;
+      }
+
+      .section p,
+      .final-cta p {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-bar">
+    <div class="top-bar-track">
+      <span>Setenário do Anjo da Guarda · Sete Dias de Oração · Proteção Espiritual · Guia Divina</span>
+      <span>Setenário do Anjo da Guarda · Sete Dias de Oração · Proteção Espiritual · Guia Divina</span>
+      <span>Setenário do Anjo da Guarda · Sete Dias de Oração · Proteção Espiritual · Guia Divina</span>
+      <span>Setenário do Anjo da Guarda · Sete Dias de Oração · Proteção Espiritual · Guia Divina</span>
+    </div>
+  </div>
+
+  <main class="hero">
+    <section class="content">
+      <div class="eyebrow">Um Devocional Sagrado de Sete Dias</div>
+
+      <h1>Setenário do Anjo da Guarda</h1>
+
+      <p class="subtitle">
+        Uma jornada espiritual de sete dias para rezar, refletir e sentir a presença do seu anjo da guarda caminhando ao seu lado.
+      </p>
+
+      <div class="prayer-card">
+        <p>“Seu anjo caminha com você<span>confie na jornada.””</span></p>
+      </div>
+
+      <a href="#" class="cta">Começar a Oração dos Sete Dias</a>
+
+      <p class="trust">
+        Inspirado na devoção cristã sagrada, criado para aqueles que buscam proteção, paz e conforto espiritual.
+      </p>
+    </section>
+
+    <section class="image-wrap">
+      <img class="angel-img" src="./images/ChatGPT Image 27 de mai. de 2026, 20_19_43.png" alt="Guardian Angel" />
+    </section>
+  </main>
+
+  <section class="section">
+    <h2>Sete Dias de Reflexão Espiritual</h2>
+    <p>
+      Cada dia foi preparado para guiar o coração através da oração, do silêncio, da proteção e da gratidão, ajudando você a se reconectar com a fé de forma simples e acolhedora.
+    </p>
+
+    <div class="days">
+      <div class="day-card">
+        <strong>Dia 1</strong>
+        <span>Abrindo o coração para a proteção divina.</span>
+      </div>
+      <div class="day-card">
+        <strong>Dia 2</strong>
+        <span>Pedindo paz, clareza e direção espiritual.</span>
+      </div>
+      <div class="day-card">
+        <strong>Dia 3</strong>
+        <span>Rezando por força nos momentos difíceis.</span>
+      </div>
+      <div class="day-card">
+        <strong>Dia 4</strong>
+        <span>Encontrando conforto na presença do seu anjo.</span>
+      </div>
+      <div class="day-card">
+        <strong>Dia 5</strong>
+        <span>Liberando medos, preocupações e pesos emocionais.</span>
+      </div>
+      <div class="day-card">
+        <strong>Dia 6</strong>
+        <span>Recebendo esperança, gratidão e fé renovada.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <h2>Comece Seu Devocional Hoje</h2>
+    <p>
+      Reserve um momento de paz para sua alma. Comece a oração dos sete dias e permita que seu coração se sinta protegido, guiado e fortalecido.
+    </p>
+    <a href="#" class="cta">Receber as Sete Orações Sagradas</a>
+  </section>
+
+</body>
+
+</html>
